@@ -150,6 +150,17 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             this.setTarget(recentDamager);
         }
 
+        // Range check: stop chasing if target is too far, but keep the grudge
+        // Resume chasing when target comes back into range
+        if (target != null && !target.isDead()) {
+            double distSq = this.squaredDistanceTo(target);
+            if (distSq > 16.0 * 16.0) {
+                // Too far — stop moving but keep target alive
+                this.getNavigation().stop();
+            }
+            // If within range, vanilla MeleeAttackGoal handles movement automatically
+        }
+
         // Ghost-explode guard: if no valid target but fuse is counting, stop
         if ((target == null || target.isDead()) && getFuseSpeed() > 0) {
             setFuseSpeed(-1);
