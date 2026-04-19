@@ -10,7 +10,6 @@ import net.minecraft.util.math.Box;
 import java.util.UUID;
 
 public class FriendlyCreeperMod implements ModInitializer {
-    public static final String MOD_ID = "friendlycreeper";
     public static final String NBT_TAMED    = "FriendlyTamed";
     public static final String NBT_OWNER    = "FriendlyOwner";
     public static final String NBT_SITTING  = "FriendlySitting";
@@ -26,7 +25,6 @@ public class FriendlyCreeperMod implements ModInitializer {
             if (!tc.friendlycreeper$isTamed()) return true;
             LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
             if (!(attacker instanceof PlayerEntity player)) return true;
-            // Check config: if allowOwnerDamage is true, owner can hurt their creeper
             if (FriendlyCreeperConfig.get().allowOwnerDamage) return true;
             UUID ownerUUID = tc.friendlycreeper$getOwnerUUID();
             return ownerUUID == null || !ownerUUID.equals(player.getUuid());

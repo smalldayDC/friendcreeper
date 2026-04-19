@@ -47,6 +47,8 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     @Unique private @Nullable UUID friendlycreeper$ownerUUID = null;
     @Unique private @Nullable UUID friendlycreeper$avengeTargetUUID = null;
     @Unique private int friendlycreeper$tameAttempts = 0;
+    @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
+
     @Unique private int friendlycreeper$hurtSoundCooldown = 0;
 
     protected MixinCreeperEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -150,13 +152,8 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         // Range check: stop chasing if target is too far, but keep the grudge
-        // Resume chasing when target comes back into range
-        if (target != null && !target.isDead()) {
-            double distSq = this.squaredDistanceTo(target);
-            if (distSq > 16.0 * 16.0) {
-                // Too far — stop moving but keep target alive
-                this.getNavigation().stop();
-            }
+        if (target != null && !target.isDead() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
+            this.getNavigation().stop();
         }
 
         // Ghost-explode guard: if no valid target but fuse is counting, stop

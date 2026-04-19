@@ -10,13 +10,6 @@ import net.minecraft.item.Items;
 import java.util.EnumSet;
 import java.util.UUID;
 
-/**
- * When tamed, this goal ALWAYS holds the TARGET control so vanilla
- * NearestAttackableTargetGoal cannot interfere. tick() decides which
- * targets to keep and which to clear.
- *
- * When untamed, suppresses targeting if a nearby player holds gunpowder.
- */
 public class CreeperSuppressTargetGoal extends Goal {
 
     private final CreeperEntity creeper;
