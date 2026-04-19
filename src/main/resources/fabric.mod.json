@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "friendlycreeper",
+  "version": "${version}",
+  "name": "Friend Creeper",
+  "description": "Tame Creepers with gunpowder and turn them into your loyal companion! Tamed Creepers will follow you, protect you from enemies, sit on command, and wear a poppy on their head.",
+  "authors": ["smalldayDC_"],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/friendcreeper",
+    "sources": "https://github.com/smalldayDC/friendlycreeper",
+    "issues" : "https://github.com/smalldayDC/friendlycreeper/issues"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.smalldaydc.friendlycreeper.FriendlyCreeperMod"],
+    "client": ["com.smalldaydc.friendlycreeper.client.FriendlyCreeperClient"]
+  },
+  "mixins": [
+    "friendlycreeper.mixins.json",
+    "friendlycreeper.client.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.6",
+    "fabric-api": ">=0.116.9",
+    "minecraft": "1.21.1"
+  }
+}
