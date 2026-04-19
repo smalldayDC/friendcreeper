@@ -19,10 +19,11 @@ public class MixinCreeperIgniteGoal {
     // Allow ignition when tamed creeper is close to a valid threat target
     @Inject(method = "canStart", at = @At("RETURN"), cancellable = true)
     private void friendlycreeper$canStart(CallbackInfoReturnable<Boolean> cir) {
-        if (!((ITamedCreeper)(Object) creeper).friendlycreeper$isTamed()) return;
+        ITamedCreeper tc = (ITamedCreeper)(Object) creeper;
+        if (!tc.friendlycreeper$isTamed()) return;
 
         // If sitting — never ignite
-        if (((ITamedCreeper)(Object) creeper).friendlycreeper$isSitting()) {
+        if (tc.friendlycreeper$isSitting()) {
             cir.setReturnValue(false);
             return;
         }

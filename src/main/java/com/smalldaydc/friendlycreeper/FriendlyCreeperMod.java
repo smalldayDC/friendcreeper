@@ -11,8 +11,10 @@ import java.util.UUID;
 
 public class FriendlyCreeperMod implements ModInitializer {
     public static final String MOD_ID = "friendlycreeper";
-    public static final String NBT_TAMED = "FriendlyTamed";
-    public static final String NBT_OWNER = "FriendlyOwner";
+    public static final String NBT_TAMED    = "FriendlyTamed";
+    public static final String NBT_OWNER    = "FriendlyOwner";
+    public static final String NBT_SITTING  = "FriendlySitting";
+    public static final String NBT_ATTEMPTS = "FriendlyTameAttempts";
 
     @Override
     public void onInitialize() {

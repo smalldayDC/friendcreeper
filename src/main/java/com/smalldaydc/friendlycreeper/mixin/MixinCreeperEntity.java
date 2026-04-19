@@ -178,9 +178,9 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void friendlycreeper$writeNbt(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putBoolean(FriendlyCreeperMod.NBT_TAMED, friendlycreeper$isTamed());
-        nbt.putBoolean("FriendlySitting", friendlycreeper$isSitting());
-        nbt.putInt("FriendlyTameAttempts", friendlycreeper$tameAttempts);
+        nbt.putBoolean(FriendlyCreeperMod.NBT_TAMED,    friendlycreeper$isTamed());
+        nbt.putBoolean(FriendlyCreeperMod.NBT_SITTING,  friendlycreeper$isSitting());
+        nbt.putInt(    FriendlyCreeperMod.NBT_ATTEMPTS, friendlycreeper$tameAttempts);
         if (friendlycreeper$ownerUUID != null) {
             nbt.put(FriendlyCreeperMod.NBT_OWNER, NbtHelper.fromUuid(friendlycreeper$ownerUUID));
         }
@@ -191,11 +191,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         if (nbt.getBoolean(FriendlyCreeperMod.NBT_TAMED)) {
             this.dataTracker.set(FRIENDLYCREEPER_TAMED, true);
         }
-        if (nbt.getBoolean("FriendlySitting")) {
+        if (nbt.getBoolean(FriendlyCreeperMod.NBT_SITTING)) {
             this.dataTracker.set(FRIENDLYCREEPER_SITTING, true);
             this.setPose(EntityPose.CROUCHING);
         }
-        friendlycreeper$tameAttempts = nbt.getInt("FriendlyTameAttempts");
+        friendlycreeper$tameAttempts = nbt.getInt(FriendlyCreeperMod.NBT_ATTEMPTS);
         if (nbt.contains(FriendlyCreeperMod.NBT_OWNER)) {
             try {
                 friendlycreeper$ownerUUID = NbtHelper.toUuid(nbt.get(FriendlyCreeperMod.NBT_OWNER));

@@ -54,14 +54,7 @@ public class MixinMobEntity {
                 return;
             }
 
-            // Gunpowder at full HP → toggle sit (prevents placing gunpowder)
-            if (stack.isOf(Items.GUNPOWDER)) {
-                tc.friendlycreeper$toggleSit();
-                cir.setReturnValue(ActionResult.SUCCESS);
-                return;
-            }
-
-            // Any other right-click → toggle sit
+            // Gunpowder at full HP or any other right-click → toggle sit
             tc.friendlycreeper$toggleSit();
             cir.setReturnValue(ActionResult.SUCCESS);
             return;
