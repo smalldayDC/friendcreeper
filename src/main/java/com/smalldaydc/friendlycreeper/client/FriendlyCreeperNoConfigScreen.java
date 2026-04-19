@@ -30,16 +30,16 @@ public class FriendlyCreeperNoConfigScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
-        context.drawCenteredTextWithShadow(this.textRenderer,
-                Text.literal("Cloth Config API is not installed"),
-                this.width / 2, this.height / 2 - 20, 0xFFFFFF);
+        String[] lines = {
+            "Cloth Config API is not installed",
+            "Please install it before configuring via the graphical interface.",
+            "You can download it from Modrinth or CurseForge."
+        };
 
-        context.drawCenteredTextWithShadow(this.textRenderer,
-                Text.literal("Please install it before configuring via the graphical interface."),
-                this.width / 2, this.height / 2 - 5, 0xFFFFFF);
-
-        context.drawCenteredTextWithShadow(this.textRenderer,
-                Text.literal("You can download it from Modrinth or CurseForge."),
-                this.width / 2, this.height / 2 + 10, 0xFFFFFF);
+        for (int i = 0; i < lines.length; i++) {
+            context.drawCenteredTextWithShadow(this.textRenderer,
+                    Text.literal(lines[i]),
+                    this.width / 2, this.height / 2 - 20 + i * 15, 0xFFFFFF);
+        }
     }
 }
