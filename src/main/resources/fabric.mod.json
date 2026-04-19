@@ -30,8 +30,8 @@
     "friendlycreeper.client.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.18.6",
-    "fabric-api": ">=0.116.9",
+    "fabricloader": ">=0.19.2",
+    "fabric-api": ">=0.116.11",
     "minecraft": "1.21.1"
   },
   "suggests": {
