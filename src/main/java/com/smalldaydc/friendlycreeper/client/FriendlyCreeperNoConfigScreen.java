@@ -46,9 +46,4 @@ public class FriendlyCreeperNoConfigScreen extends Screen {
                 Text.literal("You can download it from Modrinth or CurseForge."),
                 this.width / 2, this.height / 2 + 20, 0xAAAAAA);
     }
-
-    @Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderDarkening(context);
-    }
 }
