@@ -1,5 +1,6 @@
 package com.smalldaydc.friendlycreeper.goal;
 
+import com.smalldaydc.friendlycreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendlycreeper.ITamedCreeper;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -32,6 +33,7 @@ public class CreeperFollowOwnerGoal extends Goal {
     public boolean canStart() {
         if (!asTamed().friendlycreeper$isTamed()) return false;
         if (asTamed().friendlycreeper$isSitting()) return false;
+        if (!FriendlyCreeperConfig.get().followOwner) return false;
         if (creeper.getWorld().isClient()) return false;
         // Don't follow if currently attacking something
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;

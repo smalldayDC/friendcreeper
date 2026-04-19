@@ -21,6 +21,9 @@ public class FriendlyCreeperConfig {
     /** Whether the owner can damage their own tamed Creeper. Default: false */
     public boolean allowOwnerDamage = false;
 
+    /** Whether tamed Creepers follow their owner. Default: true */
+    public boolean followOwner = true;
+
     /** Whether tamed Creepers play a hurt sound when at low health. Default: true */
     public boolean hurtSound = true;
 

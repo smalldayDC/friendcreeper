@@ -34,6 +34,15 @@ public class FriendlyCreeperConfigScreen {
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
+                        Text.literal("Follow Owner"),
+                        config.followOwner)
+                .setDefaultValue(true)
+                .setTooltip(Text.literal("Whether tamed Creepers follow their owner."))
+                .setSaveConsumer(value -> config.followOwner = value)
+                .build());
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(
                         Text.literal("Hurt Sound"),
                         config.hurtSound)
                 .setDefaultValue(true)
