@@ -35,6 +35,7 @@
     "minecraft": "1.21.1"
   },
   "suggests": {
-    "cloth-config": ">=15.0.140"
+    "cloth-config": ">=15.0.140",
+    "modmenu": ">=11.0.4"
   }
 }
