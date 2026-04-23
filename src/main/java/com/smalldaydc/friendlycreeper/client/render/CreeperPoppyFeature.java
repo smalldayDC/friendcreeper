@@ -1,8 +1,10 @@
 package com.smalldaydc.friendlycreeper.client.render;
 
 import com.smalldaydc.friendlycreeper.ITamedCreeper;
+import com.smalldaydc.friendlycreeper.client.mixin.CreeperEntityModelAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
@@ -19,13 +21,10 @@ import net.minecraft.util.math.RotationAxis;
 @Environment(EnvType.CLIENT)
 public class CreeperPoppyFeature extends FeatureRenderer<CreeperEntity, CreeperEntityModel<CreeperEntity>> {
 
-    // Cached once — no need to create every frame
     private static final ItemStack POPPY_STACK = new ItemStack(Items.POPPY);
 
-    // head.pivotY = 6px (standing), head cube height = 8px → head top = (6-8)/16 = -0.125f
-    // sitting adds +2f to head.pivotY → (8-8)/16 = 0f
-    private static final float HEAD_TOP_STANDING = (6f - 8f) / 16.0f;
-    private static final float HEAD_TOP_SITTING  = 0f;
+    // Head cube is 8px tall; head top = -8/16 relative to head pivot in render space
+    private static final float HEAD_TOP_OFFSET = -8.0f / 16.0f;
 
     private final ItemRenderer itemRenderer;
 
@@ -43,14 +42,17 @@ public class CreeperPoppyFeature extends FeatureRenderer<CreeperEntity, CreeperE
                        float tickDelta, float animationProgress,
                        float headYaw, float headPitch) {
 
-        ITamedCreeper tc = (ITamedCreeper)(Object) entity;
-        if (!tc.friendlycreeper$isTamed()) return;
+        if (!((ITamedCreeper)(Object) entity).friendlycreeper$isTamed()) return;
 
-        float headTopY = tc.friendlycreeper$isSitting() ? HEAD_TOP_SITTING : HEAD_TOP_STANDING;
+        // Get the head model part to render in its local coordinate space
+        CreeperEntityModelAccessor modelAcc = (CreeperEntityModelAccessor)(Object) getContextModel();
+        ModelPart head = modelAcc.friendlycreeper$getHead();
 
         matrices.push();
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotation((float) Math.toRadians(-headYaw)));
-        matrices.translate(0.0, headTopY - 0.08, 0.0);
+        // Follow the head's pivot position and all rotations (yaw + pitch)
+        head.rotate(matrices);
+        // Translate to the top of the head in head's local space, slightly above surface
+        matrices.translate(0.0, HEAD_TOP_OFFSET - 0.08, 0.0);
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180f));
         matrices.scale(0.5f, 0.5f, 0.5f);
 
