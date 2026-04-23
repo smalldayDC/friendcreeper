@@ -22,69 +22,74 @@ public class MixinMobEntity {
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
     private void friendlycreeper$onInteract(PlayerEntity player, Hand hand,
                                              CallbackInfoReturnable<ActionResult> cir) {
-        // Only handle CreeperEntity
         if (!((Object) this instanceof CreeperEntity creeper)) return;
-        // Only main hand to avoid double-firing
-        if (hand != Hand.MAIN_HAND) return;
-        if (player.getWorld().isClient()) return;
 
         ITamedCreeper tc = (ITamedCreeper)(Object) creeper;
-        ItemStack stack = player.getMainHandStack();
+        ItemStack stack = player.getStackInHand(hand);
 
         if (tc.friendlycreeper$isTamed()) {
+            // Only handle main hand for tamed interactions to avoid double-firing
+            if (hand != Hand.MAIN_HAND) return;
             if (!player.getUuid().equals(tc.friendlycreeper$getOwnerUUID())) return;
 
             // Sneak+right-click → toggle sit
             if (player.isSneaking()) {
-                tc.friendlycreeper$toggleSit();
+                if (!player.getWorld().isClient()) tc.friendlycreeper$toggleSit();
                 cir.setReturnValue(ActionResult.SUCCESS);
                 return;
             }
 
             // Gunpowder when hurt → heal
             if (stack.isOf(Items.GUNPOWDER) && creeper.getHealth() < creeper.getMaxHealth()) {
-                if (!player.getAbilities().creativeMode) stack.decrement(1);
-                creeper.heal(4.0f);
-                if (creeper.getWorld() instanceof ServerWorld sw) {
-                    sw.spawnParticles(ParticleTypes.HEART,
-                            creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
-                            5, 0.4, 0.4, 0.4, 0.05);
+                if (!player.getWorld().isClient()) {
+                    if (!player.getAbilities().creativeMode) stack.decrement(1);
+                    creeper.heal(4.0f);
+                    if (creeper.getWorld() instanceof ServerWorld sw) {
+                        sw.spawnParticles(ParticleTypes.HEART,
+                                creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                                5, 0.4, 0.4, 0.4, 0.05);
+                    }
                 }
                 cir.setReturnValue(ActionResult.SUCCESS);
                 return;
             }
 
-            // Gunpowder at full HP or any other right-click → toggle sit
-            tc.friendlycreeper$toggleSit();
+            // Any other right-click → toggle sit (also prevents usable items from firing)
+            if (!player.getWorld().isClient()) tc.friendlycreeper$toggleSit();
             cir.setReturnValue(ActionResult.SUCCESS);
             return;
         }
 
-        // Untamed: gunpowder → tame attempt
+        // Untamed: gunpowder → tame attempt (both hands allowed)
         if (!stack.isOf(Items.GUNPOWDER)) return;
-        if (!player.getAbilities().creativeMode) stack.decrement(1);
+        // If off-hand triggers but main hand also has gunpowder, skip to avoid double-firing
+        if (hand == Hand.OFF_HAND && player.getMainHandStack().isOf(Items.GUNPOWDER)) return;
 
-        int attempts = tc.friendlycreeper$getTameAttempts() + 1;
-        boolean success = attempts >= 5 || creeper.getRandom().nextInt(3) == 0;
+        if (!player.getWorld().isClient()) {
+            if (!player.getAbilities().creativeMode) stack.decrement(1);
 
-        if (success) {
-            tc.friendlycreeper$setTamed(true);
-            tc.friendlycreeper$setOwnerUUID(player.getUuid());
-            tc.friendlycreeper$setTameAttempts(0);
-            creeper.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.POPPY));
-            creeper.setEquipmentDropChance(EquipmentSlot.HEAD, 0.0f);
-            creeper.setPersistent();
-            if (creeper.getWorld() instanceof ServerWorld sw) {
-                sw.spawnParticles(ParticleTypes.HAPPY_VILLAGER,
-                        creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
-                        20, 0.5, 0.5, 0.5, 0.1);
-            }
-        } else {
-            tc.friendlycreeper$setTameAttempts(attempts);
-            if (creeper.getWorld() instanceof ServerWorld sw) {
-                sw.spawnParticles(ParticleTypes.SMOKE,
-                        creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
-                        10, 0.3, 0.3, 0.3, 0.05);
+            int attempts = tc.friendlycreeper$getTameAttempts() + 1;
+            boolean success = attempts >= 5 || creeper.getRandom().nextInt(3) == 0;
+
+            if (success) {
+                tc.friendlycreeper$setTamed(true);
+                tc.friendlycreeper$setOwnerUUID(player.getUuid());
+                tc.friendlycreeper$setTameAttempts(0);
+                creeper.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.POPPY));
+                creeper.setEquipmentDropChance(EquipmentSlot.HEAD, 0.0f);
+                creeper.setPersistent();
+                if (creeper.getWorld() instanceof ServerWorld sw) {
+                    sw.spawnParticles(ParticleTypes.HAPPY_VILLAGER,
+                            creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                            20, 0.5, 0.5, 0.5, 0.1);
+                }
+            } else {
+                tc.friendlycreeper$setTameAttempts(attempts);
+                if (creeper.getWorld() instanceof ServerWorld sw) {
+                    sw.spawnParticles(ParticleTypes.SMOKE,
+                            creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                            10, 0.3, 0.3, 0.3, 0.05);
+                }
             }
         }
         cir.setReturnValue(ActionResult.SUCCESS);
