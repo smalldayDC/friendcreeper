@@ -27,6 +27,9 @@ public class FriendlyCreeperConfig {
     /** Whether tamed Creepers avenge their owner when attacked. Default: true */
     public boolean revengeOwner = true;
 
+    /** Whether Snow Golems can target tamed Creepers. Default: false */
+    public boolean snowGolemAttack = false;
+
     /** Whether tamed Creepers play a hurt sound when at low health. Default: true */
     public boolean hurtSound = true;
 

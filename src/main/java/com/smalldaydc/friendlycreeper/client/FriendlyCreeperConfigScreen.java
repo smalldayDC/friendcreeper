@@ -52,6 +52,15 @@ public class FriendlyCreeperConfigScreen {
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
+                        Text.literal("Snow Golem Attack"),
+                        config.snowGolemAttack)
+                .setDefaultValue(false)
+                .setTooltip(Text.literal("Whether Snow Golems can target tamed Creepers."))
+                .setSaveConsumer(value -> config.snowGolemAttack = value)
+                .build());
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(
                         Text.literal("Hurt Sound"),
                         config.hurtSound)
                 .setDefaultValue(true)
