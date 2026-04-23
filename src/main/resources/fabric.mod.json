@@ -16,7 +16,7 @@
   "entrypoints": {
     "main": ["com.smalldaydc.friendlycreeper.FriendlyCreeperMod"],
     "client": ["com.smalldaydc.friendlycreeper.client.FriendlyCreeperClient"],
-    "modmenu": ["com.smalldaydc.friendlycreeper.client.FriendlyCreeperClient"]
+    "modmenu": ["com.smalldaydc.friendlycreeper.client.FriendlyCreeperModMenuEntry"]
   },
   "custom": {
     "modmenu": {

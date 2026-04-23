@@ -37,7 +37,7 @@ public class FriendlyCreeperConfig {
             try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
                 instance = GSON.fromJson(reader, FriendlyCreeperConfig.class);
                 return;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 instance = new FriendlyCreeperConfig();
             }
         } else {

@@ -51,6 +51,7 @@ public class CreeperFollowOwnerGoal extends Goal {
     public boolean shouldContinue() {
         if (owner == null || owner.isDead()) return false;
         if (!asTamed().friendlycreeper$isTamed()) return false;
+        if (!FriendlyCreeperConfig.get().followOwner) return false;
         // Stop following if a target appears
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
         return creeper.squaredDistanceTo(owner) > STOP_SQ;

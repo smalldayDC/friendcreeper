@@ -72,6 +72,7 @@ public class MixinMobEntity {
             tc.friendlycreeper$setOwnerUUID(player.getUuid());
             tc.friendlycreeper$setTameAttempts(0);
             creeper.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.POPPY));
+            creeper.setEquipmentDropChance(EquipmentSlot.HEAD, 0.0f);
             creeper.setPersistent();
             if (creeper.getWorld() instanceof ServerWorld sw) {
                 sw.spawnParticles(ParticleTypes.HAPPY_VILLAGER,
