@@ -11,19 +11,19 @@
 
 ---
 
+## Requirements
+- Fabric Loader `>=0.19.2`
+- [Fabric API](https://modrinth.com/mod/fabric-api) `>=0.116.11`
+- Minecraft `1.21.1`
+
+---
+
 ## Controls
 | Action | How |
 |---|---|
 | Tame | Right-click with gunpowder |
 | Sit / Stand | Right-click |
 | Feed (heal) | Right-click with gunpowder when hurt |
-
----
-
-## Requirements
-- Fabric Loader `>=0.19.2`
-- [Fabric API](https://modrinth.com/mod/fabric-api) `>=0.116.11`
-- Minecraft `1.21.1`
 
 ---
 
