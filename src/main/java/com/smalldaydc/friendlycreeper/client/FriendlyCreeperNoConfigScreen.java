@@ -19,7 +19,7 @@ public class FriendlyCreeperNoConfigScreen extends Screen {
     private final Screen parent;
 
     public FriendlyCreeperNoConfigScreen(Screen parent) {
-        super(Text.literal("Friend Creeper Settings"));
+        super(Text.empty());
         this.parent = parent;
     }
 
