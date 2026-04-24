@@ -34,7 +34,7 @@ public class FriendlyCreeperMod implements ModInitializer {
             return ownerUUID == null || !ownerUUID.equals(player.getUuid());
         });
 
-        // Owner attacked → creeper targets attacker
+        // Owner attacked → creeper targets attacker (only if creeper can see them)
         ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamage, damage, absorbed) -> {
             if (!(entity instanceof PlayerEntity owner)) return;
             if (damage <= 0) return;
@@ -52,6 +52,7 @@ public class FriendlyCreeperMod implements ModInitializer {
                         && owner.getUuid().equals(tc.friendlycreeper$getOwnerUUID())
                         && !tc.friendlycreeper$isSitting();
             }).forEach(c -> {
+                if (!c.canSee(attacker)) return;
                 ITamedCreeper tc = (ITamedCreeper) c;
                 tc.friendlycreeper$setAvengeTargetUUID(attackerUUID);
                 c.setTarget(attacker);
