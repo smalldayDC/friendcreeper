@@ -12,7 +12,7 @@ public class CreeperSitGoal extends Goal {
 
     public CreeperSitGoal(CreeperEntity creeper) {
         this.creeper = creeper;
-        this.setControls(EnumSet.of(Control.MOVE, Control.JUMP, Control.LOOK));
+        this.setControls(EnumSet.of(Control.MOVE, Control.JUMP));
     }
 
     @Override
