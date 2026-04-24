@@ -3,7 +3,6 @@ package com.smalldaydc.friendlycreeper.mixin;
 import com.smalldaydc.friendlycreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendlycreeper.FriendlyCreeperMod;
 import com.smalldaydc.friendlycreeper.ITamedCreeper;
-import com.smalldaydc.friendlycreeper.goal.CreeperDefendOwnerGoal;
 import com.smalldaydc.friendlycreeper.goal.CreeperFollowOwnerGoal;
 import com.smalldaydc.friendlycreeper.goal.CreeperSuppressTargetGoal;
 import net.minecraft.entity.EntityPose;
@@ -27,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Mixin(CreeperEntity.class)
@@ -44,7 +44,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Unique
-    private static final TrackedData<java.util.Optional<UUID>> FRIENDLYCREEPER_OWNER =
+    private static final TrackedData<Optional<UUID>> FRIENDLYCREEPER_OWNER =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 
     @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
@@ -86,7 +86,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     }
 
     @Override public void friendlycreeper$setOwnerUUID(@Nullable UUID uuid) {
-        this.dataTracker.set(FRIENDLYCREEPER_OWNER, java.util.Optional.ofNullable(uuid));
+        this.dataTracker.set(FRIENDLYCREEPER_OWNER, Optional.ofNullable(uuid));
     }
 
     @Override public @Nullable UUID friendlycreeper$getAvengeTargetUUID() {
@@ -111,7 +111,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private void friendlycreeper$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
         builder.add(FRIENDLYCREEPER_TAMED, false);
         builder.add(FRIENDLYCREEPER_SITTING, false);
-        builder.add(FRIENDLYCREEPER_OWNER, java.util.Optional.empty());
+        builder.add(FRIENDLYCREEPER_OWNER, Optional.empty());
     }
 
     // ── Goals ─────────────────────────────────────────────────────────────────
@@ -120,7 +120,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private void friendlycreeper$initGoals(CallbackInfo ci) {
         CreeperEntity self = (CreeperEntity) (Object) this;
         this.goalSelector.add(2, new CreeperFollowOwnerGoal(self));
-        this.goalSelector.add(1, new CreeperDefendOwnerGoal(self));
         this.targetSelector.add(0, new CreeperSuppressTargetGoal(self));
     }
 
@@ -137,11 +136,10 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             // Retaliate against non-player attackers (bypasses goal system)
             if (recentDamager != null && !(recentDamager instanceof PlayerEntity) && target == null) {
                 this.setTarget(recentDamager);
-                target = recentDamager;
             }
 
             // Stop fuse only if targeting a gunpowder-holding player
-            if (getFuseSpeed() > 0 && target instanceof PlayerEntity player
+            if (getFuseSpeed() > 0 && this.getTarget() instanceof PlayerEntity player
                     && (player.getMainHandStack().isOf(Items.GUNPOWDER)
                         || player.getOffHandStack().isOf(Items.GUNPOWDER))) {
                 setFuseSpeed(-1);
