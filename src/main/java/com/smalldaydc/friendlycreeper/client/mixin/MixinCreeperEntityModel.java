@@ -5,9 +5,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
+import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.entity.mob.CreeperEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,9 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(CreeperEntityModel.class)
 public class MixinCreeperEntityModel {
 
-    @Shadow private ModelPart head;
-
     @Unique private static final float DEF_HEAD_Y = 6f;
+    @Unique private static final float DEF_BODY_Y = 6f;
     @Unique private static final float DEF_LEG_Y  = 18f;
 
     @Inject(method = "setAngles", at = @At("TAIL"))
@@ -29,6 +28,8 @@ public class MixinCreeperEntityModel {
                                                float headPitch, CallbackInfo ci) {
 
         CreeperEntityModelAccessor acc = (CreeperEntityModelAccessor)(Object) this;
+        ModelPart head       = acc.friendlycreeper$getHead();
+        ModelPart body       = ((SinglePartEntityModel<?>)(Object) this).getPart().getChild("body");
         ModelPart leftFront  = acc.friendlycreeper$getLeftFrontLeg();
         ModelPart rightFront = acc.friendlycreeper$getRightFrontLeg();
         ModelPart leftHind   = acc.friendlycreeper$getLeftHindLeg();
@@ -36,6 +37,7 @@ public class MixinCreeperEntityModel {
 
         // Always reset pivotY to defaults (model instances are shared)
         head.pivotY       = DEF_HEAD_Y;
+        body.pivotY       = DEF_BODY_Y;
         leftFront.pivotY  = DEF_LEG_Y;
         rightFront.pivotY = DEF_LEG_Y;
         leftHind.pivotY   = DEF_LEG_Y;
@@ -45,12 +47,13 @@ public class MixinCreeperEntityModel {
         if (!(entity instanceof CreeperEntity creeper)) return;
         if (!((ITamedCreeper)(Object) creeper).friendlycreeper$isSitting()) return;
 
-        // Sitting pose: legs fold UP, override vanilla pitch
-        head.pivotY       = DEF_HEAD_Y  + 2f;
-        leftFront.pivotY  = DEF_LEG_Y   - 4f;
-        rightFront.pivotY = DEF_LEG_Y   - 4f;
-        leftHind.pivotY   = DEF_LEG_Y   - 4f;
-        rightHind.pivotY  = DEF_LEG_Y   - 4f;
+        // Sitting pose: head+body sink together, legs fold UP
+        head.pivotY       = DEF_HEAD_Y + 2f;
+        body.pivotY       = DEF_BODY_Y + 2f;
+        leftFront.pivotY  = DEF_LEG_Y  - 4f;
+        rightFront.pivotY = DEF_LEG_Y  - 4f;
+        leftHind.pivotY   = DEF_LEG_Y  - 4f;
+        rightHind.pivotY  = DEF_LEG_Y  - 4f;
         leftFront.pitch   = -0.8f;
         rightFront.pitch  = -0.8f;
         leftHind.pitch    =  0.8f;
