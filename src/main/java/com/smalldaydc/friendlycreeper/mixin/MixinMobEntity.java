@@ -44,9 +44,9 @@ public class MixinMobEntity {
             if (hand != Hand.MAIN_HAND) return;
             if (!player.getUuid().equals(tc.friendlycreeper$getOwnerUUID())) return;
 
-            // Sneak+right-click → toggle sit
+            // Sneak+right-click → toggle sit (not while in vehicle)
             if (player.isSneaking()) {
-                if (!player.getWorld().isClient()) tc.friendlycreeper$toggleSit();
+                if (!creeper.hasVehicle() && !player.getWorld().isClient()) tc.friendlycreeper$toggleSit();
                 cir.setReturnValue(ActionResult.SUCCESS);
                 return;
             }
@@ -66,8 +66,8 @@ public class MixinMobEntity {
                 return;
             }
 
-            // Any other right-click → toggle sit (also prevents usable items from firing)
-            if (!player.getWorld().isClient()) tc.friendlycreeper$toggleSit();
+            // Any other right-click → toggle sit (also prevents usable items from firing, not while in vehicle)
+            if (!creeper.hasVehicle() && !player.getWorld().isClient()) tc.friendlycreeper$toggleSit();
             cir.setReturnValue(ActionResult.SUCCESS);
             return;
         }
