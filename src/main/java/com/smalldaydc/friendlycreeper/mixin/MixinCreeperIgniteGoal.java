@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.CreeperIgniteGoal;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,6 +40,22 @@ public class MixinCreeperIgniteGoal {
         if (!(target instanceof PlayerEntity)
                 && creeper.squaredDistanceTo(target) < 9.0) {
             cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "shouldContinue", at = @At("RETURN"), cancellable = true)
+    private void friendlycreeper$shouldContinue(CallbackInfoReturnable<Boolean> cir) {
+        if (!cir.getReturnValue()) return;
+
+        // Untamed: stop fuse immediately if targeted player picks up gunpowder
+        ITamedCreeper tc = (ITamedCreeper)(Object) creeper;
+        if (!tc.friendlycreeper$isTamed()) {
+            LivingEntity target = creeper.getTarget();
+            if (target instanceof PlayerEntity player
+                    && (player.getMainHandStack().isOf(Items.GUNPOWDER)
+                        || player.getOffHandStack().isOf(Items.GUNPOWDER))) {
+                cir.setReturnValue(false);
+            }
         }
     }
 }
