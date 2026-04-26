@@ -17,73 +17,74 @@ public class FriendlyCreeperConfigScreen {
 
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(Text.literal("Friend Creeper Settings"))
+                .setTitle(Text.translatable("config.friendlycreeper.title"))
                 .setSavingRunnable(FriendlyCreeperConfig::save);
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        ConfigCategory general = builder.getOrCreateCategory(Text.literal("General"));
+        ConfigCategory general = builder.getOrCreateCategory(Text.translatable("config.friendlycreeper.category.general"));
+        ConfigCategory client = builder.getOrCreateCategory(Text.translatable("config.friendlycreeper.category.client"));
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.literal("Allow Owner Damage"),
+                        Text.translatable("config.friendlycreeper.allowOwnerDamage"),
                         config.allowOwnerDamage)
                 .setDefaultValue(false)
-                .setTooltip(Text.literal("Whether the owner can damage their own tamed Creeper."))
+                .setTooltip(Text.translatable("config.friendlycreeper.allowOwnerDamage.tooltip"))
                 .setSaveConsumer(value -> config.allowOwnerDamage = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.literal("Follow Owner"),
+                        Text.translatable("config.friendlycreeper.followOwner"),
                         config.followOwner)
                 .setDefaultValue(true)
-                .setTooltip(Text.literal("Whether tamed Creepers follow their owner."))
+                .setTooltip(Text.translatable("config.friendlycreeper.followOwner.tooltip"))
                 .setSaveConsumer(value -> config.followOwner = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.literal("Revenge Owner"),
+                        Text.translatable("config.friendlycreeper.revengeOwner"),
                         config.revengeOwner)
                 .setDefaultValue(true)
-                .setTooltip(Text.literal("Whether tamed Creepers avenge their owner when attacked."))
+                .setTooltip(Text.translatable("config.friendlycreeper.revengeOwner.tooltip"))
                 .setSaveConsumer(value -> config.revengeOwner = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.literal("Snow Golem Attack"),
+                        Text.translatable("config.friendlycreeper.snowGolemAttack"),
                         config.snowGolemAttack)
                 .setDefaultValue(false)
-                .setTooltip(Text.literal("Whether Snow Golems can target tamed Creepers."))
+                .setTooltip(Text.translatable("config.friendlycreeper.snowGolemAttack.tooltip"))
                 .setSaveConsumer(value -> config.snowGolemAttack = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.literal("Hurt Sound"),
+                        Text.translatable("config.friendlycreeper.afraidOfCats"),
+                        config.afraidOfCats)
+                .setDefaultValue(true)
+                .setTooltip(Text.translatable("config.friendlycreeper.afraidOfCats.tooltip"))
+                .setSaveConsumer(value -> config.afraidOfCats = value)
+                .build());
+
+        client.addEntry(entryBuilder
+                .startBooleanToggle(
+                        Text.translatable("config.friendlycreeper.hurtSound"),
                         config.hurtSound)
                 .setDefaultValue(true)
-                .setTooltip(Text.literal("Whether tamed Creepers play a hurt sound when at low health."))
+                .setTooltip(Text.translatable("config.friendlycreeper.hurtSound.tooltip"))
                 .setSaveConsumer(value -> config.hurtSound = value)
                 .build());
 
-        general.addEntry(entryBuilder
+        client.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.literal("Render Poppy"),
+                        Text.translatable("config.friendlycreeper.renderPoppy"),
                         config.renderPoppy)
                 .setDefaultValue(true)
-                .setTooltip(Text.literal("Whether to render the poppy on tamed Creepers' heads.\nNote: This is a client-side option and is not affected by server configuration."))
+                .setTooltip(Text.translatable("config.friendlycreeper.renderPoppy.tooltip"))
                 .setSaveConsumer(value -> config.renderPoppy = value)
-                .build());
-
-        general.addEntry(entryBuilder
-                .startBooleanToggle(
-                        Text.literal("Afraid of Cats"),
-                        config.afraidOfCats)
-                .setDefaultValue(true)
-                .setTooltip(Text.literal("Whether tamed Creepers are afraid of cats and ocelots."))
-                .setSaveConsumer(value -> config.afraidOfCats = value)
                 .build());
 
         return builder.build();

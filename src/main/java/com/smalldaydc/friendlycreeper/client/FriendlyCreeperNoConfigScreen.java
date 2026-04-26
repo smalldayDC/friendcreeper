@@ -11,9 +11,9 @@ import net.minecraft.text.Text;
 public class FriendlyCreeperNoConfigScreen extends Screen {
 
     private static final Text[] MESSAGES = {
-        Text.literal("Cloth Config API is not installed"),
-        Text.literal("Please install it before configuring via the graphical interface."),
-        Text.literal("You can download it from Modrinth or CurseForge.")
+        Text.translatable("screen.friendlycreeper.noconfig.line1"),
+        Text.translatable("screen.friendlycreeper.noconfig.line2"),
+        Text.translatable("screen.friendlycreeper.noconfig.line3")
     };
 
     private final Screen parent;
@@ -26,7 +26,7 @@ public class FriendlyCreeperNoConfigScreen extends Screen {
     @Override
     protected void init() {
         this.addDrawableChild(ButtonWidget.builder(
-                Text.literal("Back"),
+                Text.translatable("screen.friendlycreeper.noconfig.back"),
                 button -> this.client.setScreen(parent))
                 .dimensions(this.width / 2 - 75, this.height / 2 + 40, 150, 20)
                 .build());

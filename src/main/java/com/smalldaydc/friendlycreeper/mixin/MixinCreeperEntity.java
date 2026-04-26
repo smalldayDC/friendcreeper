@@ -158,7 +158,23 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void friendlycreeper$onTick(CallbackInfo ci) {
-        if (this.getEntityWorld().isClient()) return;
+        // Client-side: handle hurt sound
+        if (this.getEntityWorld().isClient()) {
+            if (!friendlycreeper$isTamed()) return;
+            if (friendlycreeper$hurtSoundCooldown > 0) {
+                friendlycreeper$hurtSoundCooldown--;
+            } else if (FriendlyCreeperConfig.get().hurtSound
+                    && this.getHealth() / this.getMaxHealth() < 0.25f) {
+                if (this.getRandom().nextInt(300) == 0) {
+                    this.getEntityWorld().playSoundClient(
+                            this.getX(), this.getY(), this.getZ(),
+                            SoundEvents.ENTITY_CREEPER_HURT, this.getSoundCategory(),
+                            0.8f, 0.9f + this.getRandom().nextFloat() * 0.2f, false);
+                    friendlycreeper$hurtSoundCooldown = 160;
+                }
+            }
+            return;
+        }
 
         if (!friendlycreeper$isTamed()) {
             LivingEntity target = this.getTarget();
@@ -200,17 +216,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
         if ((target == null || target.isDead()) && getFuseSpeed() > 0) {
             setFuseSpeed(-1);
-        }
-
-        if (friendlycreeper$hurtSoundCooldown > 0) {
-            friendlycreeper$hurtSoundCooldown--;
-        } else if (FriendlyCreeperConfig.get().hurtSound
-                && this.getHealth() / this.getMaxHealth() < 0.25f) {
-            if (this.getRandom().nextInt(300) == 0) {
-                this.playSound(SoundEvents.ENTITY_CREEPER_HURT, 0.8f,
-                        0.9f + this.getRandom().nextFloat() * 0.2f);
-                friendlycreeper$hurtSoundCooldown = 160;
-            }
         }
     }
 

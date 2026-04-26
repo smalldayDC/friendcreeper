@@ -30,7 +30,7 @@ public class FriendlyCreeperConfig {
     /** Whether Snow Golems can target tamed Creepers. Default: false */
     public boolean snowGolemAttack = false;
 
-    /** Whether tamed Creepers play a hurt sound when at low health. Default: true */
+    /** Whether tamed Creepers play a hurt sound when at low health. Client-side only. Default: true */
     public boolean hurtSound = true;
 
     /** Whether to render the poppy on tamed Creepers' heads. Client-side only. Default: true */
