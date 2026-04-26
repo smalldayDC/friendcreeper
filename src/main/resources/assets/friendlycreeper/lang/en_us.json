@@ -27,5 +27,7 @@
   "screen.friendlycreeper.noconfig.line1": "Cloth Config API is not installed",
   "screen.friendlycreeper.noconfig.line2": "Please install it before configuring via the graphical interface.",
   "screen.friendlycreeper.noconfig.line3": "You can download it from Modrinth or CurseForge.",
-  "screen.friendlycreeper.noconfig.back": "Back"
+  "screen.friendlycreeper.noconfig.back": "Back",
+
+  "modmenu.descriptionTranslation.friendlycreeper": "Tame Creepers with gunpowder and make them your friend."
 }

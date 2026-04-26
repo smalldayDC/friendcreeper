@@ -27,5 +27,7 @@
   "screen.friendlycreeper.noconfig.line1": "Cloth Config API がインストールされていません",
   "screen.friendlycreeper.noconfig.line2": "グラフィカルインターフェースで設定するには、先にインストールしてください。",
   "screen.friendlycreeper.noconfig.line3": "Modrinth または CurseForge からダウンロードできます。",
-  "screen.friendlycreeper.noconfig.back": "戻る"
+  "screen.friendlycreeper.noconfig.back": "戻る",
+
+  "modmenu.descriptionTranslation.friendlycreeper": "火薬でクリーパーを手懐けて、あなたの友達にしよう。"
 }

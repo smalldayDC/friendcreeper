@@ -27,5 +27,7 @@
   "screen.friendlycreeper.noconfig.line1": "未安装 Cloth Config API",
   "screen.friendlycreeper.noconfig.line2": "请先安装后再通过图形界面进行配置。",
   "screen.friendlycreeper.noconfig.line3": "你可以从 Modrinth 或 CurseForge 下载。",
-  "screen.friendlycreeper.noconfig.back": "返回"
+  "screen.friendlycreeper.noconfig.back": "返回",
+
+  "modmenu.descriptionTranslation.friendlycreeper": "用火药驯服苦力怕，让它成为你的朋友。"
 }

@@ -27,5 +27,7 @@
   "screen.friendlycreeper.noconfig.line1": "Cloth Config API не установлен",
   "screen.friendlycreeper.noconfig.line2": "Установите его перед настройкой через графический интерфейс.",
   "screen.friendlycreeper.noconfig.line3": "Вы можете скачать его с Modrinth или CurseForge.",
-  "screen.friendlycreeper.noconfig.back": "Назад"
+  "screen.friendlycreeper.noconfig.back": "Назад",
+
+  "modmenu.descriptionTranslation.friendlycreeper": "Приручите крипера порохом и сделайте его своим другом."
 }
