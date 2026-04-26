@@ -29,7 +29,7 @@
 
 ## Building from Source
 ```bash
-git clone https://github.com/smalldayDC/friendlycreeper.git
+git clone https://github.com/smalldayDC/friendcreeper.git
 cd friendlycreeper
 gradlew build
 ```
