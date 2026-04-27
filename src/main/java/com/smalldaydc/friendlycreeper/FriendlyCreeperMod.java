@@ -17,6 +17,7 @@ public class FriendlyCreeperMod implements ModInitializer {
 
     private static final double SEARCH_RADIUS = 64;
     private static final double SEARCH_HEIGHT = 32;
+    private static final double REVENGE_RANGE_SQ = 16.0 * 16.0;
 
     @Override
     public void onInitialize() {
@@ -53,6 +54,7 @@ public class FriendlyCreeperMod implements ModInitializer {
                         && !tc.friendlycreeper$isSitting();
             }).forEach(c -> {
                 if (!c.canSee(attacker)) return;
+                if (c.squaredDistanceTo(attacker) > REVENGE_RANGE_SQ) return;
                 ITamedCreeper tc = (ITamedCreeper) c;
                 tc.friendlycreeper$setAvengeTargetUUID(attackerUUID);
                 c.setTarget(attacker);
