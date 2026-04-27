@@ -20,7 +20,8 @@ public class CreeperFollowOwnerGoal extends Goal {
     private final CreeperEntity creeper;
     private PlayerEntity owner;
     private int updateCountdownTicks;
-    private int cooldown;
+    private double lastDistanceSq;
+    private int noProgressCount;
 
     public CreeperFollowOwnerGoal(CreeperEntity creeper) {
         this.creeper = creeper;
@@ -33,12 +34,10 @@ public class CreeperFollowOwnerGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        if (cooldown > 0) { cooldown--; return false; }
         if (!asTamed().friendcreeper$isTamed()) return false;
         if (asTamed().friendcreeper$isSitting()) return false;
         if (!FriendlyCreeperConfig.get().followOwner) return false;
         if (creeper.getEntityWorld().isClient()) return false;
-        // Don't follow if currently attacking something
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
         UUID ownerUUID = asTamed().friendcreeper$getOwnerUUID();
@@ -55,33 +54,41 @@ public class CreeperFollowOwnerGoal extends Goal {
         if (owner == null || owner.isDead() || owner.isSpectator()) return false;
         if (!asTamed().friendcreeper$isTamed()) return false;
         if (!FriendlyCreeperConfig.get().followOwner) return false;
-        // Stop following if a target appears
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
-        // Stop if navigation gave up (owner unreachable)
-        if (creeper.getNavigation().isIdle()) return false;
+        // No progress for 5 consecutive recalculations → owner unreachable
+        if (noProgressCount >= 5) return false;
         return creeper.squaredDistanceTo(owner) > STOP_SQ;
     }
 
     @Override
     public void start() {
         this.updateCountdownTicks = 0;
+        this.lastDistanceSq = creeper.squaredDistanceTo(owner);
+        this.noProgressCount = 0;
     }
 
     @Override
     public void tick() {
         creeper.getLookControl().lookAt(owner, 10.0f, creeper.getMaxLookPitchChange());
-        if (--this.updateCountdownTicks <= 0) {
+
+        // Recalculate on timer OR immediately when path ends (fixes stale path target)
+        if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isIdle()) {
             this.updateCountdownTicks = this.getTickCount(10);
             creeper.getNavigation().startMovingTo(owner, MOVE_SPEED);
+
+            // Track progress: if distance hasn't decreased, owner may be unreachable
+            double currentDistSq = creeper.squaredDistanceTo(owner);
+            if (currentDistSq < lastDistanceSq - 1.0) {
+                lastDistanceSq = currentDistSq;
+                noProgressCount = 0;
+            } else {
+                noProgressCount++;
+            }
         }
     }
 
     @Override
     public void stop() {
-        // If stopped while still far from owner, add cooldown to prevent rapid restart
-        if (owner != null && creeper.squaredDistanceTo(owner) > START_SQ) {
-            cooldown = 40; // 2 seconds
-        }
         owner = null;
         creeper.getNavigation().stop();
     }
