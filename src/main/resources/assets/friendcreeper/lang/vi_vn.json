@@ -14,6 +14,8 @@
   "config.friendcreeper.hurtSound.tooltip": "Creeper đã thuần hóa có phát ra âm thanh bị thương khi máu thấp hay không.",
   "config.friendcreeper.renderPoppy": "Hiển thị hoa anh túc",
   "config.friendcreeper.renderPoppy.tooltip": "Có hiển thị hoa anh túc trên đầu Creeper đã thuần hóa hay không.",
+  "config.friendcreeper.tamedCreeperTexture": "Kết cấu Creeper đã thuần hóa",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "Creeper đã thuần hóa có sử dụng kết cấu tùy chỉnh hay không (mặt cười khi khỏe mạnh, mặt buồn khi máu thấp).",
   "config.friendcreeper.afraidOfCats": "Sợ mèo",
   "config.friendcreeper.afraidOfCats.tooltip": "Creeper đã thuần hóa có sợ mèo và mèo rừng hay không.",
   "config.friendcreeper.witherRoseOnLowHealth": "Hoa hồng héo khi máu thấp",

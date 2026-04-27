@@ -36,6 +36,9 @@ public class FriendlyCreeperConfig {
     /** Whether to render the poppy on tamed Creepers' heads. Client-side only. Default: true */
     public boolean renderPoppy = true;
 
+    /** Whether tamed Creepers use custom textures (happy/sad face). Client-side only. Default: true */
+    public boolean tamedCreeperTexture = true;
+
     /** Whether tamed Creepers are afraid of cats and ocelots. Default: true */
     public boolean afraidOfCats = true;
 

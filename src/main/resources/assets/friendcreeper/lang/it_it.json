@@ -14,6 +14,8 @@
   "config.friendcreeper.hurtSound.tooltip": "Se i Creeper addomesticati emettono un suono di danno quando hanno poca vita.",
   "config.friendcreeper.renderPoppy": "Mostra papavero",
   "config.friendcreeper.renderPoppy.tooltip": "Se mostrare il papavero sulla testa dei Creeper addomesticati.",
+  "config.friendcreeper.tamedCreeperTexture": "Texture del Creeper addomesticato",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "Se i Creeper addomesticati usano texture personalizzate (faccia felice con molta vita, triste con poca vita).",
   "config.friendcreeper.afraidOfCats": "Paura dei gatti",
   "config.friendcreeper.afraidOfCats.tooltip": "Se i Creeper addomesticati hanno paura dei gatti e degli ocelot.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa dell'appassimento con poca vita",

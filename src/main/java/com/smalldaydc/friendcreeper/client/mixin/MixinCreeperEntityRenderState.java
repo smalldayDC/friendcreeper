@@ -14,6 +14,7 @@ public class MixinCreeperEntityRenderState implements IFriendlyCreeperRenderStat
 
     @Unique private boolean friendcreeper$tamed = false;
     @Unique private boolean friendcreeper$sitting = false;
+    @Unique private boolean friendcreeper$lowHealth = false;
     @Unique private final ItemRenderState friendcreeper$poppyRenderState = new ItemRenderState();
 
     @Override
@@ -34,6 +35,16 @@ public class MixinCreeperEntityRenderState implements IFriendlyCreeperRenderStat
     @Override
     public void friendcreeper$setSitting(boolean sitting) {
         this.friendcreeper$sitting = sitting;
+    }
+
+    @Override
+    public boolean friendcreeper$isLowHealth() {
+        return friendcreeper$lowHealth;
+    }
+
+    @Override
+    public void friendcreeper$setLowHealth(boolean lowHealth) {
+        this.friendcreeper$lowHealth = lowHealth;
     }
 
     @Override

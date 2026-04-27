@@ -14,6 +14,8 @@
   "config.friendcreeper.hurtSound.tooltip": "Whether tamed Creepers play a hurt sound when at low health.",
   "config.friendcreeper.renderPoppy": "Render Poppy",
   "config.friendcreeper.renderPoppy.tooltip": "Whether to render the poppy on tamed Creepers' heads.",
+  "config.friendcreeper.tamedCreeperTexture": "Tamed Creeper Texture",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "Whether tamed Creepers use custom textures (happy face when healthy, sad face when low health).",
   "config.friendcreeper.afraidOfCats": "Afraid of Cats",
   "config.friendcreeper.afraidOfCats.tooltip": "Whether tamed Creepers are afraid of cats and ocelots.",
   "config.friendcreeper.witherRoseOnLowHealth": "Wither Rose on Low Health",

@@ -14,6 +14,8 @@
   "config.friendcreeper.hurtSound.tooltip": "Si los Creepers domesticados emiten un sonido de daño cuando tienen poca vida.",
   "config.friendcreeper.renderPoppy": "Mostrar amapola",
   "config.friendcreeper.renderPoppy.tooltip": "Si se muestra la amapola en la cabeza de los Creepers domesticados.",
+  "config.friendcreeper.tamedCreeperTexture": "Textura del Creeper domesticado",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "Si los Creepers domesticados usan texturas personalizadas (cara feliz con mucha vida, triste con poca vida).",
   "config.friendcreeper.afraidOfCats": "Miedo a los gatos",
   "config.friendcreeper.afraidOfCats.tooltip": "Si los Creepers domesticados tienen miedo de los gatos y los ocelotes.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa de Wither con poca vida",

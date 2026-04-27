@@ -14,6 +14,8 @@
   "config.friendcreeper.hurtSound.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะส่งเสียงบาดเจ็บเมื่อพลังชีวิตต่ำหรือไม่",
   "config.friendcreeper.renderPoppy": "แสดงดอกป๊อปปี้",
   "config.friendcreeper.renderPoppy.tooltip": "แสดงดอกป๊อปปี้บนหัวครีปเปอร์ที่เลี้ยงไว้หรือไม่",
+  "config.friendcreeper.tamedCreeperTexture": "เท็กซ์เจอร์ครีปเปอร์ที่เลี้ยงไว้",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะใช้เท็กซ์เจอร์กำหนดเองหรือไม่ (หน้ายิ้มเมื่อสุขภาพดี หน้าเศร้าเมื่อพลังชีวิตต่ำ)",
   "config.friendcreeper.afraidOfCats": "กลัวแมว",
   "config.friendcreeper.afraidOfCats.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะกลัวแมวและออเซลอตหรือไม่",
   "config.friendcreeper.witherRoseOnLowHealth": "ดอกกุหลาบวิเทอร์เมื่อพลังชีวิตต่ำ",

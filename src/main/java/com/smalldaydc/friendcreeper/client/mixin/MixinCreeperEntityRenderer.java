@@ -12,11 +12,13 @@ import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
 @Mixin(CreeperEntityRenderer.class)
@@ -25,6 +27,8 @@ public class MixinCreeperEntityRenderer {
     @Unique private static final ItemStack POPPY_STACK = new ItemStack(Items.POPPY);
     @Unique private static final ItemStack WITHER_ROSE_STACK = new ItemStack(Items.WITHER_ROSE);
     @Unique private static final float LOW_HEALTH_THRESHOLD = 0.25f;
+    @Unique private static final Identifier HAPPY_TEXTURE = Identifier.of("friendcreeper", "textures/entity/creeper/happy.png");
+    @Unique private static final Identifier SAD_TEXTURE = Identifier.of("friendcreeper", "textures/entity/creeper/sad.png");
 
     @Inject(method = "updateRenderState", at = @At("TAIL"))
     private void friendcreeper$updateRenderState(CreeperEntity entity,
@@ -36,11 +40,13 @@ public class MixinCreeperEntityRenderer {
         fcState.friendcreeper$setTamed(tc.friendcreeper$isTamed());
         fcState.friendcreeper$setSitting(tc.friendcreeper$isSitting());
 
+        boolean lowHealth = entity.getHealth() / entity.getMaxHealth() < LOW_HEALTH_THRESHOLD;
+        fcState.friendcreeper$setLowHealth(lowHealth);
+
         if (tc.friendcreeper$isTamed()) {
             FriendlyCreeperConfig config = FriendlyCreeperConfig.get();
             // Show wither rose when low health (if enabled), poppy otherwise
-            ItemStack flowerStack = (config.witherRoseOnLowHealth
-                    && entity.getHealth() / entity.getMaxHealth() < LOW_HEALTH_THRESHOLD)
+            ItemStack flowerStack = (config.witherRoseOnLowHealth && lowHealth)
                     ? WITHER_ROSE_STACK : POPPY_STACK;
             MinecraftClient.getInstance().getItemModelManager()
                     .updateForNonLivingEntity(fcState.friendcreeper$getPoppyRenderState(),
@@ -48,5 +54,15 @@ public class MixinCreeperEntityRenderer {
         } else {
             fcState.friendcreeper$getPoppyRenderState().clear();
         }
+    }
+
+    @Inject(method = "getTexture", at = @At("RETURN"), cancellable = true)
+    private void friendcreeper$getTexture(CreeperEntityRenderState state,
+                                           CallbackInfoReturnable<Identifier> cir) {
+        IFriendlyCreeperRenderState fcState = (IFriendlyCreeperRenderState) state;
+        if (!fcState.friendcreeper$isTamed()) return;
+        if (!FriendlyCreeperConfig.get().tamedCreeperTexture) return;
+
+        cir.setReturnValue(fcState.friendcreeper$isLowHealth() ? SAD_TEXTURE : HAPPY_TEXTURE);
     }
 }

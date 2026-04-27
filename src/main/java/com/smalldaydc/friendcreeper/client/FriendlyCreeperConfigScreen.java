@@ -96,6 +96,15 @@ public class FriendlyCreeperConfigScreen {
                 .setSaveConsumer(value -> config.renderPoppy = value)
                 .build());
 
+        client.addEntry(entryBuilder
+                .startBooleanToggle(
+                        Text.translatable("config.friendcreeper.tamedCreeperTexture"),
+                        config.tamedCreeperTexture)
+                .setDefaultValue(true)
+                .setTooltip(Text.translatable("config.friendcreeper.tamedCreeperTexture.tooltip"))
+                .setSaveConsumer(value -> config.tamedCreeperTexture = value)
+                .build());
+
         return builder.build();
     }
 }
