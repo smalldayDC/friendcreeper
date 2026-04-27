@@ -1,5 +1,6 @@
 package com.smalldaydc.friendlycreeper.client.mixin;
 
+import com.smalldaydc.friendlycreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendlycreeper.ITamedCreeper;
 import com.smalldaydc.friendlycreeper.client.IFriendlyCreeperRenderState;
 import net.fabricmc.api.EnvType;
@@ -22,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinCreeperEntityRenderer {
 
     @Unique private static final ItemStack POPPY_STACK = new ItemStack(Items.POPPY);
+    @Unique private static final ItemStack WITHER_ROSE_STACK = new ItemStack(Items.WITHER_ROSE);
+    @Unique private static final float LOW_HEALTH_THRESHOLD = 0.25f;
 
     @Inject(method = "updateRenderState", at = @At("TAIL"))
     private void friendlycreeper$updateRenderState(CreeperEntity entity,
@@ -34,9 +37,14 @@ public class MixinCreeperEntityRenderer {
         fcState.friendlycreeper$setSitting(tc.friendlycreeper$isSitting());
 
         if (tc.friendlycreeper$isTamed()) {
+            FriendlyCreeperConfig config = FriendlyCreeperConfig.get();
+            // Show wither rose when low health (if enabled), poppy otherwise
+            ItemStack flowerStack = (config.witherRoseOnLowHealth
+                    && entity.getHealth() / entity.getMaxHealth() < LOW_HEALTH_THRESHOLD)
+                    ? WITHER_ROSE_STACK : POPPY_STACK;
             MinecraftClient.getInstance().getItemModelManager()
                     .updateForNonLivingEntity(fcState.friendlycreeper$getPoppyRenderState(),
-                            POPPY_STACK, ItemDisplayContext.GROUND, entity);
+                            flowerStack, ItemDisplayContext.GROUND, entity);
         } else {
             fcState.friendlycreeper$getPoppyRenderState().clear();
         }

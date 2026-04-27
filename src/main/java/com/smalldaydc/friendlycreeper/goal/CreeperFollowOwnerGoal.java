@@ -19,6 +19,8 @@ public class CreeperFollowOwnerGoal extends Goal {
 
     private final CreeperEntity creeper;
     private PlayerEntity owner;
+    private int updateCountdownTicks;
+    private int cooldown;
 
     public CreeperFollowOwnerGoal(CreeperEntity creeper) {
         this.creeper = creeper;
@@ -31,6 +33,7 @@ public class CreeperFollowOwnerGoal extends Goal {
 
     @Override
     public boolean canStart() {
+        if (cooldown > 0) { cooldown--; return false; }
         if (!asTamed().friendlycreeper$isTamed()) return false;
         if (asTamed().friendlycreeper$isSitting()) return false;
         if (!FriendlyCreeperConfig.get().followOwner) return false;
@@ -42,29 +45,43 @@ public class CreeperFollowOwnerGoal extends Goal {
         if (ownerUUID == null) return false;
 
         owner = creeper.getEntityWorld().getPlayerByUuid(ownerUUID);
-        if (owner == null || owner.isDead()) return false;
+        if (owner == null || owner.isDead() || owner.isSpectator()) return false;
 
         return creeper.squaredDistanceTo(owner) > START_SQ;
     }
 
     @Override
     public boolean shouldContinue() {
-        if (owner == null || owner.isDead()) return false;
+        if (owner == null || owner.isDead() || owner.isSpectator()) return false;
         if (!asTamed().friendlycreeper$isTamed()) return false;
         if (!FriendlyCreeperConfig.get().followOwner) return false;
         // Stop following if a target appears
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
+        // Stop if navigation gave up (owner unreachable)
+        if (creeper.getNavigation().isIdle()) return false;
         return creeper.squaredDistanceTo(owner) > STOP_SQ;
+    }
+
+    @Override
+    public void start() {
+        this.updateCountdownTicks = 0;
     }
 
     @Override
     public void tick() {
         creeper.getLookControl().lookAt(owner, 10.0f, creeper.getMaxLookPitchChange());
-        creeper.getNavigation().startMovingTo(owner, MOVE_SPEED);
+        if (--this.updateCountdownTicks <= 0) {
+            this.updateCountdownTicks = this.getTickCount(10);
+            creeper.getNavigation().startMovingTo(owner, MOVE_SPEED);
+        }
     }
 
     @Override
     public void stop() {
+        // If stopped while still far from owner, add cooldown to prevent rapid restart
+        if (owner != null && creeper.squaredDistanceTo(owner) > START_SQ) {
+            cooldown = 40; // 2 seconds
+        }
         owner = null;
         creeper.getNavigation().stop();
     }
