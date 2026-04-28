@@ -18,4 +18,6 @@ public interface ITamedCreeper {
 
     int friendcreeper$getTameAttempts();
     void friendcreeper$setTameAttempts(int attempts);
+
+    boolean friendcreeper$hasTarget();
 }

@@ -54,6 +54,10 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private static final TrackedData<String> FRIENDCREEPER_OWNER =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.STRING);
 
+    @Unique
+    private static final TrackedData<Boolean> FRIENDCREEPER_HAS_TARGET =
+            DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
     @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
     @Unique private @Nullable UUID friendcreeper$avengeTargetUUID = null;
     @Unique private int friendcreeper$tameAttempts = 0;
@@ -118,6 +122,10 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         this.friendcreeper$tameAttempts = attempts;
     }
 
+    @Override public boolean friendcreeper$hasTarget() {
+        return this.dataTracker.get(FRIENDCREEPER_HAS_TARGET);
+    }
+
     // ── DataTracker ───────────────────────────────────────────────────────────
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -125,6 +133,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         builder.add(FRIENDCREEPER_TAMED, false);
         builder.add(FRIENDCREEPER_SITTING, false);
         builder.add(FRIENDCREEPER_OWNER, "");
+        builder.add(FRIENDCREEPER_HAS_TARGET, false);
     }
 
     // ── Goals ─────────────────────────────────────────────────────────────────
@@ -217,6 +226,12 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
         if ((target == null || target.isDead()) && getFuseSpeed() > 0) {
             setFuseSpeed(-1);
+        }
+
+        // Sync hasTarget to client for texture switching
+        boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
+        if (this.dataTracker.get(FRIENDCREEPER_HAS_TARGET) != hasTarget) {
+            this.dataTracker.set(FRIENDCREEPER_HAS_TARGET, hasTarget);
         }
     }
 

@@ -16,5 +16,8 @@ public interface IFriendlyCreeperRenderState {
     boolean friendcreeper$isLowHealth();
     void friendcreeper$setLowHealth(boolean lowHealth);
 
+    boolean friendcreeper$hasTarget();
+    void friendcreeper$setHasTarget(boolean hasTarget);
+
     ItemRenderState friendcreeper$getPoppyRenderState();
 }
