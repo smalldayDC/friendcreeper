@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Creeper đã thuần hóa có sử dụng khuôn mặt tùy chỉnh hay không (mặt cười khi khỏe mạnh, mặt buồn khi máu thấp).\nNếu gói tài nguyên tùy chỉnh của bạn không hoạt động, hãy thử tắt tùy chọn này.",
   "config.friendcreeper.afraidOfCats": "Sợ mèo",
   "config.friendcreeper.afraidOfCats.tooltip": "Creeper đã thuần hóa có sợ mèo và mèo rừng hay không.",
+  "config.friendcreeper.naturalRegeneration": "Hồi phục tự nhiên",
+  "config.friendcreeper.naturalRegeneration.tooltip": "Creeper đã thuần hóa có tự động hồi phục máu theo thời gian hay không.",
   "config.friendcreeper.witherRoseOnLowHealth": "Hoa hồng héo khi máu thấp",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Creeper đã thuần hóa có hiển thị hoa hồng héo thay cho hoa anh túc khi máu thấp hay không.\nCần bật hiển thị hoa anh túc.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API chưa được cài đặt",

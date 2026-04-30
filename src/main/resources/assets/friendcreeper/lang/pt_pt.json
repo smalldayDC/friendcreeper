@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Se os Creepers domesticados usam rostos personalizados (cara feliz com muita vida, triste com pouca vida).\nSe o seu pacote de recursos personalizado não funcionar, tente desativar esta opção.",
   "config.friendcreeper.afraidOfCats": "Medo de gatos",
   "config.friendcreeper.afraidOfCats.tooltip": "Se os Creepers domesticados têm medo de gatos e ocelotes.",
+  "config.friendcreeper.naturalRegeneration": "Regeneração natural",
+  "config.friendcreeper.naturalRegeneration.tooltip": "Se os Creepers domesticados regeneram vida naturalmente ao longo do tempo.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa do Wither com pouca vida",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Se os Creepers domesticados mostram uma rosa do Wither em vez de uma papoila quando têm pouca vida.\nMostrar papoila deve estar ativado.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API não está instalada",

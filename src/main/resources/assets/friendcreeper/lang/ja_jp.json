@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "手懐けたクリーパーにカスタム表情を使用するかどうか（健康時は笑顔、低体力時は泣き顔）。\nカスタムリソースパックが動作しない場合は、このオプションを無効にしてください。",
   "config.friendcreeper.afraidOfCats": "ネコを恐れる",
   "config.friendcreeper.afraidOfCats.tooltip": "手懐けたクリーパーがネコやヤマネコを恐れるかどうか。",
+  "config.friendcreeper.naturalRegeneration": "自然回復",
+  "config.friendcreeper.naturalRegeneration.tooltip": "手懐けたクリーパーが時間の経過とともに自然に体力を回復するかどうか。",
   "config.friendcreeper.witherRoseOnLowHealth": "低体力時にウィザーローズ",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "手懐けたクリーパーが低体力時にポピーの代わりにウィザーローズを表示するかどうか。\nポピーの描画を有効にする必要があります。",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API がインストールされていません",

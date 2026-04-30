@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Будет ли прирученный крипер использовать пользовательские лица (счастливое лицо при высоком здоровье, грустное при низком).\nЕсли ваш пользовательский набор ресурсов не работает, попробуйте отключить эту опцию.",
   "config.friendcreeper.afraidOfCats": "Боится кошек",
   "config.friendcreeper.afraidOfCats.tooltip": "Будет ли прирученный крипер бояться кошек и оцелотов.",
+  "config.friendcreeper.naturalRegeneration": "Естественная регенерация",
+  "config.friendcreeper.naturalRegeneration.tooltip": "Будет ли прирученный крипер естественно восстанавливать здоровье со временем.",
   "config.friendcreeper.witherRoseOnLowHealth": "Роза увядания при низком здоровье",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Будет ли прирученный крипер показывать розу увядания вместо мака при низком здоровье.\nТребуется включённое отображение мака.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API не установлен",

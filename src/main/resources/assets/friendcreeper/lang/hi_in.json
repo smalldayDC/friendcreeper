@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "क्या पालतू क्रीपर कस्टम चेहरे का उपयोग करेगा (स्वस्थ होने पर खुश चेहरा, कम स्वास्थ्य पर उदास चेहरा)।\nयदि आपका कस्टम रिसोर्स पैक काम नहीं कर रहा है, तो इस विकल्प को अक्षम करने का प्रयास करें।",
   "config.friendcreeper.afraidOfCats": "बिल्लियों से डर",
   "config.friendcreeper.afraidOfCats.tooltip": "क्या पालतू क्रीपर बिल्लियों और ओसेलॉट से डरेगा।",
+  "config.friendcreeper.naturalRegeneration": "प्राकृतिक पुनर्जनन",
+  "config.friendcreeper.naturalRegeneration.tooltip": "क्या पालतू क्रीपर समय के साथ स्वाभाविक रूप से स्वास्थ्य पुनर्प्राप्त करेगा।",
   "config.friendcreeper.witherRoseOnLowHealth": "कम स्वास्थ्य पर विदर गुलाब",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "क्या कम स्वास्थ्य पर पालतू क्रीपर पॉपी की जगह विदर गुलाब दिखाएगा।\nपॉपी दिखाएँ सक्षम होना चाहिए।",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API इंस्टॉल नहीं है",

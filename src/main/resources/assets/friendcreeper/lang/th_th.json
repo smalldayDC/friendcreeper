@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะใช้หน้ากำหนดเองหรือไม่ (หน้ายิ้มเมื่อสุขภาพดี หน้าเศร้าเมื่อพลังชีวิตต่ำ)\nหากแพ็กทรัพยากรกำหนดเองของคุณไม่ทำงาน ให้ลองปิดตัวเลือกนี้",
   "config.friendcreeper.afraidOfCats": "กลัวแมว",
   "config.friendcreeper.afraidOfCats.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะกลัวแมวและออเซลอตหรือไม่",
+  "config.friendcreeper.naturalRegeneration": "ฟื้นฟูตามธรรมชาติ",
+  "config.friendcreeper.naturalRegeneration.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะฟื้นฟูพลังชีวิตตามธรรมชาติเมื่อเวลาผ่านไปหรือไม่",
   "config.friendcreeper.witherRoseOnLowHealth": "ดอกกุหลาบวิเทอร์เมื่อพลังชีวิตต่ำ",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะแสดงดอกกุหลาบวิเทอร์แทนดอกป๊อปปี้เมื่อพลังชีวิตต่ำหรือไม่\nต้องเปิดใช้งานแสดงดอกป๊อปปี้",
   "screen.friendcreeper.noconfig.line1": "ยังไม่ได้ติดตั้ง Cloth Config API",

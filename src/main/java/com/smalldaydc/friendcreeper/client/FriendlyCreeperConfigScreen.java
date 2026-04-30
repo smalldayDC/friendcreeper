@@ -33,6 +33,7 @@ public class FriendlyCreeperConfigScreen {
         addBooleanEntry(general, eb, "revengeOwner", true, () -> config.revengeOwner, v -> config.revengeOwner = v);
         addBooleanEntry(general, eb, "snowGolemAttack", false, () -> config.snowGolemAttack, v -> config.snowGolemAttack = v);
         addBooleanEntry(general, eb, "afraidOfCats", true, () -> config.afraidOfCats, v -> config.afraidOfCats = v);
+        addBooleanEntry(general, eb, "naturalRegeneration", true, () -> config.naturalRegeneration, v -> config.naturalRegeneration = v);
 
         // Client
         addBooleanEntry(client, eb, "hurtSound", true, () -> config.hurtSound, v -> config.hurtSound = v);

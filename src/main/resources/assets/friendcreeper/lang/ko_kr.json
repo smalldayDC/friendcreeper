@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "길들인 크리퍼에 커스텀 표정을 사용할지 여부 (건강할 때 웃는 얼굴, 체력이 낮을 때 우는 얼굴).\n커스텀 리소스 팩이 작동하지 않으면 이 옵션을 비활성화해 보세요.",
   "config.friendcreeper.afraidOfCats": "고양이를 무서워함",
   "config.friendcreeper.afraidOfCats.tooltip": "길들인 크리퍼가 고양이와 오셀롯을 무서워하는지 여부.",
+  "config.friendcreeper.naturalRegeneration": "자연 회복",
+  "config.friendcreeper.naturalRegeneration.tooltip": "길들인 크리퍼가 시간이 지남에 따라 자연적으로 체력을 회복하는지 여부.",
   "config.friendcreeper.witherRoseOnLowHealth": "낮은 체력 시 위더 장미",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "길들인 크리퍼가 체력이 낮을 때 양귀비 대신 위더 장미를 표시할지 여부.\n양귀비 렌더링이 활성화되어 있어야 합니다.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API가 설치되지 않았습니다",

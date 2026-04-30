@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Se i Creeper addomesticati usano volti personalizzati (faccia felice con molta vita, triste con poca vita).\nSe il tuo pacchetto risorse personalizzato non funziona, prova a disattivare questa opzione.",
   "config.friendcreeper.afraidOfCats": "Paura dei gatti",
   "config.friendcreeper.afraidOfCats.tooltip": "Se i Creeper addomesticati hanno paura dei gatti e degli ocelot.",
+  "config.friendcreeper.naturalRegeneration": "Rigenerazione naturale",
+  "config.friendcreeper.naturalRegeneration.tooltip": "Se i Creeper addomesticati rigenerano vita naturalmente nel tempo.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa dell'appassimento con poca vita",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Se i Creeper addomesticati mostrano una rosa dell'appassimento al posto del papavero quando hanno poca vita.\nMostra papavero deve essere attivato.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API non è installata",

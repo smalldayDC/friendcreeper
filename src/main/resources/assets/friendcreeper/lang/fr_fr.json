@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Si les Creepers apprivoisés utilisent des visages personnalisés (visage heureux en bonne santé, triste en basse vie).\nSi votre pack de ressources personnalisé ne fonctionne pas, essayez de désactiver cette option.",
   "config.friendcreeper.afraidOfCats": "Peur des chats",
   "config.friendcreeper.afraidOfCats.tooltip": "Si les Creepers apprivoisés ont peur des chats et des ocelots.",
+  "config.friendcreeper.naturalRegeneration": "Régénération naturelle",
+  "config.friendcreeper.naturalRegeneration.tooltip": "Si les Creepers apprivoisés régénèrent naturellement leur vie au fil du temps.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rose du Wither en basse vie",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Si les Creepers apprivoisés affichent une rose du Wither au lieu d'un coquelicot lorsqu'ils ont peu de vie.\nAfficher le coquelicot doit être activé.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API n'est pas installé",

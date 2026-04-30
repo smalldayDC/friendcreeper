@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Whether tamed Creepers use custom faces (happy face when healthy, sad face when low health).\nIf your custom resource pack is not working, try disabling this option.",
   "config.friendcreeper.afraidOfCats": "Afraid of Cats",
   "config.friendcreeper.afraidOfCats.tooltip": "Whether tamed Creepers are afraid of cats and ocelots.",
+  "config.friendcreeper.naturalRegeneration": "Natural Regeneration",
+  "config.friendcreeper.naturalRegeneration.tooltip": "Whether tamed Creepers naturally regenerate health over time.",
   "config.friendcreeper.witherRoseOnLowHealth": "Wither Rose on Low Health",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Whether tamed Creepers show a wither rose instead of a poppy when at low health.\nRequires Render Poppy to be enabled.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API is not installed",

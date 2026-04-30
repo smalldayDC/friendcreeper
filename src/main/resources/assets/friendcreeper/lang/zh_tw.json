@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "馴服的苦力怕是否使用自訂表情（健康時笑臉，低血量時哭臉）。\n如果你的自訂資源包失效，請嘗試停用該選項。",
   "config.friendcreeper.afraidOfCats": "害怕貓",
   "config.friendcreeper.afraidOfCats.tooltip": "馴服的苦力怕是否害怕貓和山貓。",
+  "config.friendcreeper.naturalRegeneration": "自然恢復",
+  "config.friendcreeper.naturalRegeneration.tooltip": "馴服的苦力怕是否會隨時間自然恢復生命值。",
   "config.friendcreeper.witherRoseOnLowHealth": "低血量時顯示凋零玫瑰",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "馴服的苦力怕在低血量時是否將罌粟替換為凋零玫瑰。\n需要開啟渲染罌粟。",
   "screen.friendcreeper.noconfig.line1": "未安裝 Cloth Config API",

@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Ob gezähmte Creeper benutzerdefinierte Gesichter verwenden (fröhliches Gesicht bei hoher Gesundheit, trauriges bei niedriger).\nWenn dein benutzerdefiniertes Ressourcenpaket nicht funktioniert, versuche diese Option zu deaktivieren.",
   "config.friendcreeper.afraidOfCats": "Angst vor Katzen",
   "config.friendcreeper.afraidOfCats.tooltip": "Ob gezähmte Creeper Angst vor Katzen und Ozelots haben.",
+  "config.friendcreeper.naturalRegeneration": "Natürliche Regeneration",
+  "config.friendcreeper.naturalRegeneration.tooltip": "Ob gezähmte Creeper sich mit der Zeit natürlich regenerieren.",
   "config.friendcreeper.witherRoseOnLowHealth": "Withered Rose bei niedriger Gesundheit",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Ob gezähmte Creeper bei niedriger Gesundheit eine Withered Rose statt einer Mohnblume anzeigen.\nMohnblume anzeigen muss aktiviert sein.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API ist nicht installiert",

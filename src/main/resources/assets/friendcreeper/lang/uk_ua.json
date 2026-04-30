@@ -18,6 +18,8 @@
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Чи буде приручений кріпер використовувати власні обличчя (щасливе обличчя при здоров'ї, сумне при низькому).\nЯкщо ваш власний пакет ресурсів не працює, спробуйте вимкнути цю опцію.",
   "config.friendcreeper.afraidOfCats": "Боїться котів",
   "config.friendcreeper.afraidOfCats.tooltip": "Чи буде приручений кріпер боятися котів та оцелотів.",
+  "config.friendcreeper.naturalRegeneration": "Природна регенерація",
+  "config.friendcreeper.naturalRegeneration.tooltip": "Чи буде приручений кріпер природно відновлювати здоров'я з часом.",
   "config.friendcreeper.witherRoseOnLowHealth": "Троянда висушення при низькому здоров'ї",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Чи буде приручений кріпер показувати троянду висушення замість маку при низькому здоров'ї.\nПотрібно увімкнути відображення маку.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API не встановлено",
