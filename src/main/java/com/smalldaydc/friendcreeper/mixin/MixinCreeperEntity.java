@@ -228,7 +228,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         // Natural regeneration: heal 1 HP every 100 ticks (~95 seconds from 1 HP to full)
-        if (FriendlyCreeperConfig.get().naturalRegeneration && this.age % 100 == 0) {
+        if (FriendlyCreeperConfig.get().naturalRegeneration && this.age % 200 == 0) {
             this.heal(1.0f);
         }
 
