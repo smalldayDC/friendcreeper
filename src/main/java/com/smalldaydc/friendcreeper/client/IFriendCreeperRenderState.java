@@ -6,7 +6,7 @@ import net.minecraft.client.render.item.ItemRenderState;
  * Duck interface for injecting custom fields into {@code CreeperEntityRenderState}.
  * Implemented via {@code MixinCreeperEntityRenderState}.
  */
-public interface IFriendlyCreeperRenderState {
+public interface IFriendCreeperRenderState {
     boolean friendcreeper$isTamed();
     void friendcreeper$setTamed(boolean tamed);
 

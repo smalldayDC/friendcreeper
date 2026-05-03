@@ -1,6 +1,6 @@
 package com.smalldaydc.friendcreeper.goal;
 
-import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendCreeperConfig;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -36,7 +36,7 @@ public class CreeperFollowOwnerGoal extends Goal {
     public boolean canStart() {
         if (!asTamed().friendcreeper$isTamed()) return false;
         if (asTamed().friendcreeper$isSitting()) return false;
-        if (!FriendlyCreeperConfig.get().followOwner) return false;
+        if (!FriendCreeperConfig.get().followOwner) return false;
         if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
@@ -53,7 +53,7 @@ public class CreeperFollowOwnerGoal extends Goal {
     public boolean shouldContinue() {
         if (owner == null || owner.isDead() || owner.isSpectator()) return false;
         if (!asTamed().friendcreeper$isTamed()) return false;
-        if (!FriendlyCreeperConfig.get().followOwner) return false;
+        if (!FriendCreeperConfig.get().followOwner) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
         // No progress for 5 consecutive recalculations → owner unreachable
         if (noProgressCount >= 5) return false;

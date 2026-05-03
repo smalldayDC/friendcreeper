@@ -1,7 +1,7 @@
 package com.smalldaydc.friendcreeper.goal;
 
-import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
-import com.smalldaydc.friendcreeper.FriendlyCreeperMod;
+import com.smalldaydc.friendcreeper.FriendCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -36,14 +36,14 @@ public class CreeperPickupFishGoal extends Goal {
         if (!tc.friendcreeper$isTamed()) return false;
         if (tc.friendcreeper$isSitting()) return false;
         if (!tc.friendcreeper$getHeldFish().isEmpty()) return false;
-        if (!FriendlyCreeperConfig.get().feedOwnerCat) return false;
-        if (FriendlyCreeperConfig.get().afraidOfCats) return false;
-        if (creeper.getHealth() / creeper.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD) return false;
+        if (!FriendCreeperConfig.get().feedOwnerCat) return false;
+        if (FriendCreeperConfig.get().afraidOfCats) return false;
+        if (creeper.getHealth() / creeper.getMaxHealth() < FriendCreeperMod.LOW_HEALTH_THRESHOLD) return false;
         if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
         // Only pick up fish when there is a nearby reachable hurt cat belonging to the same owner
-        if (FriendlyCreeperMod.findNearestReachableHurtOwnerCat(creeper) == null) return false;
+        if (FriendCreeperMod.findNearestReachableHurtOwnerCat(creeper) == null) return false;
 
         targetFish = findNearestReachableFish();
         return targetFish != null;
@@ -72,7 +72,7 @@ public class CreeperPickupFishGoal extends Goal {
 
         if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isIdle()) {
             this.updateCountdownTicks = this.getTickCount(10);
-            boolean pathFound = creeper.getNavigation().startMovingTo(targetFish, FriendlyCreeperMod.INTERACTION_MOVE_SPEED);
+            boolean pathFound = creeper.getNavigation().startMovingTo(targetFish, FriendCreeperMod.INTERACTION_MOVE_SPEED);
             if (!pathFound) {
                 // Path became invalid mid-travel, give up immediately
                 targetFish = null;
@@ -82,7 +82,7 @@ public class CreeperPickupFishGoal extends Goal {
 
         // Vanilla-style pickup: bounding box overlap with pickup reach expansion
         Box pickupBox = creeper.getBoundingBox().expand(
-                FriendlyCreeperMod.INTERACTION_REACH_XZ, FriendlyCreeperMod.INTERACTION_REACH_Y, FriendlyCreeperMod.INTERACTION_REACH_XZ);
+                FriendCreeperMod.INTERACTION_REACH_XZ, FriendCreeperMod.INTERACTION_REACH_Y, FriendCreeperMod.INTERACTION_REACH_XZ);
         if (pickupBox.intersects(targetFish.getBoundingBox())) {
             asTamed().friendcreeper$setHeldFish(targetFish.getStack().copyWithCount(1));
             if (targetFish.getStack().getCount() <= 1) {

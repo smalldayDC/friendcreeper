@@ -1,6 +1,6 @@
 package com.smalldaydc.friendcreeper.client.mixin;
 
-import com.smalldaydc.friendcreeper.client.IFriendlyCreeperRenderState;
+import com.smalldaydc.friendcreeper.client.IFriendCreeperRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Environment(EnvType.CLIENT)
 @Mixin(CreeperEntityRenderState.class)
-public class MixinCreeperEntityRenderState implements IFriendlyCreeperRenderState {
+public class MixinCreeperEntityRenderState implements IFriendCreeperRenderState {
 
     @Unique private boolean friendcreeper$tamed = false;
     @Unique private boolean friendcreeper$sitting = false;

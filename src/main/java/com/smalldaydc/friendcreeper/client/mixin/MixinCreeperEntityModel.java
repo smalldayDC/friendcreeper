@@ -1,6 +1,6 @@
 package com.smalldaydc.friendcreeper.client.mixin;
 
-import com.smalldaydc.friendcreeper.client.IFriendlyCreeperRenderState;
+import com.smalldaydc.friendcreeper.client.IFriendCreeperRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
@@ -40,7 +40,7 @@ public class MixinCreeperEntityModel {
         rightHind.originY  = DEF_LEG_Y;
         // NOTE: do NOT reset pitch here — vanilla setAngles already set walking animation
 
-        IFriendlyCreeperRenderState fcState = (IFriendlyCreeperRenderState) state;
+        IFriendCreeperRenderState fcState = (IFriendCreeperRenderState) state;
         if (!fcState.friendcreeper$isSitting()) return;
 
         // Sitting pose: head+body sink together, legs fold UP

@@ -1,6 +1,6 @@
 package com.smalldaydc.friendcreeper.client;
 
-import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendCreeperConfig;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
@@ -13,15 +13,15 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
-public class FriendlyCreeperConfigScreen {
+public class FriendCreeperConfigScreen {
 
     public static Screen create(Screen parent) {
-        FriendlyCreeperConfig config = FriendlyCreeperConfig.get();
+        FriendCreeperConfig config = FriendCreeperConfig.get();
 
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
                 .setTitle(Text.translatable("config.friendcreeper.title"))
-                .setSavingRunnable(FriendlyCreeperConfig::save);
+                .setSavingRunnable(FriendCreeperConfig::save);
 
         ConfigEntryBuilder eb = builder.entryBuilder();
         ConfigCategory general = builder.getOrCreateCategory(Text.translatable("config.friendcreeper.category.general"));

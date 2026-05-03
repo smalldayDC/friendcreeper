@@ -8,7 +8,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
-public class FriendlyCreeperNoConfigScreen extends Screen {
+public class FriendCreeperNoConfigScreen extends Screen {
 
     private static final Text[] MESSAGES = {
         Text.translatable("screen.friendcreeper.noconfig.line1"),
@@ -18,7 +18,7 @@ public class FriendlyCreeperNoConfigScreen extends Screen {
 
     private final Screen parent;
 
-    public FriendlyCreeperNoConfigScreen(Screen parent) {
+    public FriendCreeperNoConfigScreen(Screen parent) {
         super(Text.empty());
         this.parent = parent;
     }

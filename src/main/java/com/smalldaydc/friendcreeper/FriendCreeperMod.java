@@ -16,7 +16,7 @@ import java.util.UUID;
 
 import org.jetbrains.annotations.Nullable;
 
-public class FriendlyCreeperMod implements ModInitializer {
+public class FriendCreeperMod implements ModInitializer {
     public static final String NBT_TAMED    = "FriendlyTamed";
     public static final String NBT_OWNER    = "FriendlyOwner";
     public static final String NBT_SITTING  = "FriendlySitting";
@@ -39,7 +39,7 @@ public class FriendlyCreeperMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        FriendlyCreeperConfig.load();
+        FriendCreeperConfig.load();
 
         // Cancel damage from owner (covers melee + projectiles)
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
@@ -48,7 +48,7 @@ public class FriendlyCreeperMod implements ModInitializer {
             if (!tc.friendcreeper$isTamed()) return true;
             LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
             if (!(attacker instanceof PlayerEntity player)) return true;
-            if (FriendlyCreeperConfig.get().allowOwnerDamage) return true;
+            if (FriendCreeperConfig.get().allowOwnerDamage) return true;
             UUID ownerUUID = tc.friendcreeper$getOwnerUUID();
             return ownerUUID == null || !ownerUUID.equals(player.getUuid());
         });
@@ -57,7 +57,7 @@ public class FriendlyCreeperMod implements ModInitializer {
         ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamage, damage, absorbed) -> {
             if (!(entity instanceof PlayerEntity owner)) return;
             if (damage <= 0) return;
-            if (!FriendlyCreeperConfig.get().revengeOwner) return;
+            if (!FriendCreeperConfig.get().revengeOwner) return;
             LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
             if (attacker == null || attacker == owner) return;
             PlayerEntity attackerPlayer = attacker instanceof PlayerEntity ap ? ap : null;

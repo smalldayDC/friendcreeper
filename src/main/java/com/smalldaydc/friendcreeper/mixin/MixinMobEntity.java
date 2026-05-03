@@ -1,6 +1,6 @@
 package com.smalldaydc.friendcreeper.mixin;
 
-import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendCreeperConfig;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -25,7 +25,7 @@ public class MixinMobEntity {
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
     private void friendcreeper$preventSnowGolemTargeting(LivingEntity target, CallbackInfo ci) {
         if (!((Object) this instanceof SnowGolemEntity)) return;
-        if (FriendlyCreeperConfig.get().snowGolemAttack) return;
+        if (FriendCreeperConfig.get().snowGolemAttack) return;
         if (!(target instanceof CreeperEntity creeper)) return;
         if (((ITamedCreeper)(Object) creeper).friendcreeper$isTamed()) ci.cancel();
     }

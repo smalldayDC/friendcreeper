@@ -1,6 +1,6 @@
 package com.smalldaydc.friendcreeper.client.render;
 
-import com.smalldaydc.friendcreeper.client.IFriendlyCreeperRenderState;
+import com.smalldaydc.friendcreeper.client.IFriendCreeperRenderState;
 import com.smalldaydc.friendcreeper.client.mixin.CreeperEntityModelAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -34,7 +34,7 @@ public class CreeperFishFeature extends FeatureRenderer<CreeperEntityRenderState
                        int light, CreeperEntityRenderState state,
                        float limbAngle, float limbDistance) {
 
-        IFriendlyCreeperRenderState fcState = (IFriendlyCreeperRenderState) state;
+        IFriendCreeperRenderState fcState = (IFriendCreeperRenderState) state;
         if (!fcState.friendcreeper$isTamed()) return;
 
         ItemRenderState fishState = fcState.friendcreeper$getFishRenderState();

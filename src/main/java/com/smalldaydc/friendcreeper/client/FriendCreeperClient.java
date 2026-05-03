@@ -19,7 +19,7 @@ import net.minecraft.util.hit.HitResult;
 import java.util.UUID;
 
 @Environment(EnvType.CLIENT)
-public class FriendlyCreeperClient implements ClientModInitializer {
+public class FriendCreeperClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {

@@ -1,9 +1,9 @@
 package com.smalldaydc.friendcreeper.client.mixin;
 
-import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
-import com.smalldaydc.friendcreeper.FriendlyCreeperMod;
+import com.smalldaydc.friendcreeper.FriendCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
-import com.smalldaydc.friendcreeper.client.IFriendlyCreeperRenderState;
+import com.smalldaydc.friendcreeper.client.IFriendCreeperRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -36,17 +36,17 @@ public class MixinCreeperEntityRenderer {
                                                     float tickDelta,
                                                     CallbackInfo ci) {
         ITamedCreeper tc = (ITamedCreeper) (Object) entity;
-        IFriendlyCreeperRenderState fcState = (IFriendlyCreeperRenderState) state;
+        IFriendCreeperRenderState fcState = (IFriendCreeperRenderState) state;
         fcState.friendcreeper$setTamed(tc.friendcreeper$isTamed());
         fcState.friendcreeper$setSitting(tc.friendcreeper$isSitting());
 
-        boolean lowHealth = entity.getHealth() / entity.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD;
+        boolean lowHealth = entity.getHealth() / entity.getMaxHealth() < FriendCreeperMod.LOW_HEALTH_THRESHOLD;
         fcState.friendcreeper$setLowHealth(lowHealth);
         fcState.friendcreeper$setHasTarget(tc.friendcreeper$hasTarget());
         fcState.friendcreeper$setFleeing(tc.friendcreeper$isFleeing());
 
         if (tc.friendcreeper$isTamed()) {
-            FriendlyCreeperConfig config = FriendlyCreeperConfig.get();
+            FriendCreeperConfig config = FriendCreeperConfig.get();
             // Show wither rose when low health (if enabled), poppy otherwise
             ItemStack flowerStack = (config.witherRoseOnLowHealth && lowHealth)
                     ? WITHER_ROSE_STACK : POPPY_STACK;
@@ -72,14 +72,14 @@ public class MixinCreeperEntityRenderer {
     @Inject(method = "getTexture", at = @At("RETURN"), cancellable = true)
     private void friendcreeper$getTexture(CreeperEntityRenderState state,
                                            CallbackInfoReturnable<Identifier> cir) {
-        IFriendlyCreeperRenderState fcState = (IFriendlyCreeperRenderState) state;
+        IFriendCreeperRenderState fcState = (IFriendCreeperRenderState) state;
         if (!fcState.friendcreeper$isTamed()) return;
-        if (!FriendlyCreeperConfig.get().tamedCreeperTexture) return;
+        if (!FriendCreeperConfig.get().tamedCreeperTexture) return;
         // Revert to vanilla face when targeting an enemy
         if (fcState.friendcreeper$hasTarget()) return;
 
         // Show sad face when fleeing from cats (if enabled)
-        if (fcState.friendcreeper$isFleeing() && FriendlyCreeperConfig.get().scaredFace) {
+        if (fcState.friendcreeper$isFleeing() && FriendCreeperConfig.get().scaredFace) {
             cir.setReturnValue(SAD_TEXTURE);
             return;
         }

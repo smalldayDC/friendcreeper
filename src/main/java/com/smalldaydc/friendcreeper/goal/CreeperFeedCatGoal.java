@@ -1,7 +1,7 @@
 package com.smalldaydc.friendcreeper.goal;
 
-import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
-import com.smalldaydc.friendcreeper.FriendlyCreeperMod;
+import com.smalldaydc.friendcreeper.FriendCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponent;
@@ -37,13 +37,13 @@ public class CreeperFeedCatGoal extends Goal {
         if (!tc.friendcreeper$isTamed()) return false;
         if (tc.friendcreeper$isSitting()) return false;
         if (tc.friendcreeper$getHeldFish().isEmpty()) return false;
-        if (!FriendlyCreeperConfig.get().feedOwnerCat) return false;
-        if (FriendlyCreeperConfig.get().afraidOfCats) return false;
-        if (creeper.getHealth() / creeper.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD) return false;
+        if (!FriendCreeperConfig.get().feedOwnerCat) return false;
+        if (FriendCreeperConfig.get().afraidOfCats) return false;
+        if (creeper.getHealth() / creeper.getMaxHealth() < FriendCreeperMod.LOW_HEALTH_THRESHOLD) return false;
         if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
-        targetCat = FriendlyCreeperMod.findNearestReachableHurtOwnerCat(creeper);
+        targetCat = FriendCreeperMod.findNearestReachableHurtOwnerCat(creeper);
         return targetCat != null;
     }
 
@@ -72,7 +72,7 @@ public class CreeperFeedCatGoal extends Goal {
 
         if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isIdle()) {
             this.updateCountdownTicks = this.getTickCount(10);
-            boolean pathFound = creeper.getNavigation().startMovingTo(targetCat, FriendlyCreeperMod.INTERACTION_MOVE_SPEED);
+            boolean pathFound = creeper.getNavigation().startMovingTo(targetCat, FriendCreeperMod.INTERACTION_MOVE_SPEED);
             if (!pathFound) {
                 // Cat became unreachable, give up immediately
                 targetCat = null;
@@ -82,7 +82,7 @@ public class CreeperFeedCatGoal extends Goal {
 
         // Bounding box overlap + line of sight check for feeding (prevent feeding through walls)
         Box feedBox = creeper.getBoundingBox().expand(
-                FriendlyCreeperMod.INTERACTION_REACH_XZ, FriendlyCreeperMod.INTERACTION_REACH_Y, FriendlyCreeperMod.INTERACTION_REACH_XZ);
+                FriendCreeperMod.INTERACTION_REACH_XZ, FriendCreeperMod.INTERACTION_REACH_Y, FriendCreeperMod.INTERACTION_REACH_XZ);
         if (feedBox.intersects(targetCat.getBoundingBox()) && creeper.canSee(targetCat)) {
             feedCat();
         }

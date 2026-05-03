@@ -7,14 +7,14 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 
 @Environment(EnvType.CLIENT)
-public class FriendlyCreeperModMenuEntry implements ModMenuApi {
+public class FriendCreeperModMenuEntry implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         if (FabricLoader.getInstance().isModLoaded("cloth-config")) {
-            return FriendlyCreeperConfigScreen::create;
+            return FriendCreeperConfigScreen::create;
         } else {
-            return FriendlyCreeperNoConfigScreen::new;
+            return FriendCreeperNoConfigScreen::new;
         }
     }
 }

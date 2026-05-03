@@ -12,14 +12,14 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FriendlyCreeperConfig {
+public class FriendCreeperConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("FriendCreeper");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path CONFIG_PATH = FabricLoader.getInstance()
             .getConfigDir().resolve("friendcreeper.json");
 
-    private static FriendlyCreeperConfig instance;
+    private static FriendCreeperConfig instance;
 
     /** Whether the owner can damage their own tamed Creeper. Default: false */
     public boolean allowOwnerDamage = false;
@@ -57,7 +57,7 @@ public class FriendlyCreeperConfig {
     /** Whether tamed Creepers pick up fish and feed the owner's cats. Requires afraidOfCats to be disabled. Default: false */
     public boolean feedOwnerCat = false;
 
-    public static FriendlyCreeperConfig get() {
+    public static FriendCreeperConfig get() {
         if (instance == null) load();
         return instance;
     }
@@ -65,19 +65,19 @@ public class FriendlyCreeperConfig {
     public static void load() {
         if (Files.exists(CONFIG_PATH)) {
             try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
-                instance = GSON.fromJson(reader, FriendlyCreeperConfig.class);
+                instance = GSON.fromJson(reader, FriendCreeperConfig.class);
                 if (instance == null) {
                     LOGGER.warn("Empty configuration file; reset to default values.");
-                    instance = new FriendlyCreeperConfig();
+                    instance = new FriendCreeperConfig();
                 } else {
                     return;
                 }
             } catch (Exception e) {
                 LOGGER.warn("Failed to load configuration file; reset to default values.");
-                instance = new FriendlyCreeperConfig();
+                instance = new FriendCreeperConfig();
             }
         } else {
-            instance = new FriendlyCreeperConfig();
+            instance = new FriendCreeperConfig();
         }
         save();
     }
