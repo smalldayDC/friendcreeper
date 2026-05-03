@@ -4,6 +4,7 @@ import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.item.Items;
@@ -48,7 +49,7 @@ public class CreeperPickupFishGoal extends Goal {
         // Only pick up fish when there is a nearby hurt cat belonging to the same owner
         if (!hasHurtOwnerCat()) return false;
 
-        targetFish = findNearestFish();
+        targetFish = findNearestReachableFish();
         return targetFish != null;
     }
 
@@ -75,7 +76,12 @@ public class CreeperPickupFishGoal extends Goal {
 
         if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isIdle()) {
             this.updateCountdownTicks = this.getTickCount(10);
-            creeper.getNavigation().startMovingTo(targetFish, MOVE_SPEED);
+            boolean pathFound = creeper.getNavigation().startMovingTo(targetFish, MOVE_SPEED);
+            if (!pathFound) {
+                // Path became invalid mid-travel, give up immediately
+                targetFish = null;
+                return;
+            }
         }
 
         // Check if close enough to pick up
@@ -111,22 +117,24 @@ public class CreeperPickupFishGoal extends Goal {
         return !cats.isEmpty();
     }
 
-    private ItemEntity findNearestFish() {
+    private ItemEntity findNearestReachableFish() {
         Box searchBox = creeper.getBoundingBox().expand(SEARCH_RANGE);
         List<ItemEntity> items = creeper.getEntityWorld().getEntitiesByClass(
                 ItemEntity.class, searchBox,
                 item -> item.isAlive()
                         && (item.getStack().isOf(Items.COD) || item.getStack().isOf(Items.SALMON)));
 
-        ItemEntity nearest = null;
-        double nearestDistSq = Double.MAX_VALUE;
+        // Sort by distance so we try the closest fish first
+        items.sort((a, b) -> Double.compare(
+                creeper.squaredDistanceTo(a), creeper.squaredDistanceTo(b)));
+
         for (ItemEntity item : items) {
-            double distSq = creeper.squaredDistanceTo(item);
-            if (distSq < nearestDistSq) {
-                nearestDistSq = distSq;
-                nearest = item;
+            // Pre-check path reachability — findPathTo can return partial paths
+            Path path = creeper.getNavigation().findPathTo(item, 1);
+            if (path != null && path.reachesTarget()) {
+                return item;
             }
         }
-        return nearest;
+        return null;
     }
 }

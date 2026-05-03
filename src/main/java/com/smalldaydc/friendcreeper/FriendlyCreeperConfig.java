@@ -55,7 +55,7 @@ public class FriendlyCreeperConfig {
     public boolean witherRoseOnLowHealth = true;
 
     /** Whether tamed Creepers pick up fish and feed the owner's cats. Requires afraidOfCats to be disabled. Default: true */
-    public boolean feedOwnerCat = true;
+    public boolean feedOwnerCat = false;
 
     public static FriendlyCreeperConfig get() {
         if (instance == null) load();

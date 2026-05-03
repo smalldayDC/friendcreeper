@@ -290,7 +290,8 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         ItemStack heldFish = friendcreeper$getHeldFish();
         if (!heldFish.isEmpty()) {
             boolean lowHealth = this.getHealth() / this.getMaxHealth() < FISH_DROP_HEALTH_THRESHOLD;
-            boolean shouldDrop = lowHealth || FriendlyCreeperConfig.get().afraidOfCats;
+            boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
+            boolean shouldDrop = lowHealth || hasTarget || FriendlyCreeperConfig.get().afraidOfCats;
 
             // Check for nearby hurt owner cat every 20 ticks (1 second) to reduce overhead
             if (!shouldDrop && this.age % 20 == 0) {
