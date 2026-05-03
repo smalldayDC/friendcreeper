@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -36,6 +37,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -263,12 +265,24 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         LivingEntity target = this.getTarget();
         LivingEntity recentDamager = this.getAttacker();
 
+        // Non-player mob attacked → drop fish + retaliate
         if (recentDamager != null
                 && !(recentDamager instanceof PlayerEntity)
-                && !friendcreeper$isSitting()
-                && target == null
-                && this.canSee(recentDamager)) {
-            this.setTarget(recentDamager);
+                && !friendcreeper$isSitting()) {
+            // Drop held fish immediately
+            ItemStack attackFish = friendcreeper$getHeldFish();
+            if (!attackFish.isEmpty()) {
+                ItemEntity drop = new ItemEntity(
+                        this.getEntityWorld(),
+                        this.getX(), this.getY() + 0.5, this.getZ(),
+                        attackFish.copy());
+                this.getEntityWorld().spawnEntity(drop);
+                friendcreeper$setHeldFish(ItemStack.EMPTY);
+            }
+            // Retaliate if no current target
+            if (target == null && this.canSee(recentDamager)) {
+                this.setTarget(recentDamager);
+            }
         }
 
         if (target != null && !target.isDead() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
@@ -284,19 +298,25 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             this.heal(1.0f);
         }
 
-        // Compute once, reuse for fish drop check and DataTracker sync
-        boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
-
-        // Drop held fish: low health / has target / afraidOfCats / no hurt owner cat nearby
+        // Drop held fish: low health / afraidOfCats / no reachable hurt owner cat nearby
         ItemStack heldFish = friendcreeper$getHeldFish();
         if (!heldFish.isEmpty()) {
             boolean lowHealth = this.getHealth() / this.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD;
-            boolean shouldDrop = lowHealth || hasTarget || FriendlyCreeperConfig.get().afraidOfCats;
+            boolean shouldDrop = lowHealth || FriendlyCreeperConfig.get().afraidOfCats;
 
-            // Check for nearby hurt owner cat every 20 ticks (1 second) to reduce overhead
+            // Check for nearby reachable hurt owner cat every 20 ticks (1 second) to reduce overhead
             if (!shouldDrop && this.age % 20 == 0) {
                 CreeperEntity self = (CreeperEntity) (Object) this;
-                if (FriendlyCreeperMod.findHurtOwnerCats(self, FriendlyCreeperMod.CAT_SEARCH_RANGE).isEmpty()) {
+                List<CatEntity> hurtCats = FriendlyCreeperMod.findHurtOwnerCats(self, FriendlyCreeperMod.CAT_SEARCH_RANGE);
+                boolean hasReachableCat = false;
+                for (CatEntity cat : hurtCats) {
+                    Path path = this.getNavigation().findPathTo(cat, 1);
+                    if (path != null && path.reachesTarget()) {
+                        hasReachableCat = true;
+                        break;
+                    }
+                }
+                if (!hasReachableCat) {
                     shouldDrop = true;
                 }
             }
@@ -312,6 +332,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         // Sync hasTarget to client for texture switching
+        boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
         if (this.dataTracker.get(FRIENDCREEPER_HAS_TARGET) != hasTarget) {
             this.dataTracker.set(FRIENDCREEPER_HAS_TARGET, hasTarget);
         }

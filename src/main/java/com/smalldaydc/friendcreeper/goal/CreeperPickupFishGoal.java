@@ -7,6 +7,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Box;
 
@@ -42,8 +43,8 @@ public class CreeperPickupFishGoal extends Goal {
         if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
-        // Only pick up fish when there is a nearby hurt cat belonging to the same owner
-        if (FriendlyCreeperMod.findHurtOwnerCats(creeper, FriendlyCreeperMod.CAT_SEARCH_RANGE).isEmpty()) return false;
+        // Only pick up fish when there is a nearby reachable hurt cat belonging to the same owner
+        if (!hasReachableHurtOwnerCat()) return false;
 
         targetFish = findNearestReachableFish();
         return targetFish != null;
@@ -99,6 +100,17 @@ public class CreeperPickupFishGoal extends Goal {
     public void stop() {
         targetFish = null;
         creeper.getNavigation().stop();
+    }
+
+    private boolean hasReachableHurtOwnerCat() {
+        List<CatEntity> cats = FriendlyCreeperMod.findHurtOwnerCats(creeper, FriendlyCreeperMod.CAT_SEARCH_RANGE);
+        for (CatEntity cat : cats) {
+            Path path = creeper.getNavigation().findPathTo(cat, 1);
+            if (path != null && path.reachesTarget()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private ItemEntity findNearestReachableFish() {

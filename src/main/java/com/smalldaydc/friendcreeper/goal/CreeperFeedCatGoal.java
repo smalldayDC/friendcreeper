@@ -6,6 +6,7 @@ import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.item.ItemStack;
@@ -73,13 +74,18 @@ public class CreeperFeedCatGoal extends Goal {
 
         if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isIdle()) {
             this.updateCountdownTicks = this.getTickCount(10);
-            creeper.getNavigation().startMovingTo(targetCat, FriendlyCreeperMod.INTERACTION_MOVE_SPEED);
+            boolean pathFound = creeper.getNavigation().startMovingTo(targetCat, FriendlyCreeperMod.INTERACTION_MOVE_SPEED);
+            if (!pathFound) {
+                // Cat became unreachable, give up immediately
+                targetCat = null;
+                return;
+            }
         }
 
-        // Bounding box overlap check for feeding
+        // Bounding box overlap + line of sight check for feeding (prevent feeding through walls)
         Box feedBox = creeper.getBoundingBox().expand(
                 FriendlyCreeperMod.INTERACTION_REACH_XZ, FriendlyCreeperMod.INTERACTION_REACH_Y, FriendlyCreeperMod.INTERACTION_REACH_XZ);
-        if (feedBox.intersects(targetCat.getBoundingBox())) {
+        if (feedBox.intersects(targetCat.getBoundingBox()) && creeper.canSee(targetCat)) {
             feedCat();
         }
     }
@@ -112,15 +118,16 @@ public class CreeperFeedCatGoal extends Goal {
     private CatEntity findHungryOwnerCat() {
         List<CatEntity> cats = FriendlyCreeperMod.findHurtOwnerCats(creeper, FriendlyCreeperMod.CAT_SEARCH_RANGE);
 
-        CatEntity nearest = null;
-        double nearestDistSq = Double.MAX_VALUE;
+        // Sort by distance so we try the closest cat first
+        cats.sort((a, b) -> Double.compare(
+                creeper.squaredDistanceTo(a), creeper.squaredDistanceTo(b)));
+
         for (CatEntity cat : cats) {
-            double distSq = creeper.squaredDistanceTo(cat);
-            if (distSq < nearestDistSq) {
-                nearestDistSq = distSq;
-                nearest = cat;
+            Path path = creeper.getNavigation().findPathTo(cat, 1);
+            if (path != null && path.reachesTarget()) {
+                return cat;
             }
         }
-        return nearest;
+        return null;
     }
 }
