@@ -14,9 +14,9 @@
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": ["com.smalldaydc.friendcreeper.FriendlyCreeperMod"],
-    "client": ["com.smalldaydc.friendcreeper.client.FriendlyCreeperClient"],
-    "modmenu": ["com.smalldaydc.friendcreeper.client.FriendlyCreeperModMenuEntry"],
+    "main": ["com.smalldaydc.friendcreeper.FriendCreeperMod"],
+    "client": ["com.smalldaydc.friendcreeper.client.FriendCreeperClient"],
+    "modmenu": ["com.smalldaydc.friendcreeper.client.FriendCreeperModMenuEntry"],
     "jade": ["com.smalldaydc.friendcreeper.compat.jade.FriendCreeperJadePlugin"]
   },
   "custom": {
