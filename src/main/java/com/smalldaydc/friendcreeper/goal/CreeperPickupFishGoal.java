@@ -18,8 +18,13 @@ public class CreeperPickupFishGoal extends Goal {
 
     private static final double SEARCH_RANGE = 10.0;
     private static final double CAT_SEARCH_RANGE = 16.0;
-    private static final double PICKUP_RANGE_SQ = 2.0 * 2.0;
     private static final double MOVE_SPEED = 1.0;
+    /**
+     * Pickup reach: slightly larger than vanilla Vec3i(1,0,1) to reliably
+     * cover the gap between navigation stop position and item position.
+     */
+    private static final double PICKUP_REACH_XZ = 1.5;
+    private static final double PICKUP_REACH_Y = 0.5;
 
     private final CreeperEntity creeper;
     private ItemEntity targetFish;
@@ -84,13 +89,15 @@ public class CreeperPickupFishGoal extends Goal {
             }
         }
 
-        // Check if close enough to pick up
-        if (creeper.squaredDistanceTo(targetFish) <= PICKUP_RANGE_SQ) {
+        // Vanilla-style pickup: bounding box overlap with pickup reach expansion
+        Box pickupBox = creeper.getBoundingBox().expand(PICKUP_REACH_XZ, PICKUP_REACH_Y, PICKUP_REACH_XZ);
+        if (pickupBox.intersects(targetFish.getBoundingBox())) {
             asTamed().friendcreeper$setHeldFish(targetFish.getStack().copyWithCount(1));
-            if (targetFish.getStack().getCount() > 1) {
-                targetFish.getStack().decrement(1);
-            } else {
+            if (targetFish.getStack().getCount() <= 1) {
                 targetFish.discard();
+            } else {
+                // Must call setStack() to trigger DataTracker sync to client
+                targetFish.setStack(targetFish.getStack().copyWithCount(targetFish.getStack().getCount() - 1));
             }
             targetFish = null;
         }

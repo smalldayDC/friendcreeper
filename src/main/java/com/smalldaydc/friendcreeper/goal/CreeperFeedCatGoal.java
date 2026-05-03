@@ -20,8 +20,9 @@ import java.util.UUID;
 public class CreeperFeedCatGoal extends Goal {
 
     private static final double SEARCH_RANGE = 16.0;
-    private static final double FEED_RANGE_SQ = 2.25; // 1.5 blocks
     private static final double MOVE_SPEED = 1.0;
+    private static final double FEED_REACH_XZ = 1.5;
+    private static final double FEED_REACH_Y = 0.5;
 
     private final CreeperEntity creeper;
     private CatEntity targetCat;
@@ -80,8 +81,9 @@ public class CreeperFeedCatGoal extends Goal {
             creeper.getNavigation().startMovingTo(targetCat, MOVE_SPEED);
         }
 
-        // Check if close enough to feed
-        if (creeper.squaredDistanceTo(targetCat) <= FEED_RANGE_SQ) {
+        // Bounding box overlap check for feeding
+        Box feedBox = creeper.getBoundingBox().expand(FEED_REACH_XZ, FEED_REACH_Y, FEED_REACH_XZ);
+        if (feedBox.intersects(targetCat.getBoundingBox())) {
             feedCat();
         }
     }
