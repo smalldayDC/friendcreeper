@@ -4,15 +4,17 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.UUID;
+
+import org.jetbrains.annotations.Nullable;
 
 public class FriendlyCreeperMod implements ModInitializer {
     public static final String NBT_TAMED    = "FriendlyTamed";
@@ -72,6 +74,8 @@ public class FriendlyCreeperMod implements ModInitializer {
                 if (!c.canSee(attacker)) return;
                 if (c.squaredDistanceTo(attacker) > REVENGE_RANGE_SQ) return;
                 ITamedCreeper tc = (ITamedCreeper) c;
+                // Drop held fish before engaging
+                dropHeldFish(c);
                 tc.friendcreeper$setAvengeTargetUUID(attackerUUID);
                 c.setTarget(attacker);
             });
@@ -83,15 +87,7 @@ public class FriendlyCreeperMod implements ModInitializer {
             if (entity instanceof CreeperEntity creeper) {
                 ITamedCreeper tc = (ITamedCreeper) creeper;
                 if (tc.friendcreeper$isTamed()) {
-                    ItemStack fish = tc.friendcreeper$getHeldFish();
-                    if (!fish.isEmpty()) {
-                        ItemEntity itemEntity = new ItemEntity(
-                                creeper.getEntityWorld(),
-                                creeper.getX(), creeper.getY() + 0.5, creeper.getZ(),
-                                fish.copy());
-                        creeper.getEntityWorld().spawnEntity(itemEntity);
-                        tc.friendcreeper$setHeldFish(ItemStack.EMPTY);
-                    }
+                    dropHeldFish(creeper);
                 }
             }
 
@@ -107,8 +103,23 @@ public class FriendlyCreeperMod implements ModInitializer {
     }
 
     /**
+     * Drop the creeper's held fish as an item entity on the ground.
+     * Does nothing if the creeper is not holding a fish.
+     */
+    public static void dropHeldFish(CreeperEntity creeper) {
+        ITamedCreeper tc = (ITamedCreeper) creeper;
+        ItemStack fish = tc.friendcreeper$getHeldFish();
+        if (fish.isEmpty()) return;
+        ItemEntity drop = new ItemEntity(
+                creeper.getEntityWorld(),
+                creeper.getX(), creeper.getY() + 0.3, creeper.getZ(),
+                fish.copy());
+        creeper.getEntityWorld().spawnEntity(drop);
+        tc.friendcreeper$setHeldFish(ItemStack.EMPTY);
+    }
+
+    /**
      * Find hurt cats belonging to the same owner within the given range.
-     * Shared by CreeperPickupFishGoal, CreeperFeedCatGoal, and MixinCreeperEntity tick.
      */
     public static List<CatEntity> findHurtOwnerCats(CreeperEntity creeper, double range) {
         UUID ownerUUID = ((ITamedCreeper) creeper).friendcreeper$getOwnerUUID();
@@ -121,5 +132,23 @@ public class FriendlyCreeperMod implements ModInitializer {
                         && cat.getOwner() != null
                         && ownerUUID.equals(cat.getOwner().getUuid())
                         && cat.getHealth() < cat.getMaxHealth());
+    }
+
+    /**
+     * Find the nearest reachable hurt cat belonging to the same owner.
+     * Returns null if no reachable hurt cat is found.
+     */
+    @Nullable
+    public static CatEntity findNearestReachableHurtOwnerCat(CreeperEntity creeper) {
+        List<CatEntity> cats = findHurtOwnerCats(creeper, CAT_SEARCH_RANGE);
+        cats.sort((a, b) -> Double.compare(
+                creeper.squaredDistanceTo(a), creeper.squaredDistanceTo(b)));
+        for (CatEntity cat : cats) {
+            Path path = creeper.getNavigation().findPathTo(cat, 1);
+            if (path != null && path.reachesTarget()) {
+                return cat;
+            }
+        }
+        return null;
     }
 }

@@ -6,7 +6,6 @@ import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.item.ItemStack;
@@ -16,7 +15,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 
 import java.util.EnumSet;
-import java.util.List;
 
 public class CreeperFeedCatGoal extends Goal {
 
@@ -45,7 +43,7 @@ public class CreeperFeedCatGoal extends Goal {
         if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
-        targetCat = findHungryOwnerCat();
+        targetCat = FriendlyCreeperMod.findNearestReachableHurtOwnerCat(creeper);
         return targetCat != null;
     }
 
@@ -113,21 +111,5 @@ public class CreeperFeedCatGoal extends Goal {
         }
 
         targetCat = null;
-    }
-
-    private CatEntity findHungryOwnerCat() {
-        List<CatEntity> cats = FriendlyCreeperMod.findHurtOwnerCats(creeper, FriendlyCreeperMod.CAT_SEARCH_RANGE);
-
-        // Sort by distance so we try the closest cat first
-        cats.sort((a, b) -> Double.compare(
-                creeper.squaredDistanceTo(a), creeper.squaredDistanceTo(b)));
-
-        for (CatEntity cat : cats) {
-            Path path = creeper.getNavigation().findPathTo(cat, 1);
-            if (path != null && path.reachesTarget()) {
-                return cat;
-            }
-        }
-        return null;
     }
 }

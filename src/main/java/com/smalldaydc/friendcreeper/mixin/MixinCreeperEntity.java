@@ -10,10 +10,8 @@ import com.smalldaydc.friendcreeper.goal.CreeperSitGoal;
 import com.smalldaydc.friendcreeper.goal.CreeperSuppressTargetGoal;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
-import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -37,7 +35,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -173,9 +170,9 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private void friendcreeper$initGoals(CallbackInfo ci) {
         CreeperEntity self = (CreeperEntity) (Object) this;
         this.goalSelector.add(1, new CreeperSitGoal(self));
-        this.goalSelector.add(3, new CreeperFeedCatGoal(self));
+        this.goalSelector.add(2, new CreeperFeedCatGoal(self));
+        this.goalSelector.add(3, new CreeperPickupFishGoal(self));
         this.goalSelector.add(4, new CreeperFollowOwnerGoal(self));
-        this.goalSelector.add(5, new CreeperPickupFishGoal(self));
         this.targetSelector.add(0, new CreeperSuppressTargetGoal(self));
 
         // Replace vanilla flee goals with conditional ones (respects afraidOfCats config)
@@ -270,15 +267,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
                 && !(recentDamager instanceof PlayerEntity)
                 && !friendcreeper$isSitting()) {
             // Drop held fish immediately
-            ItemStack attackFish = friendcreeper$getHeldFish();
-            if (!attackFish.isEmpty()) {
-                ItemEntity drop = new ItemEntity(
-                        this.getEntityWorld(),
-                        this.getX(), this.getY() + 0.5, this.getZ(),
-                        attackFish.copy());
-                this.getEntityWorld().spawnEntity(drop);
-                friendcreeper$setHeldFish(ItemStack.EMPTY);
-            }
+            FriendlyCreeperMod.dropHeldFish((CreeperEntity) (Object) this);
             // Retaliate if no current target
             if (target == null && this.canSee(recentDamager)) {
                 this.setTarget(recentDamager);
@@ -299,35 +288,20 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         // Drop held fish: low health / afraidOfCats / no reachable hurt owner cat nearby
-        ItemStack heldFish = friendcreeper$getHeldFish();
-        if (!heldFish.isEmpty()) {
+        if (!friendcreeper$getHeldFish().isEmpty()) {
             boolean lowHealth = this.getHealth() / this.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD;
             boolean shouldDrop = lowHealth || FriendlyCreeperConfig.get().afraidOfCats;
 
             // Check for nearby reachable hurt owner cat every 20 ticks (1 second) to reduce overhead
             if (!shouldDrop && this.age % 20 == 0) {
                 CreeperEntity self = (CreeperEntity) (Object) this;
-                List<CatEntity> hurtCats = FriendlyCreeperMod.findHurtOwnerCats(self, FriendlyCreeperMod.CAT_SEARCH_RANGE);
-                boolean hasReachableCat = false;
-                for (CatEntity cat : hurtCats) {
-                    Path path = this.getNavigation().findPathTo(cat, 1);
-                    if (path != null && path.reachesTarget()) {
-                        hasReachableCat = true;
-                        break;
-                    }
-                }
-                if (!hasReachableCat) {
+                if (FriendlyCreeperMod.findNearestReachableHurtOwnerCat(self) == null) {
                     shouldDrop = true;
                 }
             }
 
             if (shouldDrop) {
-                ItemEntity drop = new ItemEntity(
-                        this.getEntityWorld(),
-                        this.getX(), this.getY() + 0.5, this.getZ(),
-                        heldFish.copy());
-                this.getEntityWorld().spawnEntity(drop);
-                friendcreeper$setHeldFish(ItemStack.EMPTY);
+                FriendlyCreeperMod.dropHeldFish((CreeperEntity) (Object) this);
             }
         }
 
