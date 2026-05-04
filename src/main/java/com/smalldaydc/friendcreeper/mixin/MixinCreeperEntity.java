@@ -95,10 +95,8 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         boolean nowSitting = !friendcreeper$isSitting();
         this.dataTracker.set(FRIENDCREEPER_SITTING, nowSitting);
         this.setPose(nowSitting ? EntityPose.CROUCHING : EntityPose.STANDING);
-        if (!this.getEntityWorld().isClient()) {
-            this.getNavigation().stop();
-            setFuseSpeed(-1);
-        }
+        this.getNavigation().stop();
+        setFuseSpeed(-1);
     }
 
     @Override public @Nullable UUID friendcreeper$getOwnerUUID() {
@@ -269,12 +267,12 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         LivingEntity target = this.getTarget();
-		
-		// Force-reset fleeing state when afraidOfCats is disabled
-		if (friendcreeper$isFleeing() && !FriendCreeperConfig.get().afraidOfCats) {
-		friendcreeper$setFleeing(false);
-		this.getNavigation().stop();
-		}
+
+        // Force-reset fleeing state when afraidOfCats is disabled
+        if (friendcreeper$isFleeing() && !FriendCreeperConfig.get().afraidOfCats) {
+            friendcreeper$setFleeing(false);
+            this.getNavigation().stop();
+        }
 
         if (target != null && !target.isDead() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
             this.setTarget(null);
