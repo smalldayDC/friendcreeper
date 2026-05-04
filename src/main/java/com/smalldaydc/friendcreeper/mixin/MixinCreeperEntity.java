@@ -269,6 +269,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             return;
         }
 
+        CreeperEntity self = (CreeperEntity) (Object) this;
         LivingEntity target = this.getTarget();
 
         // Force-reset fleeing state when afraidOfCats is disabled
@@ -297,14 +298,13 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
             // Check for nearby reachable hurt owner cat every 20 ticks (1 second) to reduce overhead
             if (!shouldDrop && this.age % 20 == 0) {
-                CreeperEntity self = (CreeperEntity) (Object) this;
                 if (FriendCreeperMod.findNearestReachableHurtOwnerCat(self) == null) {
                     shouldDrop = true;
                 }
             }
 
             if (shouldDrop) {
-                FriendCreeperMod.dropHeldFish((CreeperEntity) (Object) this);
+                FriendCreeperMod.dropHeldFish(self);
             }
         }
 
@@ -316,7 +316,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
         // Reset fleeing state when cat leaves (flee goal can't run while sitting)
         if (friendcreeper$isSitting() && friendcreeper$isFleeing() && this.age % 20 == 0) {
-            CreeperEntity self = (CreeperEntity) (Object) this;
             boolean catNearby = !self.getEntityWorld().getEntitiesByClass(
                     CatEntity.class, self.getBoundingBox().expand(6.0), cat -> cat.isAlive()).isEmpty()
                 || !self.getEntityWorld().getEntitiesByClass(
