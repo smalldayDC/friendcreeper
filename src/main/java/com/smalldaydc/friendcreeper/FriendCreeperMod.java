@@ -134,7 +134,7 @@ public class FriendCreeperMod implements ModInitializer {
     /**
      * Find hurt cats belonging to the same owner within the given range.
      */
-    public static List<CatEntity> findHurtOwnerCats(CreeperEntity creeper, double range) {
+    private static List<CatEntity> findHurtOwnerCats(CreeperEntity creeper, double range) {
         UUID ownerUUID = ((ITamedCreeper) creeper).friendcreeper$getOwnerUUID();
         if (ownerUUID == null) return List.of();
         Box searchBox = creeper.getBoundingBox().expand(range);
