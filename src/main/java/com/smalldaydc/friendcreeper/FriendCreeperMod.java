@@ -26,7 +26,7 @@ public class FriendCreeperMod implements ModInitializer {
     /** Health ratio threshold shared across all low-health checks (goals, tick, renderer). */
     public static final float LOW_HEALTH_THRESHOLD = 0.25f;
     /** Bounding box reach for fish pickup and cat feeding interactions. */
-    public static final double INTERACTION_REACH_XZ = 1.5;
+    public static final double INTERACTION_REACH_XZ = 1.3;
     public static final double INTERACTION_REACH_Y = 0.5;
     /** Movement speed for pickup/feed goals. */
     public static final double INTERACTION_MOVE_SPEED = 1.0;
