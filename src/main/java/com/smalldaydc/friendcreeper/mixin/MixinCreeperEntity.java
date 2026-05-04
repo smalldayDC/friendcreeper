@@ -269,6 +269,12 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         LivingEntity target = this.getTarget();
+		
+		// Force-reset fleeing state when afraidOfCats is disabled
+		if (friendcreeper$isFleeing() && !FriendCreeperConfig.get().afraidOfCats) {
+		friendcreeper$setFleeing(false);
+		this.getNavigation().stop();
+		}
 
         if (target != null && !target.isDead() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
             this.setTarget(null);
