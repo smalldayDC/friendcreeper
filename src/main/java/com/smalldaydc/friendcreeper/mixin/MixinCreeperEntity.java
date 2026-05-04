@@ -190,7 +190,8 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             @Override
             public void stop() {
                 super.stop();
-                friendcreeper$setFleeing(false);
+                // Don't reset fleeing when sitting — tick check handles it
+                if (!friendcreeper$isSitting()) friendcreeper$setFleeing(false);
             }
         });
         this.goalSelector.add(3, new FleeEntityGoal<>(self, CatEntity.class, 6.0F, 1.0, 1.2) {
@@ -207,7 +208,8 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             @Override
             public void stop() {
                 super.stop();
-                friendcreeper$setFleeing(false);
+                // Don't reset fleeing when sitting — tick check handles it
+                if (!friendcreeper$isSitting()) friendcreeper$setFleeing(false);
             }
         });
     }
@@ -303,6 +305,18 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
         if (this.dataTracker.get(FRIENDCREEPER_HAS_TARGET) != hasTarget) {
             this.dataTracker.set(FRIENDCREEPER_HAS_TARGET, hasTarget);
+        }
+
+        // Reset fleeing state when cat leaves (flee goal can't run while sitting)
+        if (friendcreeper$isSitting() && friendcreeper$isFleeing() && this.age % 20 == 0) {
+            CreeperEntity self = (CreeperEntity) (Object) this;
+            boolean catNearby = !self.getEntityWorld().getEntitiesByClass(
+                    CatEntity.class, self.getBoundingBox().expand(6.0), cat -> cat.isAlive()).isEmpty()
+                || !self.getEntityWorld().getEntitiesByClass(
+                    OcelotEntity.class, self.getBoundingBox().expand(6.0), ocelot -> ocelot.isAlive()).isEmpty();
+            if (!catNearby) {
+                this.dataTracker.set(FRIENDCREEPER_IS_FLEEING, false);
+            }
         }
     }
 
