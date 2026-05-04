@@ -96,7 +96,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         this.dataTracker.set(FRIENDCREEPER_SITTING, nowSitting);
         this.setPose(nowSitting ? EntityPose.CROUCHING : EntityPose.STANDING);
         if (!this.getEntityWorld().isClient()) {
-            this.setTarget(null);
             this.getNavigation().stop();
             setFuseSpeed(-1);
         }
@@ -260,19 +259,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         LivingEntity target = this.getTarget();
-        LivingEntity recentDamager = this.getAttacker();
-
-        // Non-player mob attacked → drop fish + retaliate
-        if (recentDamager != null
-                && !(recentDamager instanceof PlayerEntity)
-                && !friendcreeper$isSitting()) {
-            // Drop held fish immediately
-            FriendCreeperMod.dropHeldFish((CreeperEntity) (Object) this);
-            // Retaliate if no current target
-            if (target == null && this.canSee(recentDamager)) {
-                this.setTarget(recentDamager);
-            }
-        }
 
         if (target != null && !target.isDead() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
             this.setTarget(null);

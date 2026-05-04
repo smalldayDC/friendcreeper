@@ -46,12 +46,6 @@ public class CreeperSuppressTargetGoal extends Goal {
         LivingEntity target = creeper.getTarget();
         if (target == null) return;
 
-        // Sitting: clear all targets
-        if (asTamed().friendcreeper$isSitting()) {
-            creeper.setTarget(null);
-            return;
-        }
-
         // Untamed: only clear target if the targeted player is holding gunpowder
         if (!asTamed().friendcreeper$isTamed()) {
             if (target instanceof PlayerEntity player && isHoldingGunpowder(player)) {
