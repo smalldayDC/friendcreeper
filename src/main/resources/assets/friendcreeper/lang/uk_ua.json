@@ -27,7 +27,7 @@
   "config.friendcreeper.witherRoseOnLowHealth": "Троянда висушення при низькому здоров'ї",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Чи буде приручений кріпер показувати троянду висушення замість маку при низькому здоров'ї.\nПотрібно увімкнути відображення маку.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API не встановлено",
-  "screen.friendcreeper.noconfig.line2": "Встановіть його перед налаштуванням через графічний інтерфейс.",
+  "screen.friendcreeper.noconfig.line2": "Friend Creeper потребує Cloth Config API для графічного налаштування",
   "screen.friendcreeper.noconfig.line3": "Ви можете завантажити його з Modrinth або CurseForge.",
   "screen.friendcreeper.noconfig.back": "Назад",
   "modmenu.descriptionTranslation.friendcreeper": "Приручіть кріпера порохом та зробіть його своїм другом.",

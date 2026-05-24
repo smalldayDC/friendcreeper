@@ -27,7 +27,7 @@
   "config.friendcreeper.witherRoseOnLowHealth": "Wither Rose on Low Health",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Whether tamed Creepers show a wither rose instead of a poppy when at low health.\nRequires Render Poppy to be enabled.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API is not installed",
-  "screen.friendcreeper.noconfig.line2": "Please install it before configuring via the graphical interface.",
+  "screen.friendcreeper.noconfig.line2": "Friend Creeper requires Cloth Config API for graphical configuration",
   "screen.friendcreeper.noconfig.line3": "You can download it from Modrinth or CurseForge.",
   "screen.friendcreeper.noconfig.back": "Back",
   "modmenu.descriptionTranslation.friendcreeper": "Tame Creepers with gunpowder and make them your friend.",

@@ -27,7 +27,7 @@
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa de Wither con poca vida",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Si los Creepers domesticados muestran una rosa de Wither en lugar de una amapola cuando tienen poca vida.\nMostrar amapola debe estar activado.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API no está instalada",
-  "screen.friendcreeper.noconfig.line2": "Instálala antes de configurar a través de la interfaz gráfica.",
+  "screen.friendcreeper.noconfig.line2": "Friend Creeper requiere Cloth Config API para la configuración gráfica",
   "screen.friendcreeper.noconfig.line3": "Puedes descargarla desde Modrinth o CurseForge.",
   "screen.friendcreeper.noconfig.back": "Volver",
   "modmenu.descriptionTranslation.friendcreeper": "Domestica Creepers con pólvora y hazlos tu amigo.",

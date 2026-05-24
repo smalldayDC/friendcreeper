@@ -27,7 +27,7 @@
   "config.friendcreeper.witherRoseOnLowHealth": "ดอกกุหลาบวิเทอร์เมื่อพลังชีวิตต่ำ",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะแสดงดอกกุหลาบวิเทอร์แทนดอกป๊อปปี้เมื่อพลังชีวิตต่ำหรือไม่\nต้องเปิดใช้งานแสดงดอกป๊อปปี้",
   "screen.friendcreeper.noconfig.line1": "ยังไม่ได้ติดตั้ง Cloth Config API",
-  "screen.friendcreeper.noconfig.line2": "กรุณาติดตั้งก่อนทำการตั้งค่าผ่านอินเทอร์เฟซกราฟิก",
+  "screen.friendcreeper.noconfig.line2": "Friend Creeper ต้องใช้ Cloth Config API เพื่อตั้งค่าผ่านอินเทอร์เฟซกราฟิก",
   "screen.friendcreeper.noconfig.line3": "คุณสามารถดาวน์โหลดได้จาก Modrinth หรือ CurseForge",
   "screen.friendcreeper.noconfig.back": "กลับ",
   "modmenu.descriptionTranslation.friendcreeper": "เลี้ยงครีปเปอร์ด้วยดินปืนและทำให้พวกมันเป็นเพื่อนของคุณ",
