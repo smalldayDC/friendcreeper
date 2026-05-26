@@ -30,7 +30,10 @@
   },
   "mixins": [
     "friendcreeper.mixins.json",
-    "friendcreeper.client.mixins.json"
+    {
+      "config": "friendcreeper.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
     "fabricloader": ">=0.19.2",
