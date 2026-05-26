@@ -1,5 +1,7 @@
-package com.smalldaydc.friendcreeper.compat.jade;
+package com.smalldaydc.friendcreeper.client.compat.jade;
 
+import com.smalldaydc.friendcreeper.compat.jade.CreeperOwnerDataProvider;
+import com.smalldaydc.friendcreeper.compat.jade.FriendCreeperJadePlugin;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import snownee.jade.api.EntityAccessor;

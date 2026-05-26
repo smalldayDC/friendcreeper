@@ -5,6 +5,17 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "friendcreeper" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
 repositories {
     maven { url = 'https://maven.shedaniel.me/' }
     maven { url = 'https://maven.terraformersmc.com/releases/' }

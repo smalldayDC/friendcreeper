@@ -17,7 +17,10 @@
     "main": ["com.smalldaydc.friendcreeper.FriendCreeperMod"],
     "client": ["com.smalldaydc.friendcreeper.client.FriendCreeperClient"],
     "modmenu": ["com.smalldaydc.friendcreeper.client.FriendCreeperModMenuEntry"],
-    "jade": ["com.smalldaydc.friendcreeper.compat.jade.FriendCreeperJadePlugin"]
+    "jade": [
+      "com.smalldaydc.friendcreeper.compat.jade.FriendCreeperJadePlugin",
+      "com.smalldaydc.friendcreeper.client.compat.jade.FriendCreeperJadeClientPlugin"
+    ]
   },
   "custom": {
     "modmenu": {

@@ -16,7 +16,7 @@ import java.util.UUID;
 public enum CreeperOwnerDataProvider implements IServerDataProvider<EntityAccessor> {
     INSTANCE;
 
-    static final String TAG_OWNER_NAME = "FriendCreeperOwnerName";
+    public static final String TAG_OWNER_NAME = "FriendCreeperOwnerName";
 
     @Override
     public boolean shouldRequestData(EntityAccessor accessor) {
