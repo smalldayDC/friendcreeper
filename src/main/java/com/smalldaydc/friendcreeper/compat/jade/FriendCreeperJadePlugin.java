@@ -2,8 +2,7 @@ package com.smalldaydc.friendcreeper.compat.jade;
 
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.util.Identifier;
-import snownee.jade.api.EntityAccessor;
-import snownee.jade.api.IComponentProvider;
+import snownee.jade.api.IEntityComponentProvider;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;
@@ -20,13 +19,11 @@ public class FriendCreeperJadePlugin implements IWailaPlugin {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void registerClient(IWailaClientRegistration registration) {
         // Resolve the client-only provider reflectively so this class stays loadable on dedicated servers.
         try {
             Class<?> providerClass = Class.forName("com.smalldaydc.friendcreeper.client.compat.jade.CreeperOwnerProvider");
-            IComponentProvider<EntityAccessor> provider =
-                    (IComponentProvider<EntityAccessor>) providerClass.getEnumConstants()[0];
+            IEntityComponentProvider provider = (IEntityComponentProvider) providerClass.getEnumConstants()[0];
             registration.registerEntityComponent(provider, CreeperEntity.class);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException("Failed to load Friend Creeper Jade client provider", e);
