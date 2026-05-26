@@ -2,6 +2,7 @@ package com.smalldaydc.friendcreeper.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.smalldaydc.friendcreeper.FriendCreeperConfig;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -36,7 +37,8 @@ public abstract class MixinLivingEntity {
                                                                     RegistryKey<LootTable> key,
                                                                     Consumer<ItemStack> consumer,
                                                                     Operation<Void> original) {
-        if (self instanceof CreeperEntity creeper
+        if (FriendCreeperConfig.get().dropPoppy
+                && self instanceof CreeperEntity creeper
                 && ((ITamedCreeper) (Object) creeper).friendcreeper$isTamed()) {
             Consumer<ItemStack> wrapped = stack -> {
                 if (stack.isOf(Items.GUNPOWDER)) {
