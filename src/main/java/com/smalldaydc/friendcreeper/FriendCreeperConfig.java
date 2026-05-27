@@ -42,9 +42,6 @@ public class FriendCreeperConfig {
     /** Whether tamed Creepers pick up fish and feed the owner's cats. Requires afraidOfCats to be disabled. Default: false */
     public boolean feedOwnerCat = false;
 
-    /** Whether friend Creepers drop a poppy on death (instead of vanilla gunpowder). Default: true */
-    public boolean dropPoppy = true;
-
     // Client
     /** Whether tamed Creepers play a hurt sound when at low health. Client-side only. Default: true */
     public boolean hurtSound = true;

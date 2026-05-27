@@ -24,8 +24,6 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Ob befreundete Creeper sich mit der Zeit natürlich regenerieren.",
   "config.friendcreeper.feedOwnerCat": "Katze des Besitzers füttern",
   "config.friendcreeper.feedOwnerCat.tooltip": "Ob befreundete Creeper rohen Fisch aufheben und die verletzten Katzen des Besitzers füttern.\nAngst vor Katzen muss deaktiviert sein.",
-  "config.friendcreeper.dropPoppy": "Mohnblume fallen lassen",
-  "config.friendcreeper.dropPoppy.tooltip": "Ob befreundete Creeper beim Tod eine Mohnblume fallen lassen.",
   "config.friendcreeper.witherRoseOnLowHealth": "Withered Rose bei niedriger Gesundheit",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Ob befreundete Creeper bei niedriger Gesundheit eine Withered Rose statt einer Mohnblume anzeigen.\nMohnblume anzeigen muss aktiviert sein.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API ist nicht installiert",

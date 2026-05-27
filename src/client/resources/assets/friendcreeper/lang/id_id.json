@@ -24,8 +24,6 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Apakah Creeper teman akan memulihkan kesehatan secara alami seiring waktu.",
   "config.friendcreeper.feedOwnerCat": "Beri makan kucing pemilik",
   "config.friendcreeper.feedOwnerCat.tooltip": "Apakah Creeper teman akan mengambil ikan mentah dan memberi makan kucing pemilik yang terluka.\nTakut kucing harus dinonaktifkan.",
-  "config.friendcreeper.dropPoppy": "Jatuhkan poppy",
-  "config.friendcreeper.dropPoppy.tooltip": "Apakah Creeper teman menjatuhkan poppy saat mati.",
   "config.friendcreeper.witherRoseOnLowHealth": "Mawar Wither saat kesehatan rendah",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Apakah Creeper teman menampilkan mawar Wither alih-alih poppy saat kesehatannya rendah.\nTampilkan poppy harus diaktifkan.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API belum diinstal",

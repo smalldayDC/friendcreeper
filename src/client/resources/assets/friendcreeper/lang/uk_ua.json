@@ -24,8 +24,6 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Чи буде дружній кріпер природно відновлювати здоров'я з часом.",
   "config.friendcreeper.feedOwnerCat": "Годувати кота власника",
   "config.friendcreeper.feedOwnerCat.tooltip": "Чи буде дружній кріпер підбирати сиру рибу та годувати поранених котів власника.\nПотрібно вимкнути страх котів.",
-  "config.friendcreeper.dropPoppy": "Випадання маку",
-  "config.friendcreeper.dropPoppy.tooltip": "Чи буде дружній кріпер кидати мак при смерті.",
   "config.friendcreeper.witherRoseOnLowHealth": "Троянда висушення при низькому здоров'ї",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Чи буде дружній кріпер показувати троянду висушення замість маку при низькому здоров'ї.\nПотрібно увімкнути відображення маку.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API не встановлено",

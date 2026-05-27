@@ -24,8 +24,6 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Будет ли дружественный крипер естественно восстанавливать здоровье со временем.",
   "config.friendcreeper.feedOwnerCat": "Кормить кошку владельца",
   "config.friendcreeper.feedOwnerCat.tooltip": "Будет ли дружественный крипер подбирать сырую рыбу и кормить раненых кошек владельца.\nТребуется отключённый страх кошек.",
-  "config.friendcreeper.dropPoppy": "Выпадение мака",
-  "config.friendcreeper.dropPoppy.tooltip": "Будет ли дружественный крипер выбрасывать мак при смерти.",
   "config.friendcreeper.witherRoseOnLowHealth": "Роза увядания при низком здоровье",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Будет ли дружественный крипер показывать розу увядания вместо мака при низком здоровье.\nТребуется включённое отображение мака.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API не установлен",

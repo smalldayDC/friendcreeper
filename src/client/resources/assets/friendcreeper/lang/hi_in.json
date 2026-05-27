@@ -24,8 +24,6 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "क्या मित्र क्रीपर समय के साथ स्वाभाविक रूप से स्वास्थ्य पुनर्प्राप्त करेगा।",
   "config.friendcreeper.feedOwnerCat": "मालिक की बिल्ली को खिलाएँ",
   "config.friendcreeper.feedOwnerCat.tooltip": "क्या मित्र क्रीपर कच्ची मछली उठाकर मालिक की घायल बिल्लियों को खिलाएगा।\nबिल्लियों से डर अक्षम होना चाहिए।",
-  "config.friendcreeper.dropPoppy": "पॉपी गिराएँ",
-  "config.friendcreeper.dropPoppy.tooltip": "क्या मित्र क्रीपर मरने पर पॉपी गिराएगा।",
   "config.friendcreeper.witherRoseOnLowHealth": "कम स्वास्थ्य पर विदर गुलाब",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "क्या कम स्वास्थ्य पर मित्र क्रीपर पॉपी की जगह विदर गुलाब दिखाएगा।\nपॉपी दिखाएँ सक्षम होना चाहिए।",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API इंस्टॉल नहीं है",

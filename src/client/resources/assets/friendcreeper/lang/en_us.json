@@ -24,8 +24,6 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Whether friend Creepers naturally regenerate health over time.",
   "config.friendcreeper.feedOwnerCat": "Feed Owner's Cat",
   "config.friendcreeper.feedOwnerCat.tooltip": "Whether friend Creepers pick up raw fish and feed the owner's hurt cats.\nRequires Afraid of Cats to be disabled.",
-  "config.friendcreeper.dropPoppy": "Drop Poppy",
-  "config.friendcreeper.dropPoppy.tooltip": "Whether friend Creepers drop a poppy on death.",
   "config.friendcreeper.witherRoseOnLowHealth": "Wither Rose on Low Health",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Whether friend Creepers show a wither rose instead of a poppy when at low health.\nRequires Render Poppy to be enabled.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API is not installed",

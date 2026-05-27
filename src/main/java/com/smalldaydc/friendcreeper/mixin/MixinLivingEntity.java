@@ -2,7 +2,6 @@ package com.smalldaydc.friendcreeper.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.smalldaydc.friendcreeper.FriendCreeperConfig;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -21,18 +20,11 @@ import java.util.function.Consumer;
 public abstract class MixinLivingEntity {
 
     /**
-     * For tamed creepers, wrap the loot consumer so vanilla gunpowder drops
-     * are intercepted:
-     *   - dropPoppy = true  → replace each gunpowder stack with at most one
-     *                          poppy. The vanilla drop probability is
-     *                          preserved (a rolled count of 0 stays empty
-     *                          and is not dropped); when something would
-     *                          drop, it is always exactly one poppy
-     *                          regardless of looting.
-     *   - dropPoppy = false → swallow gunpowder entirely (tamed creepers
-     *                          drop no gunpowder).
-     * Non-gunpowder drops (e.g. music discs from skeleton kills) always
-     * pass through unchanged.
+     * For tamed creepers, replace each gunpowder stack with at most one
+     * poppy. The vanilla drop probability is preserved (a rolled count of
+     * 0 stays empty and is not dropped); when something would drop, it is
+     * always exactly one poppy regardless of looting. Non-gunpowder drops
+     * (e.g. music discs from skeleton kills) pass through unchanged.
      */
     @WrapOperation(method = "dropLoot(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/damage/DamageSource;ZLnet/minecraft/registry/RegistryKey;)V",
                    at = @At(value = "INVOKE",
@@ -48,10 +40,7 @@ public abstract class MixinLivingEntity {
                 && ((ITamedCreeper) (Object) creeper).friendcreeper$isTamed()) {
             Consumer<ItemStack> wrapped = stack -> {
                 if (stack.isOf(Items.GUNPOWDER)) {
-                    if (FriendCreeperConfig.get().dropPoppy) {
-                        consumer.accept(new ItemStack(Items.POPPY, Math.min(1, stack.getCount())));
-                    }
-                    // dropPoppy = false → swallow the gunpowder stack entirely
+                    consumer.accept(new ItemStack(Items.POPPY, Math.min(1, stack.getCount())));
                 } else {
                     consumer.accept(stack);
                 }

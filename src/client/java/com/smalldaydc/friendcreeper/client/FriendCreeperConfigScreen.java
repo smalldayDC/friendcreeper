@@ -36,7 +36,6 @@ public class FriendCreeperConfigScreen {
         addBooleanEntry(general, eb, "afraidOfCats", defaults.afraidOfCats, () -> config.afraidOfCats, v -> config.afraidOfCats = v);
         addBooleanEntry(general, eb, "naturalRegeneration", defaults.naturalRegeneration, () -> config.naturalRegeneration, v -> config.naturalRegeneration = v);
         addBooleanEntry(general, eb, "feedOwnerCat", defaults.feedOwnerCat, () -> config.feedOwnerCat, v -> config.feedOwnerCat = v);
-        addBooleanEntry(general, eb, "dropPoppy", defaults.dropPoppy, () -> config.dropPoppy, v -> config.dropPoppy = v);
 
         // Client
         addBooleanEntry(client, eb, "hurtSound", defaults.hurtSound, () -> config.hurtSound, v -> config.hurtSound = v);
