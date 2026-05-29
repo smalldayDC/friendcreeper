@@ -55,6 +55,11 @@ dependencies {
     modLocalRuntime("maven.modrinth:jade:${project.jade_version}")
 }
 
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+    it.options.encoding = "UTF-8"
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
