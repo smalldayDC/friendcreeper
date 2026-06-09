@@ -1,27 +1,26 @@
 package com.smalldaydc.friendcreeper.goal;
 
 import com.smalldaydc.friendcreeper.ITamedCreeper;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.mob.CreeperEntity;
-
 import java.util.EnumSet;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.Creeper;
 
 public class CreeperSitGoal extends Goal {
 
-    private final CreeperEntity creeper;
+    private final Creeper creeper;
 
-    public CreeperSitGoal(CreeperEntity creeper) {
+    public CreeperSitGoal(Creeper creeper) {
         this.creeper = creeper;
-        this.setControls(EnumSet.of(Control.MOVE, Control.JUMP));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP));
     }
 
     @Override
-    public boolean canStart() {
+    public boolean canUse() {
         return ((ITamedCreeper)(Object) creeper).friendcreeper$isSitting();
     }
 
     @Override
-    public boolean shouldContinue() {
+    public boolean canContinueToUse() {
         return ((ITamedCreeper)(Object) creeper).friendcreeper$isSitting();
     }
 }

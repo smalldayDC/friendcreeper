@@ -1,22 +1,22 @@
 package com.smalldaydc.friendcreeper.mixin;
 
 import com.smalldaydc.friendcreeper.ITamedCreeper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.CreeperIgniteGoal;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.SwellGoal;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(CreeperIgniteGoal.class)
+@Mixin(SwellGoal.class)
 public class MixinCreeperIgniteGoal {
 
-    @Shadow private CreeperEntity creeper;
+    @Shadow private Creeper creeper;
 
-    @Inject(method = "canStart", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "canUse", at = @At("RETURN"), cancellable = true)
     private void friendcreeper$canStart(CallbackInfoReturnable<Boolean> cir) {
         ITamedCreeper tc = (ITamedCreeper)(Object) creeper;
         if (!tc.friendcreeper$isTamed()) return;
@@ -36,8 +36,8 @@ public class MixinCreeperIgniteGoal {
         }
 
         // Non-player threat nearby → ignite
-        if (!(target instanceof PlayerEntity)
-                && creeper.squaredDistanceTo(target) < 9.0) {
+        if (!(target instanceof Player)
+                && creeper.distanceToSqr(target) < 9.0) {
             cir.setReturnValue(true);
         }
     }

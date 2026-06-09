@@ -1,21 +1,20 @@
 package com.smalldaydc.friendcreeper.goal;
 
 import com.smalldaydc.friendcreeper.ITamedCreeper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.player.PlayerEntity;
-
 import java.util.EnumSet;
 import java.util.UUID;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
 
 public class CreeperSuppressTargetGoal extends Goal {
 
-    private final CreeperEntity creeper;
+    private final Creeper creeper;
 
-    public CreeperSuppressTargetGoal(CreeperEntity creeper) {
+    public CreeperSuppressTargetGoal(Creeper creeper) {
         this.creeper = creeper;
-        this.setControls(EnumSet.of(Control.TARGET));
+        this.setFlags(EnumSet.of(Flag.TARGET));
     }
 
     private ITamedCreeper asTamed() {
@@ -23,13 +22,13 @@ public class CreeperSuppressTargetGoal extends Goal {
     }
 
     @Override
-    public boolean canStart() {
+    public boolean canUse() {
         return asTamed().friendcreeper$isTamed();
     }
 
     @Override
-    public boolean shouldContinue() {
-        return canStart();
+    public boolean canContinueToUse() {
+        return canUse();
     }
 
     @Override
@@ -38,11 +37,11 @@ public class CreeperSuppressTargetGoal extends Goal {
         if (target == null) return;
 
         // Keep non-player targets (mobs for defending owner/self)
-        if (!(target instanceof PlayerEntity)) return;
+        if (!(target instanceof Player)) return;
 
         // Keep avenge target
         UUID avengeUUID = asTamed().friendcreeper$getAvengeTargetUUID();
-        if (avengeUUID != null && avengeUUID.equals(target.getUuid())) return;
+        if (avengeUUID != null && avengeUUID.equals(target.getUUID())) return;
 
         // Clear all other player targets
         creeper.setTarget(null);

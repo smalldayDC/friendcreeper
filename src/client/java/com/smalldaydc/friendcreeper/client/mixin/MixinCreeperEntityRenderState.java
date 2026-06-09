@@ -3,13 +3,13 @@ package com.smalldaydc.friendcreeper.client.mixin;
 import com.smalldaydc.friendcreeper.client.IFriendCreeperRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
-import net.minecraft.client.render.item.ItemRenderState;
+import net.minecraft.client.renderer.entity.state.CreeperRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 @Environment(EnvType.CLIENT)
-@Mixin(CreeperEntityRenderState.class)
+@Mixin(CreeperRenderState.class)
 public class MixinCreeperEntityRenderState implements IFriendCreeperRenderState {
 
     @Unique private boolean friendcreeper$tamed = false;
@@ -17,8 +17,8 @@ public class MixinCreeperEntityRenderState implements IFriendCreeperRenderState 
     @Unique private boolean friendcreeper$lowHealth = false;
     @Unique private boolean friendcreeper$hasTarget = false;
     @Unique private boolean friendcreeper$fleeing = false;
-    @Unique private final ItemRenderState friendcreeper$poppyRenderState = new ItemRenderState();
-    @Unique private final ItemRenderState friendcreeper$fishRenderState = new ItemRenderState();
+    @Unique private final ItemStackRenderState friendcreeper$poppyRenderState = new ItemStackRenderState();
+    @Unique private final ItemStackRenderState friendcreeper$fishRenderState = new ItemStackRenderState();
 
     @Override
     public boolean friendcreeper$isTamed() {
@@ -71,12 +71,12 @@ public class MixinCreeperEntityRenderState implements IFriendCreeperRenderState 
     }
 
     @Override
-    public ItemRenderState friendcreeper$getPoppyRenderState() {
+    public ItemStackRenderState friendcreeper$getPoppyRenderState() {
         return friendcreeper$poppyRenderState;
     }
 
     @Override
-    public ItemRenderState friendcreeper$getFishRenderState() {
+    public ItemStackRenderState friendcreeper$getFishRenderState() {
         return friendcreeper$fishRenderState;
     }
 }

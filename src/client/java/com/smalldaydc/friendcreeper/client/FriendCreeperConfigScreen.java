@@ -6,9 +6,8 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -21,12 +20,12 @@ public class FriendCreeperConfigScreen {
 
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(Text.translatable("config.friendcreeper.title"))
+                .setTitle(Component.translatable("config.friendcreeper.title"))
                 .setSavingRunnable(FriendCreeperConfig::save);
 
         ConfigEntryBuilder eb = builder.entryBuilder();
-        ConfigCategory general = builder.getOrCreateCategory(Text.translatable("config.friendcreeper.category.general"));
-        ConfigCategory client = builder.getOrCreateCategory(Text.translatable("config.friendcreeper.category.client"));
+        ConfigCategory general = builder.getOrCreateCategory(Component.translatable("config.friendcreeper.category.general"));
+        ConfigCategory client = builder.getOrCreateCategory(Component.translatable("config.friendcreeper.category.client"));
 
         // General
         addBooleanEntry(general, eb, "allowOwnerDamage", defaults.allowOwnerDamage, () -> config.allowOwnerDamage, v -> config.allowOwnerDamage = v);
@@ -51,9 +50,9 @@ public class FriendCreeperConfigScreen {
                                         String key, boolean defaultValue,
                                         Supplier<Boolean> getter, Consumer<Boolean> setter) {
         category.addEntry(eb.startBooleanToggle(
-                Text.translatable("config.friendcreeper." + key), getter.get())
+                Component.translatable("config.friendcreeper." + key), getter.get())
                 .setDefaultValue(defaultValue)
-                .setTooltip(Text.translatable("config.friendcreeper." + key + ".tooltip"))
+                .setTooltip(Component.translatable("config.friendcreeper." + key + ".tooltip"))
                 .setSaveConsumer(setter)
                 .build());
     }

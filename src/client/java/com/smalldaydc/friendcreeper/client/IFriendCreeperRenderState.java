@@ -1,6 +1,6 @@
 package com.smalldaydc.friendcreeper.client;
 
-import net.minecraft.client.render.item.ItemRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
 
 /**
  * Duck interface for injecting custom fields into {@code CreeperEntityRenderState}.
@@ -22,6 +22,6 @@ public interface IFriendCreeperRenderState {
     boolean friendcreeper$isFleeing();
     void friendcreeper$setFleeing(boolean fleeing);
 
-    ItemRenderState friendcreeper$getPoppyRenderState();
-    ItemRenderState friendcreeper$getFishRenderState();
+    ItemStackRenderState friendcreeper$getPoppyRenderState();
+    ItemStackRenderState friendcreeper$getFishRenderState();
 }

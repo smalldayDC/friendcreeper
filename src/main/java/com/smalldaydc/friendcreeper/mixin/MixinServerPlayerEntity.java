@@ -3,26 +3,26 @@ package com.smalldaydc.friendcreeper.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
-import net.minecraft.advancement.criterion.OnKilledCriterion;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.advancements.criterion.KilledTrigger;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.Creeper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(ServerPlayerEntity.class)
+@Mixin(ServerPlayer.class)
 public abstract class MixinServerPlayerEntity {
 
-    @WrapOperation(method = "updateKilledAdvancementCriterion",
+    @WrapOperation(method = "awardKillScore",
                    at = @At(value = "INVOKE",
-                            target = "Lnet/minecraft/advancement/criterion/OnKilledCriterion;trigger(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;)V"))
-    private void friendcreeper$skipKillCriterionForTamedCreeper(OnKilledCriterion criterion,
-                                                                 ServerPlayerEntity player,
+                            target = "Lnet/minecraft/advancements/criterion/KilledTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;)V"))
+    private void friendcreeper$skipKillCriterionForTamedCreeper(KilledTrigger criterion,
+                                                                 ServerPlayer player,
                                                                  Entity entityKilled,
                                                                  DamageSource damageSource,
                                                                  Operation<Void> original) {
-        if (entityKilled instanceof CreeperEntity creeper
+        if (entityKilled instanceof Creeper creeper
                 && ((ITamedCreeper) (Object) creeper).friendcreeper$isTamed()) {
             return;
         }

@@ -1,12 +1,12 @@
 package com.smalldaydc.friendcreeper.compat.jade;
 
 import com.smalldaydc.friendcreeper.ITamedCreeper;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.PlayerConfigEntry;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.NameAndId;
+import net.minecraft.world.entity.monster.Creeper;
 import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IServerDataProvider;
 
@@ -20,28 +20,28 @@ public enum CreeperOwnerDataProvider implements IServerDataProvider<EntityAccess
 
     @Override
     public boolean shouldRequestData(EntityAccessor accessor) {
-        return accessor.getEntity() instanceof CreeperEntity creeper
+        return accessor.getEntity() instanceof Creeper creeper
                 && ((ITamedCreeper) creeper).friendcreeper$isTamed();
     }
 
     @Override
-    public void appendServerData(NbtCompound data, EntityAccessor accessor) {
-        CreeperEntity creeper = (CreeperEntity) accessor.getEntity();
+    public void appendServerData(CompoundTag data, EntityAccessor accessor) {
+        Creeper creeper = (Creeper) accessor.getEntity();
         UUID ownerUUID = ((ITamedCreeper) creeper).friendcreeper$getOwnerUUID();
         if (ownerUUID == null) return;
 
-        MinecraftServer server = creeper.getEntityWorld().getServer();
+        MinecraftServer server = creeper.level().getServer();
         if (server == null) return;
 
         // Try online player first
-        ServerPlayerEntity player = server.getPlayerManager().getPlayer(ownerUUID);
+        ServerPlayer player = server.getPlayerList().getPlayer(ownerUUID);
         if (player != null) {
             data.putString(TAG_OWNER_NAME, player.getName().getString());
             return;
         }
 
         // Fall back to NameToIdCache for offline players
-        Optional<PlayerConfigEntry> entry = server.getApiServices().nameToIdCache().getByUuid(ownerUUID);
+        Optional<NameAndId> entry = server.services().nameToIdCache().get(ownerUUID);
         entry.ifPresent(e -> data.putString(TAG_OWNER_NAME, e.name()));
     }
 

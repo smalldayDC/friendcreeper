@@ -3,27 +3,26 @@ package com.smalldaydc.friendcreeper.goal;
 import com.smalldaydc.friendcreeper.FriendCreeperConfig;
 import com.smalldaydc.friendcreeper.FriendCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.Box;
-
 import java.util.EnumSet;
 import java.util.List;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.AABB;
 
 public class CreeperPickupFishGoal extends Goal {
 
     private static final double FISH_SEARCH_RANGE = 10.0;
 
-    private final CreeperEntity creeper;
+    private final Creeper creeper;
     private ItemEntity targetFish;
     private int updateCountdownTicks;
 
-    public CreeperPickupFishGoal(CreeperEntity creeper) {
+    public CreeperPickupFishGoal(Creeper creeper) {
         this.creeper = creeper;
-        this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     private ITamedCreeper asTamed() {
@@ -31,7 +30,7 @@ public class CreeperPickupFishGoal extends Goal {
     }
 
     @Override
-    public boolean canStart() {
+    public boolean canUse() {
         ITamedCreeper tc = asTamed();
         if (!tc.friendcreeper$isTamed()) return false;
         if (tc.friendcreeper$isSitting()) return false;
@@ -49,7 +48,7 @@ public class CreeperPickupFishGoal extends Goal {
     }
 
     @Override
-    public boolean shouldContinue() {
+    public boolean canContinueToUse() {
         if (targetFish == null || !targetFish.isAlive()) return false;
         if (!asTamed().friendcreeper$isTamed()) return false;
         if (asTamed().friendcreeper$isSitting()) return false;
@@ -67,11 +66,11 @@ public class CreeperPickupFishGoal extends Goal {
     public void tick() {
         if (targetFish == null || !targetFish.isAlive()) return;
 
-        creeper.getLookControl().lookAt(targetFish, 10.0f, creeper.getMaxLookPitchChange());
+        creeper.getLookControl().setLookAt(targetFish, 10.0f, creeper.getMaxHeadXRot());
 
-        if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isIdle()) {
-            this.updateCountdownTicks = this.getTickCount(10);
-            boolean pathFound = creeper.getNavigation().startMovingTo(targetFish, FriendCreeperMod.INTERACTION_MOVE_SPEED);
+        if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isDone()) {
+            this.updateCountdownTicks = this.adjustedTickDelay(10);
+            boolean pathFound = creeper.getNavigation().moveTo(targetFish, FriendCreeperMod.INTERACTION_MOVE_SPEED);
             if (!pathFound) {
                 // Path became invalid mid-travel, give up immediately
                 targetFish = null;
@@ -80,15 +79,15 @@ public class CreeperPickupFishGoal extends Goal {
         }
 
         // Vanilla-style pickup: bounding box overlap with pickup reach expansion
-        Box pickupBox = creeper.getBoundingBox().expand(
+        AABB pickupBox = creeper.getBoundingBox().inflate(
                 FriendCreeperMod.INTERACTION_REACH_XZ, FriendCreeperMod.INTERACTION_REACH_Y, FriendCreeperMod.INTERACTION_REACH_XZ);
         if (pickupBox.intersects(targetFish.getBoundingBox())) {
-            asTamed().friendcreeper$setHeldFish(targetFish.getStack().copyWithCount(1));
-            if (targetFish.getStack().getCount() <= 1) {
+            asTamed().friendcreeper$setHeldFish(targetFish.getItem().copyWithCount(1));
+            if (targetFish.getItem().getCount() <= 1) {
                 targetFish.discard();
             } else {
                 // Must call setStack() to trigger DataTracker sync to client
-                targetFish.setStack(targetFish.getStack().copyWithCount(targetFish.getStack().getCount() - 1));
+                targetFish.setItem(targetFish.getItem().copyWithCount(targetFish.getItem().getCount() - 1));
             }
             targetFish = null;
         }
@@ -101,20 +100,20 @@ public class CreeperPickupFishGoal extends Goal {
     }
 
     private ItemEntity findNearestReachableFish() {
-        Box searchBox = creeper.getBoundingBox().expand(FISH_SEARCH_RANGE);
-        List<ItemEntity> items = creeper.getEntityWorld().getEntitiesByClass(
+        AABB searchBox = creeper.getBoundingBox().inflate(FISH_SEARCH_RANGE);
+        List<ItemEntity> items = creeper.level().getEntitiesOfClass(
                 ItemEntity.class, searchBox,
                 item -> item.isAlive()
-                        && (item.getStack().isOf(Items.COD) || item.getStack().isOf(Items.SALMON)));
+                        && (item.getItem().is(Items.COD) || item.getItem().is(Items.SALMON)));
 
         // Sort by distance so we try the closest fish first
         items.sort((a, b) -> Double.compare(
-                creeper.squaredDistanceTo(a), creeper.squaredDistanceTo(b)));
+                creeper.distanceToSqr(a), creeper.distanceToSqr(b)));
 
         for (ItemEntity item : items) {
             // Pre-check path reachability — findPathTo can return partial paths
-            Path path = creeper.getNavigation().findPathTo(item, 1);
-            if (path != null && path.reachesTarget()) {
+            Path path = creeper.getNavigation().createPath(item, 1);
+            if (path != null && path.canReach()) {
                 return item;
             }
         }

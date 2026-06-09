@@ -6,14 +6,14 @@ import com.smalldaydc.friendcreeper.ITamedCreeper;
 import com.smalldaydc.friendcreeper.client.IFriendCreeperRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.entity.CreeperEntityRenderer;
-import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.CreeperRenderer;
+import net.minecraft.client.renderer.entity.state.CreeperRenderState;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,17 +22,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
-@Mixin(CreeperEntityRenderer.class)
+@Mixin(CreeperRenderer.class)
 public class MixinCreeperEntityRenderer {
 
     @Unique private static final ItemStack POPPY_STACK = new ItemStack(Items.POPPY);
     @Unique private static final ItemStack WITHER_ROSE_STACK = new ItemStack(Items.WITHER_ROSE);
-    @Unique private static final Identifier HAPPY_TEXTURE = Identifier.of("friendcreeper", "textures/entity/creeper/happy.png");
-    @Unique private static final Identifier SAD_TEXTURE = Identifier.of("friendcreeper", "textures/entity/creeper/sad.png");
+    @Unique private static final Identifier HAPPY_TEXTURE = Identifier.fromNamespaceAndPath("friendcreeper", "textures/entity/creeper/happy.png");
+    @Unique private static final Identifier SAD_TEXTURE = Identifier.fromNamespaceAndPath("friendcreeper", "textures/entity/creeper/sad.png");
 
-    @Inject(method = "updateRenderState", at = @At("TAIL"))
-    private void friendcreeper$updateRenderState(CreeperEntity entity,
-                                                    CreeperEntityRenderState state,
+    @Inject(method = "extractRenderState", at = @At("TAIL"))
+    private void friendcreeper$updateRenderState(Creeper entity,
+                                                    CreeperRenderState state,
                                                     float tickDelta,
                                                     CallbackInfo ci) {
         ITamedCreeper tc = (ITamedCreeper) (Object) entity;
@@ -50,15 +50,15 @@ public class MixinCreeperEntityRenderer {
             // Show wither rose when low health (if enabled), poppy otherwise
             ItemStack flowerStack = (config.witherRoseOnLowHealth && lowHealth)
                     ? WITHER_ROSE_STACK : POPPY_STACK;
-            MinecraftClient.getInstance().getItemModelManager()
-                    .updateForNonLivingEntity(fcState.friendcreeper$getPoppyRenderState(),
+            Minecraft.getInstance().getItemModelResolver()
+                    .updateForNonLiving(fcState.friendcreeper$getPoppyRenderState(),
                             flowerStack, ItemDisplayContext.GROUND, entity);
 
             // Update fish render state
             ItemStack heldFish = tc.friendcreeper$getHeldFish();
             if (!heldFish.isEmpty()) {
-                MinecraftClient.getInstance().getItemModelManager()
-                        .updateForNonLivingEntity(fcState.friendcreeper$getFishRenderState(),
+                Minecraft.getInstance().getItemModelResolver()
+                        .updateForNonLiving(fcState.friendcreeper$getFishRenderState(),
                                 heldFish, ItemDisplayContext.GROUND, entity);
             } else {
                 fcState.friendcreeper$getFishRenderState().clear();
@@ -69,8 +69,8 @@ public class MixinCreeperEntityRenderer {
         }
     }
 
-    @Inject(method = "getTexture", at = @At("RETURN"), cancellable = true)
-    private void friendcreeper$getTexture(CreeperEntityRenderState state,
+    @Inject(method = "getTextureLocation", at = @At("RETURN"), cancellable = true)
+    private void friendcreeper$getTexture(CreeperRenderState state,
                                            CallbackInfoReturnable<Identifier> cir) {
         IFriendCreeperRenderState fcState = (IFriendCreeperRenderState) state;
         if (!fcState.friendcreeper$isTamed()) return;

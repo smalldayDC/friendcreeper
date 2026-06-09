@@ -2,15 +2,14 @@ package com.smalldaydc.friendcreeper;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Box;
-
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.AABB;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,16 +42,16 @@ public class FriendCreeperMod implements ModInitializer {
 
         // Cancel damage from owner + self-defense against non-player attackers
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
-            if (!(entity instanceof CreeperEntity creeper)) return true;
+            if (!(entity instanceof Creeper creeper)) return true;
             ITamedCreeper tc = (ITamedCreeper) creeper;
-            LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
+            LivingEntity attacker = source.getEntity() instanceof LivingEntity l ? l : null;
             if (attacker == null) return true;
 
             // Non-player attacker → allow damage + trigger self-defense (tamed and untamed)
-            if (!(attacker instanceof PlayerEntity player)) {
+            if (!(attacker instanceof Player player)) {
                 if ((creeper.getTarget() == null || !creeper.getTarget().isAlive())
-                        && creeper.canSee(attacker)
-                        && creeper.squaredDistanceTo(attacker) <= REVENGE_RANGE_SQ) {
+                        && creeper.hasLineOfSight(attacker)
+                        && creeper.distanceToSqr(attacker) <= REVENGE_RANGE_SQ) {
                     if (tc.friendcreeper$isTamed() && !tc.friendcreeper$isSitting()) {
                         dropHeldFish(creeper);
                     }
@@ -64,29 +63,29 @@ public class FriendCreeperMod implements ModInitializer {
             // Owner damage protection (tamed only)
             if (!tc.friendcreeper$isTamed() || FriendCreeperConfig.get().allowOwnerDamage) return true;
             UUID ownerUUID = tc.friendcreeper$getOwnerUUID();
-            return ownerUUID == null || !ownerUUID.equals(player.getUuid());
+            return ownerUUID == null || !ownerUUID.equals(player.getUUID());
         });
 
         // Owner attacked → creeper targets attacker (only if creeper can see them)
         ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamage, damage, absorbed) -> {
-            if (!(entity instanceof PlayerEntity owner)) return;
+            if (!(entity instanceof Player owner)) return;
             if (damage <= 0) return;
             if (!FriendCreeperConfig.get().revengeOwner) return;
-            LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
+            LivingEntity attacker = source.getEntity() instanceof LivingEntity l ? l : null;
             if (attacker == null || attacker == owner) return;
-            PlayerEntity attackerPlayer = attacker instanceof PlayerEntity ap ? ap : null;
-            if (attackerPlayer != null && (attackerPlayer.isCreative() || owner.isTeammate(attackerPlayer))) return;
+            Player attackerPlayer = attacker instanceof Player ap ? ap : null;
+            if (attackerPlayer != null && (attackerPlayer.isCreative() || owner.isAlliedTo(attackerPlayer))) return;
 
-            Box searchBox = Box.of(owner.getEntityPos(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
-            UUID attackerUUID = attackerPlayer != null ? attackerPlayer.getUuid() : null;
-            owner.getEntityWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
+            AABB searchBox = AABB.ofSize(owner.position(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
+            UUID attackerUUID = attackerPlayer != null ? attackerPlayer.getUUID() : null;
+            owner.level().getEntitiesOfClass(Creeper.class, searchBox, c -> {
                 ITamedCreeper tc = (ITamedCreeper) c;
                 return tc.friendcreeper$isTamed()
-                        && owner.getUuid().equals(tc.friendcreeper$getOwnerUUID())
+                        && owner.getUUID().equals(tc.friendcreeper$getOwnerUUID())
                         && !tc.friendcreeper$isSitting();
             }).forEach(c -> {
-                if (!c.canSee(attacker)) return;
-                if (c.squaredDistanceTo(attacker) > REVENGE_RANGE_SQ) return;
+                if (!c.hasLineOfSight(attacker)) return;
+                if (c.distanceToSqr(attacker) > REVENGE_RANGE_SQ) return;
                 ITamedCreeper tc = (ITamedCreeper) c;
                 // Drop held fish before engaging
                 dropHeldFish(c);
@@ -98,7 +97,7 @@ public class FriendCreeperMod implements ModInitializer {
         // Clear avenge target when that player dies + drop held fish on creeper death
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             // Drop held fish when a tamed creeper dies
-            if (entity instanceof CreeperEntity creeper) {
+            if (entity instanceof Creeper creeper) {
                 ITamedCreeper tc = (ITamedCreeper) creeper;
                 if (tc.friendcreeper$isTamed()) {
                     dropHeldFish(creeper);
@@ -106,12 +105,12 @@ public class FriendCreeperMod implements ModInitializer {
             }
 
             // Clear avenge target when that player dies
-            if (!(entity instanceof PlayerEntity dead)) return;
-            Box searchBox = Box.of(entity.getEntityPos(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
-            entity.getEntityWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
+            if (!(entity instanceof Player dead)) return;
+            AABB searchBox = AABB.ofSize(entity.position(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
+            entity.level().getEntitiesOfClass(Creeper.class, searchBox, c -> {
                 ITamedCreeper tc = (ITamedCreeper) c;
                 UUID av = tc.friendcreeper$getAvengeTargetUUID();
-                return av != null && av.equals(dead.getUuid());
+                return av != null && av.equals(dead.getUUID());
             }).forEach(c -> ((ITamedCreeper) c).friendcreeper$setAvengeTargetUUID(null));
         });
     }
@@ -120,31 +119,31 @@ public class FriendCreeperMod implements ModInitializer {
      * Drop the creeper's held fish as an item entity on the ground.
      * Does nothing if the creeper is not holding a fish.
      */
-    public static void dropHeldFish(CreeperEntity creeper) {
+    public static void dropHeldFish(Creeper creeper) {
         ITamedCreeper tc = (ITamedCreeper) creeper;
         ItemStack fish = tc.friendcreeper$getHeldFish();
         if (fish.isEmpty()) return;
         ItemEntity drop = new ItemEntity(
-                creeper.getEntityWorld(),
+                creeper.level(),
                 creeper.getX(), creeper.getY() + 0.3, creeper.getZ(),
                 fish.copy());
-        creeper.getEntityWorld().spawnEntity(drop);
+        creeper.level().addFreshEntity(drop);
         tc.friendcreeper$setHeldFish(ItemStack.EMPTY);
     }
 
     /**
      * Find hurt cats belonging to the same owner within the given range.
      */
-    private static List<CatEntity> findHurtOwnerCats(CreeperEntity creeper, double range) {
+    private static List<Cat> findHurtOwnerCats(Creeper creeper, double range) {
         UUID ownerUUID = ((ITamedCreeper) creeper).friendcreeper$getOwnerUUID();
         if (ownerUUID == null) return List.of();
-        Box searchBox = creeper.getBoundingBox().expand(range);
-        return creeper.getEntityWorld().getEntitiesByClass(
-                CatEntity.class, searchBox,
+        AABB searchBox = creeper.getBoundingBox().inflate(range);
+        return creeper.level().getEntitiesOfClass(
+                Cat.class, searchBox,
                 cat -> cat.isAlive()
-                        && cat.isTamed()
+                        && cat.isTame()
                         && cat.getOwner() != null
-                        && ownerUUID.equals(cat.getOwner().getUuid())
+                        && ownerUUID.equals(cat.getOwner().getUUID())
                         && cat.getHealth() < cat.getMaxHealth());
     }
 
@@ -153,13 +152,13 @@ public class FriendCreeperMod implements ModInitializer {
      * Returns null if no reachable hurt cat is found.
      */
     @Nullable
-    public static CatEntity findNearestReachableHurtOwnerCat(CreeperEntity creeper) {
-        List<CatEntity> cats = findHurtOwnerCats(creeper, CAT_SEARCH_RANGE);
+    public static Cat findNearestReachableHurtOwnerCat(Creeper creeper) {
+        List<Cat> cats = findHurtOwnerCats(creeper, CAT_SEARCH_RANGE);
         cats.sort((a, b) -> Double.compare(
-                creeper.squaredDistanceTo(a), creeper.squaredDistanceTo(b)));
-        for (CatEntity cat : cats) {
-            Path path = creeper.getNavigation().findPathTo(cat, 1);
-            if (path != null && path.reachesTarget()) {
+                creeper.distanceToSqr(a), creeper.distanceToSqr(b)));
+        for (Cat cat : cats) {
+            Path path = creeper.getNavigation().createPath(cat, 1);
+            if (path != null && path.canReach()) {
                 return cat;
             }
         }

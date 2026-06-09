@@ -1,8 +1,8 @@
 package com.smalldaydc.friendcreeper;
 
-import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
+import net.minecraft.world.item.ItemStack;
 
 public interface ITamedCreeper {
     boolean friendcreeper$isTamed();
