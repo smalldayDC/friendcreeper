@@ -1,0 +1,11 @@
+name: Other
+description: Other issues
+title: "[Other]: "
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please describe your issue.
+    validations:
+      required: true
