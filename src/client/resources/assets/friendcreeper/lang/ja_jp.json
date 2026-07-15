@@ -28,7 +28,7 @@
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "フレンドクリーパーが低体力時にポピーの代わりにウィザーローズを表示するかどうか。\nポピーの描画を有効にする必要があります。",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API がインストールされていません",
   "screen.friendcreeper.noconfig.line2": "Friend Creeper はグラフィカル設定に Cloth Config API が必要です",
-  "screen.friendcreeper.noconfig.line3": "Modrinth または CurseForge からダウンロードできます。",
+  "screen.friendcreeper.noconfig.line3": "Modrinth または CurseForge からダウンロードしてください。",
   "screen.friendcreeper.noconfig.back": "戻る",
   "modmenu.descriptionTranslation.friendcreeper": "火薬でクリーパーを手懐けて、あなたの友達にしよう。",
   "jade.friendcreeper.owner": "オーナー：%s",

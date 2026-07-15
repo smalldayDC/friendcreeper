@@ -28,7 +28,7 @@
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "क्या कम स्वास्थ्य पर मित्र क्रीपर पॉपी की जगह विदर गुलाब दिखाएगा।\nपॉपी दिखाएँ सक्षम होना चाहिए।",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API इंस्टॉल नहीं है",
   "screen.friendcreeper.noconfig.line2": "Friend Creeper को ग्राफ़िकल कॉन्फ़िगरेशन के लिए Cloth Config API की आवश्यकता है",
-  "screen.friendcreeper.noconfig.line3": "आप इसे Modrinth या CurseForge से डाउनलोड कर सकते हैं।",
+  "screen.friendcreeper.noconfig.line3": "कृपया इसे Modrinth या CurseForge से डाउनलोड करें।",
   "screen.friendcreeper.noconfig.back": "वापस",
   "modmenu.descriptionTranslation.friendcreeper": "बारूद से क्रीपर को पालतू बनाएँ और उसे अपना दोस्त बनाएँ।",
   "jade.friendcreeper.owner": "मालिक: %s",

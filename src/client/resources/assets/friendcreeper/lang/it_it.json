@@ -28,7 +28,7 @@
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Se i Creeper amici mostrano una rosa dell'appassimento al posto del papavero quando hanno poca vita.\nMostra papavero deve essere attivato.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API non è installata",
   "screen.friendcreeper.noconfig.line2": "Friend Creeper richiede Cloth Config API per la configurazione grafica",
-  "screen.friendcreeper.noconfig.line3": "Puoi scaricarla da Modrinth o CurseForge.",
+  "screen.friendcreeper.noconfig.line3": "Scaricala da Modrinth o CurseForge.",
   "screen.friendcreeper.noconfig.back": "Indietro",
   "modmenu.descriptionTranslation.friendcreeper": "Addomestica i Creeper con la polvere da sparo e rendili tuoi amici.",
   "jade.friendcreeper.owner": "Proprietario: %s",

@@ -28,7 +28,7 @@
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Apakah Creeper teman menampilkan mawar Wither alih-alih poppy saat kesehatannya rendah.\nTampilkan poppy harus diaktifkan.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API belum diinstal",
   "screen.friendcreeper.noconfig.line2": "Friend Creeper memerlukan Cloth Config API untuk konfigurasi grafis",
-  "screen.friendcreeper.noconfig.line3": "Anda dapat mengunduhnya dari Modrinth atau CurseForge.",
+  "screen.friendcreeper.noconfig.line3": "Silakan unduh dari Modrinth atau CurseForge.",
   "screen.friendcreeper.noconfig.back": "Kembali",
   "modmenu.descriptionTranslation.friendcreeper": "Jinakkan Creeper dengan bubuk mesiu dan jadikan mereka temanmu.",
   "jade.friendcreeper.owner": "Pemilik: %s",

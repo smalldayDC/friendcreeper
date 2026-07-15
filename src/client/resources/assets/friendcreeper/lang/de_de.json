@@ -28,7 +28,7 @@
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Ob befreundete Creeper bei niedriger Gesundheit eine Withered Rose statt einer Mohnblume anzeigen.\nMohnblume anzeigen muss aktiviert sein.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API ist nicht installiert",
   "screen.friendcreeper.noconfig.line2": "Friend Creeper benötigt die Cloth Config API für die grafische Konfiguration",
-  "screen.friendcreeper.noconfig.line3": "Du kannst es von Modrinth oder CurseForge herunterladen.",
+  "screen.friendcreeper.noconfig.line3": "Bitte lade es von Modrinth oder CurseForge herunter.",
   "screen.friendcreeper.noconfig.back": "Zurück",
   "modmenu.descriptionTranslation.friendcreeper": "Zähme Creeper mit Schwarzpulver und mache sie zu deinem Freund.",
   "jade.friendcreeper.owner": "Besitzer: %s",

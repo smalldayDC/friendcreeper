@@ -28,7 +28,7 @@
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Se os Creepers amigos mostram uma rosa do Wither em vez de uma papoula quando estão com pouca vida.\nMostrar papoula deve estar ativado.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API não está instalada",
   "screen.friendcreeper.noconfig.line2": "Friend Creeper precisa do Cloth Config API para a configuração gráfica",
-  "screen.friendcreeper.noconfig.line3": "Você pode baixá-la no Modrinth ou CurseForge.",
+  "screen.friendcreeper.noconfig.line3": "Baixe-a no Modrinth ou CurseForge.",
   "screen.friendcreeper.noconfig.back": "Voltar",
   "modmenu.descriptionTranslation.friendcreeper": "Domestique Creepers com pólvora e torne-os seu amigo.",
   "jade.friendcreeper.owner": "Dono: %s",

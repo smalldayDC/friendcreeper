@@ -28,7 +28,7 @@
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Будет ли дружественный крипер показывать розу увядания вместо мака при низком здоровье.\nТребуется включённое отображение мака.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API не установлен",
   "screen.friendcreeper.noconfig.line2": "Friend Creeper требует Cloth Config API для графической настройки",
-  "screen.friendcreeper.noconfig.line3": "Вы можете скачать его с Modrinth или CurseForge.",
+  "screen.friendcreeper.noconfig.line3": "Пожалуйста, скачайте его с Modrinth или CurseForge.",
   "screen.friendcreeper.noconfig.back": "Назад",
   "modmenu.descriptionTranslation.friendcreeper": "Приручите крипера порохом и сделайте его своим другом.",
   "jade.friendcreeper.owner": "Владелец: %s",
