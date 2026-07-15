@@ -12,9 +12,11 @@ public class CreeperFollowOwnerGoal extends Goal {
 
     private static final double FOLLOW_START_DISTANCE = 10.0;
     private static final double FOLLOW_STOP_DISTANCE  = 3.0;
+    private static final double MAX_FOLLOW_DISTANCE   = 32.0;
     private static final double MOVE_SPEED            = 1.0;
     private static final double START_SQ = FOLLOW_START_DISTANCE * FOLLOW_START_DISTANCE;
     private static final double STOP_SQ  = FOLLOW_STOP_DISTANCE  * FOLLOW_STOP_DISTANCE;
+    private static final double MAX_SQ   = MAX_FOLLOW_DISTANCE * MAX_FOLLOW_DISTANCE;
 
     private final Creeper creeper;
     private Player owner;
@@ -44,7 +46,8 @@ public class CreeperFollowOwnerGoal extends Goal {
         owner = creeper.level().getPlayerByUUID(ownerUUID);
         if (owner == null || !owner.isAlive() || owner.isSpectator()) return false;
 
-        return creeper.distanceToSqr(owner) > START_SQ;
+        double distSq = creeper.distanceToSqr(owner);
+        return distSq > START_SQ && distSq <= MAX_SQ;
     }
 
     @Override
@@ -55,7 +58,8 @@ public class CreeperFollowOwnerGoal extends Goal {
         if (creeper.getTarget() != null && creeper.getTarget().isAlive()) return false;
         // No progress for 5 consecutive recalculations → owner unreachable
         if (noProgressCount >= 5) return false;
-        return creeper.distanceToSqr(owner) > STOP_SQ;
+        double distSq = creeper.distanceToSqr(owner);
+        return distSq > STOP_SQ && distSq <= MAX_SQ;
     }
 
     @Override
