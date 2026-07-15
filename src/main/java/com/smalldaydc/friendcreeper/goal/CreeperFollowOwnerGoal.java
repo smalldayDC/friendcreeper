@@ -12,7 +12,7 @@ public class CreeperFollowOwnerGoal extends Goal {
 
     private static final double FOLLOW_START_DISTANCE = 10.0;
     private static final double FOLLOW_STOP_DISTANCE  = 3.0;
-    private static final double MAX_FOLLOW_DISTANCE   = 32.0;
+    private static final double MAX_FOLLOW_DISTANCE   = 64.0;
     private static final double MOVE_SPEED            = 1.0;
     private static final double START_SQ = FOLLOW_START_DISTANCE * FOLLOW_START_DISTANCE;
     private static final double STOP_SQ  = FOLLOW_STOP_DISTANCE  * FOLLOW_STOP_DISTANCE;
