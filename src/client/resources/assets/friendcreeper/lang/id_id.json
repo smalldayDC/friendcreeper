@@ -30,7 +30,7 @@
   "screen.friendcreeper.noconfig.line2": "Friend Creeper memerlukan Cloth Config API untuk konfigurasi grafis",
   "screen.friendcreeper.noconfig.line3": "Silakan unduh dari Modrinth atau CurseForge.",
   "screen.friendcreeper.noconfig.back": "Kembali",
-  "modmenu.descriptionTranslation.friendcreeper": "Jinakkan Creeper dan jadikan mereka temanmu.",
+  "modmenu.descriptionTranslation.friendcreeper": "Jinakkan Creeper dengan bubuk mesiu dan jadikan mereka temanmu.",
   "jade.friendcreeper.owner": "Pemilik: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "Pemilik Creeper teman"
 }

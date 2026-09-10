@@ -30,7 +30,7 @@
   "screen.friendcreeper.noconfig.line2": "Friend Creeper को ग्राफ़िकल कॉन्फ़िगरेशन के लिए Cloth Config API की आवश्यकता है",
   "screen.friendcreeper.noconfig.line3": "कृपया इसे Modrinth या CurseForge से डाउनलोड करें।",
   "screen.friendcreeper.noconfig.back": "वापस",
-  "modmenu.descriptionTranslation.friendcreeper": "क्रीपर को पालतू बनाएँ और उसे अपना दोस्त बनाएँ।",
+  "modmenu.descriptionTranslation.friendcreeper": "बारूद से क्रीपर को पालतू बनाएँ और उसे अपना दोस्त बनाएँ।",
   "jade.friendcreeper.owner": "मालिक: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "मित्र क्रीपर का मालिक"
 }
