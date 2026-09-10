@@ -30,7 +30,7 @@
   "screen.friendcreeper.noconfig.line2": "Friend Creeper nécessite Cloth Config API pour la configuration graphique",
   "screen.friendcreeper.noconfig.line3": "Veuillez le télécharger depuis Modrinth ou CurseForge.",
   "screen.friendcreeper.noconfig.back": "Retour",
-  "modmenu.descriptionTranslation.friendcreeper": "Apprivoisez les Creepers avec de la poudre à canon et faites-en votre ami.",
+  "modmenu.descriptionTranslation.friendcreeper": "Apprivoisez les Creepers et faites-en votre ami.",
   "jade.friendcreeper.owner": "Propriétaire : %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "Propriétaire du Creeper ami"
 }

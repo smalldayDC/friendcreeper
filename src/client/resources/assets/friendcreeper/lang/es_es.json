@@ -30,7 +30,7 @@
   "screen.friendcreeper.noconfig.line2": "Friend Creeper requiere Cloth Config API para la configuración gráfica",
   "screen.friendcreeper.noconfig.line3": "Por favor, descárgala desde Modrinth o CurseForge.",
   "screen.friendcreeper.noconfig.back": "Volver",
-  "modmenu.descriptionTranslation.friendcreeper": "Domestica Creepers con pólvora y hazlos tu amigo.",
+  "modmenu.descriptionTranslation.friendcreeper": "Domestica Creepers y hazlos tu amigo.",
   "jade.friendcreeper.owner": "Dueño: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "Dueño del Creeper amigo"
 }

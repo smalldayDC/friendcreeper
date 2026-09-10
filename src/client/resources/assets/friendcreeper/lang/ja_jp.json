@@ -30,7 +30,7 @@
   "screen.friendcreeper.noconfig.line2": "Friend Creeper はグラフィカル設定に Cloth Config API が必要です",
   "screen.friendcreeper.noconfig.line3": "Modrinth または CurseForge からダウンロードしてください。",
   "screen.friendcreeper.noconfig.back": "戻る",
-  "modmenu.descriptionTranslation.friendcreeper": "火薬でクリーパーを手懐けて、あなたの友達にしよう。",
+  "modmenu.descriptionTranslation.friendcreeper": "クリーパーを手懐けて、あなたの友達にしよう。",
   "jade.friendcreeper.owner": "オーナー：%s",
   "config.jade.plugin_friendcreeper.creeper_owner": "フレンドクリーパーのオーナー"
 }
