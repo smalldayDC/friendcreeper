@@ -23,6 +23,12 @@ public class FriendCreeperNoConfigScreen extends Screen {
     private static final URI MODRINTH_URL = URI.create("https://modrinth.com/mod/cloth-config");
     private static final URI CURSEFORGE_URL = URI.create("https://www.curseforge.com/minecraft/mc-mods/cloth-config");
 
+    private static final Component LINE1 = Component.translatable("screen.friendcreeper.noconfig.line1");
+    private static final Component LINE2 = Component.translatable("screen.friendcreeper.noconfig.line2");
+    // 第三行的三种样子：无下划线 / Modrinth 下划线 / CurseForge 下划线
+    private static final Component LINE3 = buildLine3(null);
+    private static final Component LINE3_MODRINTH = buildLine3(MODRINTH_URL);
+    private static final Component LINE3_CURSEFORGE = buildLine3(CURSEFORGE_URL);
     private static final int LINE_HEIGHT = 15;
 
     private final Screen parent;
@@ -45,9 +51,11 @@ public class FriendCreeperNoConfigScreen extends Screen {
     public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
-        // 先找出鼠标下方的链接，再带着下划线绘制
-        URI hoveredLink = findLinkAt(mouseX, mouseY);
-        visitLines(context.textRenderer(GuiGraphics.HoveredTextEffects.TOOLTIP_AND_CURSOR), hoveredLink);
+        URI hovered = findLinkAt(mouseX, mouseY);
+        Component line3 = MODRINTH_URL.equals(hovered) ? LINE3_MODRINTH
+                : CURSEFORGE_URL.equals(hovered) ? LINE3_CURSEFORGE
+                : LINE3;
+        visitLines(context.textRenderer(GuiGraphics.HoveredTextEffects.TOOLTIP_AND_CURSOR), line3);
     }
 
     @Override
@@ -55,41 +63,38 @@ public class FriendCreeperNoConfigScreen extends Screen {
         if (super.mouseClicked(event, doubleClick)) {
             return true;
         }
-        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
-            URI link = findLinkAt((int) event.x(), (int) event.y());
-            if (link != null) {
-                ConfirmLinkScreen.confirmLinkNow(this, link, true);
-                return true;
-            }
+        URI link = event.button() == InputConstants.MOUSE_BUTTON_LEFT ? findLinkAt((int) event.x(), (int) event.y()) : null;
+        if (link == null) {
+            return false;
         }
-        return false;
+        ConfirmLinkScreen.confirmLinkNow(this, link, true);
+        return true;
     }
 
-    private void visitLines(ActiveTextCollector collector, @Nullable URI hoveredLink) {
+    private void visitLines(ActiveTextCollector collector, Component line3) {
         int x = this.width / 2;
         int y = this.height / 2 - 20;
-        collector.accept(TextAlignment.CENTER, x, y, Component.translatable("screen.friendcreeper.noconfig.line1"));
-        collector.accept(TextAlignment.CENTER, x, y + LINE_HEIGHT, Component.translatable("screen.friendcreeper.noconfig.line2"));
-        collector.accept(TextAlignment.CENTER, x, y + LINE_HEIGHT * 2, Component.translatable("screen.friendcreeper.noconfig.line3",
-                link("Modrinth", MODRINTH_URL, hoveredLink),
-                link("CurseForge", CURSEFORGE_URL, hoveredLink)));
+        collector.accept(TextAlignment.CENTER, x, y, LINE1);
+        collector.accept(TextAlignment.CENTER, x, y + LINE_HEIGHT, LINE2);
+        collector.accept(TextAlignment.CENTER, x, y + LINE_HEIGHT * 2, line3);
     }
 
     @Nullable
     private URI findLinkAt(int x, int y) {
         ActiveTextCollector.ClickableStyleFinder finder = new ActiveTextCollector.ClickableStyleFinder(this.font, x, y);
-        visitLines(finder, null);
-        return linkOf(finder.result());
+        visitLines(finder, LINE3);
+        return finder.result() != null && finder.result().getClickEvent() instanceof ClickEvent.OpenUrl(URI uri) ? uri : null;
+    }
+
+    private static Component buildLine3(@Nullable URI hoveredLink) {
+        return Component.translatable("screen.friendcreeper.noconfig.line3",
+                link("Modrinth", MODRINTH_URL, hoveredLink),
+                link("CurseForge", CURSEFORGE_URL, hoveredLink));
     }
 
     private static Component link(String name, URI url, @Nullable URI hoveredLink) {
-        return Component.literal(name).withStyle(style -> style
+        return Component.literal(name).withStyle(Style.EMPTY
                 .withClickEvent(new ClickEvent.OpenUrl(url))
                 .withUnderlined(url.equals(hoveredLink)));
-    }
-
-    @Nullable
-    private static URI linkOf(@Nullable Style style) {
-        return style != null && style.getClickEvent() instanceof ClickEvent.OpenUrl(URI uri) ? uri : null;
     }
 }
