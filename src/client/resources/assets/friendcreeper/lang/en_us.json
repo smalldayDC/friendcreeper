@@ -28,7 +28,7 @@
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Whether friend Creepers show a wither rose instead of a poppy when at low health.\nRequires Render Poppy to be enabled.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API is not installed",
   "screen.friendcreeper.noconfig.line2": "Friend Creeper requires Cloth Config API for graphical configuration",
-  "screen.friendcreeper.noconfig.line3": "Please download it from Modrinth or CurseForge.",
+  "screen.friendcreeper.noconfig.line3": "Please download it from %s or %s.",
   "screen.friendcreeper.noconfig.back": "Back",
   "jade.friendcreeper.owner": "Owner: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "Friend Creeper Owner"
