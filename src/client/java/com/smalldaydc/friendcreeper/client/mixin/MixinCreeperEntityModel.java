@@ -36,21 +36,21 @@ public class MixinCreeperEntityModel {
     // against the body's own face (tested and reverted).
     @Unique private static final float Z_EMBED = 0.7f;
 
-    // CreeperModel doesn't keep "body" as a field (unlike head/legs), so it can't be reached via
-    // @Accessor - only via a string lookup on the shared root part. Cache it once instead of
-    // paying that lookup every frame for every rendered creeper.
-    @Unique private static ModelPart bodyPart;
+    // CreeperModel doesn't keep "body" as a field, so look it up once per model instance.
+    // Must not be static: multiple CreeperModel instances exist (main model, charged layer,
+    // and new copies after resource reloads), and a static cache would move the wrong body.
+    @Unique private ModelPart friendcreeper$body;
 
     @Inject(method = "setupAnim", at = @At("TAIL"))
     private void friendcreeper$applySitPose(CreeperRenderState state, CallbackInfo ci) {
 
-        if (bodyPart == null) {
-            bodyPart = ((Model<?>) (Object) this).root().getChild("body");
+        if (friendcreeper$body == null) {
+            friendcreeper$body = ((Model<?>) (Object) this).root().getChild("body");
         }
 
         CreeperEntityModelAccessor acc = (CreeperEntityModelAccessor)(Object) this;
         ModelPart head       = acc.friendcreeper$getHead();
-        ModelPart body       = bodyPart;
+        ModelPart body       = friendcreeper$body;
         ModelPart leftFront  = acc.friendcreeper$getLeftFrontLeg();
         ModelPart rightFront = acc.friendcreeper$getRightFrontLeg();
         ModelPart leftHind   = acc.friendcreeper$getLeftHindLeg();
