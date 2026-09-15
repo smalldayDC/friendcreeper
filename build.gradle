@@ -79,7 +79,7 @@ processResources {
 gradle.projectsEvaluated {
     publishMods {
         if (!project.hasProperty('build.release')) {
-            return println('Publishing is disabled, use the CI workflow or pass -Pbuild.release=true')
+            return
         }
 
         def modVersion = project.version.toString()
