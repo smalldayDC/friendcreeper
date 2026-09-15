@@ -122,7 +122,7 @@ gradle.projectsEvaluated {
                 minecraftVersions.add(project.minecraft_version)
                 modLoaders.add('fabric')
                 clientRequired = true
-                serverRequired = false
+                serverRequired = true
             }
         }
     }
