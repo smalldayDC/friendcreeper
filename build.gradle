@@ -82,6 +82,13 @@ gradle.projectsEvaluated {
             return
         }
 
+        def releaseDestination = project.findProperty('build.release.destination')
+        if (!releaseDestination) {
+            return println('build.release.destination must be defined (expected: MR+CF, MR, CF)')
+        }
+        def publishModrinth = releaseDestination.contains('MR')
+        def publishCurseforge = releaseDestination.contains('CF')
+
         def modVersion = project.version.toString()
         if (modVersion.contains('alpha') || modVersion.contains('beta')) {
             return println("Refusing to publish non-stable version: ${modVersion}")
@@ -90,13 +97,33 @@ gradle.projectsEvaluated {
         changelog = providers.environmentVariable('CHANGELOG').orElse('')
         type = STABLE
 
-        modrinth {
-            accessToken = providers.environmentVariable('MODRINTH_TOKEN')
-            projectId = 'zJk1s6MI'
-            file = remapJar.archiveFile
-            displayName = "Friend Creeper ${modVersion}"
-            minecraftVersions.add(project.minecraft_version)
-            modLoaders.add('fabric')
+        def releaseTitle = "Friend Creeper ${modVersion} for Minecraft ${project.minecraft_version}"
+        def releaseVersion = "v${modVersion}"
+
+        if (publishModrinth) {
+            modrinth {
+                accessToken = providers.environmentVariable('MODRINTH_TOKEN')
+                projectId = 'zJk1s6MI'
+                file = remapJar.archiveFile
+                displayName = releaseTitle
+                version = releaseVersion
+                minecraftVersions.add(project.minecraft_version)
+                modLoaders.add('fabric')
+            }
+        }
+
+        if (publishCurseforge) {
+            curseforge {
+                accessToken = providers.environmentVariable('CURSEFORGE_TOKEN')
+                projectId = '1518666'
+                file = remapJar.archiveFile
+                displayName = releaseTitle
+                version = releaseVersion
+                minecraftVersions.add(project.minecraft_version)
+                modLoaders.add('fabric')
+                clientRequired = true
+                serverRequired = false
+            }
         }
     }
 }

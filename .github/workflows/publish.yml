@@ -1,4 +1,4 @@
-name: Publish to Modrinth
+name: Publish to Platforms
 
 on:
   push:
@@ -36,7 +36,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Build and publish
-        run: ./gradlew build publishModrinth -Pbuild.release=true
+        run: ./gradlew build publishMods -Pbuild.release=true -Pbuild.release.destination=MR+CF
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           CHANGELOG: ${{ steps.tag.outputs.message }}
