@@ -42,9 +42,15 @@ public class FriendCreeperNoConfigScreen extends Screen {
     protected void init() {
         this.addRenderableWidget(Button.builder(
                 Component.translatable("screen.friendcreeper.noconfig.back"),
-                button -> this.minecraft.setScreen(parent))
+                button -> this.onClose())
                 .bounds(this.width / 2 - 75, this.height / 2 + 40, 150, 20)
                 .build());
+    }
+
+    // ESC 默认会 setScreen(null) 回到标题屏幕，这里改为返回 Mod Menu
+    @Override
+    public void onClose() {
+        this.minecraft.setScreen(parent);
     }
 
     @Override
