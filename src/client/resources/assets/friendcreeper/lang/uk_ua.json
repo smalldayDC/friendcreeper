@@ -1,5 +1,6 @@
 {
   "config.friendcreeper.title": "Налаштування Friend Creeper",
+  "config.friendcreeper.search": "Пошук…",
   "config.friendcreeper.category.general": "Загальні",
   "config.friendcreeper.category.client": "Клієнт",
   "config.friendcreeper.allowOwnerDamage": "Шкода від власника",
@@ -26,10 +27,6 @@
   "config.friendcreeper.feedOwnerCat.tooltip": "Чи буде дружній кріпер підбирати сиру рибу та годувати поранених котів власника.\nПотрібно вимкнути страх котів.",
   "config.friendcreeper.witherRoseOnLowHealth": "Троянда висушення при низькому здоров'ї",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Чи буде дружній кріпер показувати троянду висушення замість маку при низькому здоров'ї.\nПотрібно увімкнути відображення маку.",
-  "screen.friendcreeper.noconfig.line1": "Cloth Config API не встановлено",
-  "screen.friendcreeper.noconfig.line2": "Friend Creeper потребує Cloth Config API для графічного налаштування",
-  "screen.friendcreeper.noconfig.line3": "Будь ласка, завантажте його з %s або %s.",
-  "screen.friendcreeper.noconfig.back": "Назад",
   "modmenu.descriptionTranslation.friendcreeper": "Приручіть кріпера порохом та зробіть його своїм другом.",
   "jade.friendcreeper.owner": "Власник: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "Власник дружнього кріпера"

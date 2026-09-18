@@ -1,5 +1,6 @@
 {
   "config.friendcreeper.title": "ตั้งค่า Friend Creeper",
+  "config.friendcreeper.search": "ค้นหา...",
   "config.friendcreeper.category.general": "ทั่วไป",
   "config.friendcreeper.category.client": "ไคลเอนต์",
   "config.friendcreeper.allowOwnerDamage": "อนุญาตเจ้าของทำดาเมจ",
@@ -26,10 +27,6 @@
   "config.friendcreeper.feedOwnerCat.tooltip": "ครีปเปอร์เพื่อนจะเก็บปลาดิบและให้อาหารแมวที่บาดเจ็บของเจ้าของหรือไม่\nต้องปิดใช้งานกลัวแมว",
   "config.friendcreeper.witherRoseOnLowHealth": "ดอกกุหลาบวิเทอร์เมื่อพลังชีวิตต่ำ",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "ครีปเปอร์เพื่อนจะแสดงดอกกุหลาบวิเทอร์แทนดอกป๊อปปี้เมื่อพลังชีวิตต่ำหรือไม่\nต้องเปิดใช้งานแสดงดอกป๊อปปี้",
-  "screen.friendcreeper.noconfig.line1": "ยังไม่ได้ติดตั้ง Cloth Config API",
-  "screen.friendcreeper.noconfig.line2": "Friend Creeper ต้องใช้ Cloth Config API เพื่อตั้งค่าผ่านอินเทอร์เฟซกราฟิก",
-  "screen.friendcreeper.noconfig.line3": "กรุณาดาวน์โหลดจาก %s หรือ %s",
-  "screen.friendcreeper.noconfig.back": "กลับ",
   "modmenu.descriptionTranslation.friendcreeper": "เลี้ยงครีปเปอร์ด้วยดินปืนและทำให้พวกมันเป็นเพื่อนของคุณ",
   "jade.friendcreeper.owner": "เจ้าของ: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "เจ้าของครีปเปอร์เพื่อน"

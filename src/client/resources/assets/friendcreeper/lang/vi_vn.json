@@ -1,5 +1,6 @@
 {
   "config.friendcreeper.title": "Cài đặt Friend Creeper",
+  "config.friendcreeper.search": "Tìm kiếm...",
   "config.friendcreeper.category.general": "Chung",
   "config.friendcreeper.category.client": "Máy khách",
   "config.friendcreeper.allowOwnerDamage": "Cho phép chủ gây sát thương",
@@ -26,10 +27,6 @@
   "config.friendcreeper.feedOwnerCat.tooltip": "Creeper bạn có nhặt cá sống và cho mèo bị thương của chủ ăn hay không.\nCần tắt sợ mèo.",
   "config.friendcreeper.witherRoseOnLowHealth": "Hoa hồng héo khi máu thấp",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Creeper bạn có hiển thị hoa hồng héo thay cho hoa anh túc khi máu thấp hay không.\nCần bật hiển thị hoa anh túc.",
-  "screen.friendcreeper.noconfig.line1": "Cloth Config API chưa được cài đặt",
-  "screen.friendcreeper.noconfig.line2": "Friend Creeper cần Cloth Config API để cấu hình qua giao diện đồ họa",
-  "screen.friendcreeper.noconfig.line3": "Vui lòng tải từ %s hoặc %s.",
-  "screen.friendcreeper.noconfig.back": "Quay lại",
   "modmenu.descriptionTranslation.friendcreeper": "Thuần hóa Creeper bằng thuốc súng và biến chúng thành bạn của bạn.",
   "jade.friendcreeper.owner": "Chủ: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "Chủ Creeper bạn"

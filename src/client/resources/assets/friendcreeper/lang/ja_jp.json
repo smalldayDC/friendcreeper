@@ -1,5 +1,6 @@
 {
   "config.friendcreeper.title": "Friend Creeper 設定",
+  "config.friendcreeper.search": "検索…",
   "config.friendcreeper.category.general": "一般",
   "config.friendcreeper.category.client": "クライアント",
   "config.friendcreeper.allowOwnerDamage": "オーナーのダメージを許可",
@@ -26,10 +27,6 @@
   "config.friendcreeper.feedOwnerCat.tooltip": "フレンドクリーパーが生魚を拾い、飼い主の傷ついたネコに餌をやるかどうか。\nネコを恐れるを無効にする必要があります。",
   "config.friendcreeper.witherRoseOnLowHealth": "低体力時にウィザーローズ",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "フレンドクリーパーが低体力時にポピーの代わりにウィザーローズを表示するかどうか。\nポピーの描画を有効にする必要があります。",
-  "screen.friendcreeper.noconfig.line1": "Cloth Config API がインストールされていません",
-  "screen.friendcreeper.noconfig.line2": "Friend Creeper はグラフィカル設定に Cloth Config API が必要です",
-  "screen.friendcreeper.noconfig.line3": "%s または %s からダウンロードしてください。",
-  "screen.friendcreeper.noconfig.back": "戻る",
   "modmenu.descriptionTranslation.friendcreeper": "火薬でクリーパーを手懐けて、あなたの友達にしよう。",
   "jade.friendcreeper.owner": "オーナー：%s",
   "config.jade.plugin_friendcreeper.creeper_owner": "フレンドクリーパーのオーナー"

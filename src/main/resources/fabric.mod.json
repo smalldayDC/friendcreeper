@@ -41,7 +41,6 @@
     "minecraft": "1.21.11"
   },
   "suggests": {
-    "cloth-config": ">=21.11.153",
     "modmenu": ">=17.0.0",
     "jade": ">=21.1.6"
   }

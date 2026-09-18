@@ -1,5 +1,6 @@
 {
   "config.friendcreeper.title": "Ajustes de Friend Creeper",
+  "config.friendcreeper.search": "Buscar...",
   "config.friendcreeper.category.general": "General",
   "config.friendcreeper.category.client": "Cliente",
   "config.friendcreeper.allowOwnerDamage": "Permitir daño del dueño",
@@ -26,10 +27,6 @@
   "config.friendcreeper.feedOwnerCat.tooltip": "Si los Creepers amigos recogen pescado crudo y alimentan a los gatos heridos del dueño.\nMiedo a los gatos debe estar desactivado.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa de Wither con poca vida",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Si los Creepers amigos muestran una rosa de Wither en lugar de una amapola cuando tienen poca vida.\nMostrar amapola debe estar activado.",
-  "screen.friendcreeper.noconfig.line1": "Cloth Config API no está instalada",
-  "screen.friendcreeper.noconfig.line2": "Friend Creeper requiere Cloth Config API para la configuración gráfica",
-  "screen.friendcreeper.noconfig.line3": "Por favor, descárgala desde %s o %s.",
-  "screen.friendcreeper.noconfig.back": "Volver",
   "modmenu.descriptionTranslation.friendcreeper": "Domestica Creepers con pólvora y hazlos tu amigo.",
   "jade.friendcreeper.owner": "Dueño: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "Dueño del Creeper amigo"

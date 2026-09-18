@@ -1,5 +1,6 @@
 {
   "config.friendcreeper.title": "Friend Creeper सेटिंग्स",
+  "config.friendcreeper.search": "ढूंढें...",
   "config.friendcreeper.category.general": "सामान्य",
   "config.friendcreeper.category.client": "क्लाइंट",
   "config.friendcreeper.allowOwnerDamage": "मालिक का नुकसान",
@@ -26,10 +27,6 @@
   "config.friendcreeper.feedOwnerCat.tooltip": "क्या मित्र क्रीपर कच्ची मछली उठाकर मालिक की घायल बिल्लियों को खिलाएगा।\nबिल्लियों से डर अक्षम होना चाहिए।",
   "config.friendcreeper.witherRoseOnLowHealth": "कम स्वास्थ्य पर विदर गुलाब",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "क्या कम स्वास्थ्य पर मित्र क्रीपर पॉपी की जगह विदर गुलाब दिखाएगा।\nपॉपी दिखाएँ सक्षम होना चाहिए।",
-  "screen.friendcreeper.noconfig.line1": "Cloth Config API इंस्टॉल नहीं है",
-  "screen.friendcreeper.noconfig.line2": "Friend Creeper को ग्राफ़िकल कॉन्फ़िगरेशन के लिए Cloth Config API की आवश्यकता है",
-  "screen.friendcreeper.noconfig.line3": "कृपया इसे %s या %s से डाउनलोड करें।",
-  "screen.friendcreeper.noconfig.back": "वापस",
   "modmenu.descriptionTranslation.friendcreeper": "बारूद से क्रीपर को पालतू बनाएँ और उसे अपना दोस्त बनाएँ।",
   "jade.friendcreeper.owner": "मालिक: %s",
   "config.jade.plugin_friendcreeper.creeper_owner": "मित्र क्रीपर का मालिक"
