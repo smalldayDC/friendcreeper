@@ -25,8 +25,8 @@ import net.minecraft.util.FormattedCharSequence;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * Vanilla-styled configuration screen, modelled on the vanilla Debug Options screen.
@@ -43,6 +43,9 @@ public class FriendCreeperConfigScreen extends Screen {
     private static final Component CATEGORY_GENERAL = Component.translatable("config.friendcreeper.category.general");
     private static final Component CATEGORY_CLIENT = Component.translatable("config.friendcreeper.category.client");
 
+    /** Pristine instance, only ever read, used to look up the default value of each option. */
+    private static final FriendCreeperConfig DEFAULTS = new FriendCreeperConfig();
+
     private final Screen parent;
     final HeaderAndFooterLayout layout = new HeaderAndFooterLayout(this);
 
@@ -58,7 +61,7 @@ public class FriendCreeperConfigScreen extends Screen {
     protected void init() {
         LinearLayout header = this.layout.addToHeader(LinearLayout.vertical().spacing(4));
         header.defaultCellSetting().alignHorizontallyCenter();
-        header.addChild(new StringWidget(TITLE, this.font));
+        header.addChild(new StringWidget(this.title, this.font));
 
         this.searchBox = header.addChild(
                 new EditBox(this.font, 0, 0, SEARCH_BOX_WIDTH, SEARCH_BOX_HEIGHT, this.searchBox, Component.empty()));
@@ -108,53 +111,39 @@ public class FriendCreeperConfigScreen extends Screen {
     // ------------------------------------------------------------------
 
     private record Option(String key, Component name, Component tooltip, boolean defaultValue,
-                          Supplier<Boolean> getter, Consumer<Boolean> setter) {
+                          BooleanSupplier getter, Consumer<Boolean> setter) {
     }
 
-    private record Category(Component name, List<Option> options) {
+    private static FriendCreeperConfig cfg() {
+        return FriendCreeperConfig.get();
     }
 
     private static Option option(String key, boolean defaultValue,
-                                 Supplier<Boolean> getter, Consumer<Boolean> setter) {
+                                 BooleanSupplier getter, Consumer<Boolean> setter) {
         return new Option(key,
                 Component.translatable("config.friendcreeper." + key),
                 Component.translatable("config.friendcreeper." + key + ".tooltip"),
                 defaultValue, getter, setter);
     }
 
-    private static List<Category> categories() {
-        FriendCreeperConfig config = FriendCreeperConfig.get();
-        FriendCreeperConfig defaults = new FriendCreeperConfig();
+    private static List<Option> generalOptions() {
+        return List.of(
+                option("allowOwnerDamage", DEFAULTS.allowOwnerDamage, () -> cfg().allowOwnerDamage, v -> cfg().allowOwnerDamage = v),
+                option("followOwner", DEFAULTS.followOwner, () -> cfg().followOwner, v -> cfg().followOwner = v),
+                option("revengeOwner", DEFAULTS.revengeOwner, () -> cfg().revengeOwner, v -> cfg().revengeOwner = v),
+                option("snowGolemAttack", DEFAULTS.snowGolemAttack, () -> cfg().snowGolemAttack, v -> cfg().snowGolemAttack = v),
+                option("afraidOfCats", DEFAULTS.afraidOfCats, () -> cfg().afraidOfCats, v -> cfg().afraidOfCats = v),
+                option("naturalRegeneration", DEFAULTS.naturalRegeneration, () -> cfg().naturalRegeneration, v -> cfg().naturalRegeneration = v),
+                option("feedOwnerCat", DEFAULTS.feedOwnerCat, () -> cfg().feedOwnerCat, v -> cfg().feedOwnerCat = v));
+    }
 
-        List<Option> general = List.of(
-                option("allowOwnerDamage", defaults.allowOwnerDamage,
-                        () -> config.allowOwnerDamage, value -> config.allowOwnerDamage = value),
-                option("followOwner", defaults.followOwner,
-                        () -> config.followOwner, value -> config.followOwner = value),
-                option("revengeOwner", defaults.revengeOwner,
-                        () -> config.revengeOwner, value -> config.revengeOwner = value),
-                option("snowGolemAttack", defaults.snowGolemAttack,
-                        () -> config.snowGolemAttack, value -> config.snowGolemAttack = value),
-                option("afraidOfCats", defaults.afraidOfCats,
-                        () -> config.afraidOfCats, value -> config.afraidOfCats = value),
-                option("naturalRegeneration", defaults.naturalRegeneration,
-                        () -> config.naturalRegeneration, value -> config.naturalRegeneration = value),
-                option("feedOwnerCat", defaults.feedOwnerCat,
-                        () -> config.feedOwnerCat, value -> config.feedOwnerCat = value));
-
-        List<Option> client = List.of(
-                option("hurtSound", defaults.hurtSound,
-                        () -> config.hurtSound, value -> config.hurtSound = value),
-                option("renderPoppy", defaults.renderPoppy,
-                        () -> config.renderPoppy, value -> config.renderPoppy = value),
-                option("witherRoseOnLowHealth", defaults.witherRoseOnLowHealth,
-                        () -> config.witherRoseOnLowHealth, value -> config.witherRoseOnLowHealth = value),
-                option("tamedCreeperTexture", defaults.tamedCreeperTexture,
-                        () -> config.tamedCreeperTexture, value -> config.tamedCreeperTexture = value),
-                option("scaredFace", defaults.scaredFace,
-                        () -> config.scaredFace, value -> config.scaredFace = value));
-
-        return List.of(new Category(CATEGORY_GENERAL, general), new Category(CATEGORY_CLIENT, client));
+    private static List<Option> clientOptions() {
+        return List.of(
+                option("hurtSound", DEFAULTS.hurtSound, () -> cfg().hurtSound, v -> cfg().hurtSound = v),
+                option("renderPoppy", DEFAULTS.renderPoppy, () -> cfg().renderPoppy, v -> cfg().renderPoppy = v),
+                option("witherRoseOnLowHealth", DEFAULTS.witherRoseOnLowHealth, () -> cfg().witherRoseOnLowHealth, v -> cfg().witherRoseOnLowHealth = v),
+                option("tamedCreeperTexture", DEFAULTS.tamedCreeperTexture, () -> cfg().tamedCreeperTexture, v -> cfg().tamedCreeperTexture = v),
+                option("scaredFace", DEFAULTS.scaredFace, () -> cfg().scaredFace, v -> cfg().scaredFace = v));
     }
 
     // ------------------------------------------------------------------
@@ -167,12 +156,27 @@ public class FriendCreeperConfigScreen extends Screen {
         private static final int ROW_WIDTH = 350;
         private static final int ITEM_HEIGHT = 20;
 
-        private final List<Category> categories = categories();
+        /** A category header plus the entries below it. Built once, only filtered on search. */
+        private record Section(CategoryEntry header, List<OptionEntry> entries) {
+
+            static Section of(Minecraft minecraft, Component name, List<Option> options) {
+                List<OptionEntry> entries = new ArrayList<>(options.size());
+                for (Option option : options) {
+                    entries.add(new OptionEntry(minecraft, option));
+                }
+                return new Section(new CategoryEntry(minecraft, name), List.copyOf(entries));
+            }
+        }
+
+        private final List<Section> sections;
 
         OptionList(FriendCreeperConfigScreen screen) {
             super(Minecraft.getInstance(), screen.width,
                     screen.layout.getContentHeight(), screen.layout.getHeaderHeight(), ITEM_HEIGHT);
-            this.updateSearch("");
+
+            this.sections = List.of(
+                    Section.of(this.minecraft, CATEGORY_GENERAL, generalOptions()),
+                    Section.of(this.minecraft, CATEGORY_CLIENT, clientOptions()));
         }
 
         @Override
@@ -184,28 +188,21 @@ public class FriendCreeperConfigScreen extends Screen {
             String needle = query.toLowerCase(Locale.ROOT).trim();
             this.clearEntries();
 
-            for (Category category : this.categories) {
-                List<Option> matched = new ArrayList<>();
-                for (Option option : category.options()) {
-                    if (needle.isEmpty() || matches(option, needle)) {
-                        matched.add(option);
+            for (Section section : this.sections) {
+                boolean headerAdded = false;
+                for (OptionEntry entry : section.entries()) {
+                    if (!needle.isEmpty() && !entry.matches(needle)) {
+                        continue;
                     }
-                }
-                if (matched.isEmpty()) {
-                    continue;
-                }
-                this.addEntry(new CategoryEntry(category.name()));
-                for (Option option : matched) {
-                    this.addEntry(new OptionEntry(option));
+                    if (!headerAdded) {
+                        this.addEntry(section.header());
+                        headerAdded = true;
+                    }
+                    this.addEntry(entry);
                 }
             }
 
             this.setScrollAmount(0.0);
-        }
-
-        private static boolean matches(Option option, String needle) {
-            return option.name().getString().toLowerCase(Locale.ROOT).contains(needle)
-                    || option.key().toLowerCase(Locale.ROOT).contains(needle);
         }
     }
 
@@ -220,11 +217,24 @@ public class FriendCreeperConfigScreen extends Screen {
     @Environment(EnvType.CLIENT)
     static class CategoryEntry extends AbstractEntry {
 
-        private final Minecraft minecraft = Minecraft.getInstance();
+        private final Minecraft minecraft;
         private final Component name;
+        private final List<NarratableEntry> narratables;
 
-        CategoryEntry(Component name) {
+        CategoryEntry(Minecraft minecraft, Component name) {
+            this.minecraft = minecraft;
             this.name = name;
+            this.narratables = List.of(new NarratableEntry() {
+                @Override
+                public NarrationPriority narrationPriority() {
+                    return NarrationPriority.HOVERED;
+                }
+
+                @Override
+                public void updateNarration(NarrationElementOutput output) {
+                    output.add(NarratedElementType.TITLE, name);
+                }
+            });
         }
 
         @Override
@@ -240,17 +250,7 @@ public class FriendCreeperConfigScreen extends Screen {
 
         @Override
         public List<? extends NarratableEntry> narratables() {
-            return List.of(new NarratableEntry() {
-                @Override
-                public NarrationPriority narrationPriority() {
-                    return NarrationPriority.HOVERED;
-                }
-
-                @Override
-                public void updateNarration(NarrationElementOutput output) {
-                    output.add(NarratedElementType.TITLE, CategoryEntry.this.name);
-                }
-            });
+            return this.narratables;
         }
     }
 
@@ -262,20 +262,24 @@ public class FriendCreeperConfigScreen extends Screen {
         private static final int RESET_WIDTH = 50;
         private static final int PADDING = 5;
 
-        private final Minecraft minecraft = Minecraft.getInstance();
+        private final Minecraft minecraft;
         private final Option option;
         private final CycleButton<Boolean> toggle;
         private final Button reset;
         private final List<AbstractWidget> children;
         private final List<FormattedCharSequence> tooltipLines;
+        private final String searchText;
 
-        OptionEntry(Option option) {
+        OptionEntry(Minecraft minecraft, Option option) {
+            this.minecraft = minecraft;
             this.option = option;
+
             // Break only where the translation itself has a line break. Tooltip#splitTooltip
             // would additionally wrap at 170 px, which is not wanted here.
-            this.tooltipLines = this.minecraft.font.split(option.tooltip(), Integer.MAX_VALUE);
+            this.tooltipLines = minecraft.font.split(option.tooltip(), Integer.MAX_VALUE);
+            this.searchText = (option.name().getString() + '\u0000' + option.key()).toLowerCase(Locale.ROOT);
 
-            this.toggle = CycleButton.onOffBuilder(option.getter().get())
+            this.toggle = CycleButton.onOffBuilder(option.getter().getAsBoolean())
                     .displayOnlyValue()
                     .withCustomNarration(button -> CommonComponents.optionNameValue(option.name(), button.getMessage()))
                     .create(0, 0, TOGGLE_WIDTH, 20, option.name(), (button, value) -> {
@@ -293,8 +297,12 @@ public class FriendCreeperConfigScreen extends Screen {
             this.updateResetButton();
         }
 
+        boolean matches(String lowerCaseNeedle) {
+            return this.searchText.contains(lowerCaseNeedle);
+        }
+
         private void updateResetButton() {
-            this.reset.active = this.option.getter().get() != this.option.defaultValue();
+            this.reset.active = this.option.getter().getAsBoolean() != this.option.defaultValue();
         }
 
         @Override
