@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "Friend Creeper",
   "config.friendcreeper.title": "Friend Creeper Settings",
   "config.friendcreeper.search": "Search...",
   "config.friendcreeper.category.general": "General",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Whether Friend Creepers naturally regenerate health over time.",
   "config.friendcreeper.feedOwnerCat": "Feed Owner's Cat",
   "config.friendcreeper.feedOwnerCat.tooltip": "Whether Friend Creepers pick up raw fish and feed the owner's hurt cats.\nRequires Afraid of Cats to be disabled.",
+  "config.friendcreeper.deathMessage": "Friend Creeper Death Message",
+  "config.friendcreeper.deathMessage.tooltip": "Whether a Friend Creeper's death is announced to its owner.",
   "config.friendcreeper.witherRoseOnLowHealth": "Wither Rose on Low Health",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Whether Friend Creepers show a wither rose instead of a poppy when at low health.\nRequires Render Poppy to be enabled.",
   "jade.friendcreeper.owner": "Owner: %s",

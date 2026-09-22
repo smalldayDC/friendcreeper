@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.core.UUIDUtil;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -151,6 +152,37 @@ public abstract class MixinCreeperEntity extends Monster implements ITamedCreepe
 
     @Override public void friendcreeper$setHeldFish(ItemStack stack) {
         this.entityData.set(FRIENDCREEPER_HELD_FISH, stack);
+    }
+
+    // ── Name ──────────────────────────────────────────────────────────────────
+
+    /**
+     * Tamed creepers are named "Friend Creeper". Overriding the type name
+     * covers every place the name surfaces — death messages, Jade, command
+     * feedback — while a name tag still takes priority, as it does for wolves.
+     * The fallback keeps vanilla clients on a modded server from seeing the
+     * raw translation key.
+     */
+    @Override
+    protected Component getTypeName() {
+        return friendcreeper$isTamed()
+                ? Component.translatableWithFallback("entity.friendcreeper.friend_creeper", "Friend Creeper")
+                : super.getTypeName();
+    }
+
+    // ── Death message ─────────────────────────────────────────────────────────
+
+    /**
+     * Self-destruction bypasses {@code die} — {@code explodeCreeper} discards
+     * the entity outright — so the owner is told here instead. The combat
+     * tracker is not consulted: whatever hurt it earlier, it went out by
+     * exploding.
+     */
+    @Inject(method = "explodeCreeper", at = @At("HEAD"))
+    private void friendcreeper$announceSelfDestruct(CallbackInfo ci) {
+        Creeper self = (Creeper) (Object) this;
+        FriendCreeperMod.sendDeathMessageToOwner(
+                self, Component.translatable("death.attack.explosion", self.getDisplayName()));
     }
 
     // ── DataTracker ───────────────────────────────────────────────────────────

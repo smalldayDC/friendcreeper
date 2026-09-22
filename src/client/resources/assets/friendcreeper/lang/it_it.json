@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "Creeper amico",
   "config.friendcreeper.title": "Impostazioni Friend Creeper",
   "config.friendcreeper.search": "Cerca...",
   "config.friendcreeper.category.general": "Generale",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Se i Creeper amici rigenerano vita naturalmente nel tempo.",
   "config.friendcreeper.feedOwnerCat": "Nutrire il gatto del proprietario",
   "config.friendcreeper.feedOwnerCat.tooltip": "Se i Creeper amici raccolgono pesce crudo e nutrono i gatti feriti del proprietario.\nPaura dei gatti deve essere disattivato.",
+  "config.friendcreeper.deathMessage": "Messaggio di morte del Creeper amico",
+  "config.friendcreeper.deathMessage.tooltip": "Se la morte di un Creeper amico viene annunciata al suo proprietario.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa dell'appassimento con poca vita",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Se i Creeper amici mostrano una rosa dell'appassimento al posto del papavero quando hanno poca vita.\nMostra papavero deve essere attivato.",
   "modmenu.descriptionTranslation.friendcreeper": "Addomestica i Creeper con la polvere da sparo e rendili tuoi amici.",

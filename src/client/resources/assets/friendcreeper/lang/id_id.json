@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "Creeper teman",
   "config.friendcreeper.title": "Pengaturan Friend Creeper",
   "config.friendcreeper.search": "Cari...",
   "config.friendcreeper.category.general": "Umum",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Apakah Creeper teman akan memulihkan kesehatan secara alami seiring waktu.",
   "config.friendcreeper.feedOwnerCat": "Beri makan kucing pemilik",
   "config.friendcreeper.feedOwnerCat.tooltip": "Apakah Creeper teman akan mengambil ikan mentah dan memberi makan kucing pemilik yang terluka.\nTakut kucing harus dinonaktifkan.",
+  "config.friendcreeper.deathMessage": "Pesan kematian Creeper teman",
+  "config.friendcreeper.deathMessage.tooltip": "Apakah kematian Creeper teman diberitahukan kepada pemiliknya.",
   "config.friendcreeper.witherRoseOnLowHealth": "Mawar Wither saat kesehatan rendah",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Apakah Creeper teman menampilkan mawar Wither alih-alih poppy saat kesehatannya rendah.\nTampilkan poppy harus diaktifkan.",
   "modmenu.descriptionTranslation.friendcreeper": "Jinakkan Creeper dengan bubuk mesiu dan jadikan mereka temanmu.",

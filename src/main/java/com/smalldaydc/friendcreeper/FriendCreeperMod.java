@@ -2,12 +2,16 @@ package com.smalldaydc.friendcreeper;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.feline.Cat;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.AABB;
 import java.util.List;
@@ -129,6 +133,29 @@ public class FriendCreeperMod implements ModInitializer {
                 fish.copy());
         creeper.level().addFreshEntity(drop);
         tc.friendcreeper$setHeldFish(ItemStack.EMPTY);
+    }
+
+    /**
+     * Send a tamed creeper's death message to its owner, mirroring
+     * {@code TamableAnimal.die}: the message goes only to the owner, never
+     * broadcast, only while they are online, and only when the
+     * showDeathMessages game rule is enabled. Additionally gated on the
+     * deathMessage config option. Does nothing for untamed creepers.
+     */
+    public static void sendDeathMessageToOwner(Creeper creeper, Component message) {
+        if (!FriendCreeperConfig.get().deathMessage) return;
+        ITamedCreeper tc = (ITamedCreeper) creeper;
+        if (!tc.friendcreeper$isTamed()) return;
+        if (!(creeper.level() instanceof ServerLevel world)) return;
+        if (!world.getGameRules().get(GameRules.SHOW_DEATH_MESSAGES)) return;
+
+        UUID ownerUUID = tc.friendcreeper$getOwnerUUID();
+        if (ownerUUID == null) return;
+
+        ServerPlayer owner = world.getServer().getPlayerList().getPlayer(ownerUUID);
+        if (owner == null) return;
+
+        owner.sendSystemMessage(message);
     }
 
     /**

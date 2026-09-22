@@ -134,7 +134,8 @@ public class FriendCreeperConfigScreen extends Screen {
                 option("snowGolemAttack", DEFAULTS.snowGolemAttack, () -> cfg().snowGolemAttack, v -> cfg().snowGolemAttack = v),
                 option("afraidOfCats", DEFAULTS.afraidOfCats, () -> cfg().afraidOfCats, v -> cfg().afraidOfCats = v),
                 option("naturalRegeneration", DEFAULTS.naturalRegeneration, () -> cfg().naturalRegeneration, v -> cfg().naturalRegeneration = v),
-                option("feedOwnerCat", DEFAULTS.feedOwnerCat, () -> cfg().feedOwnerCat, v -> cfg().feedOwnerCat = v));
+                option("feedOwnerCat", DEFAULTS.feedOwnerCat, () -> cfg().feedOwnerCat, v -> cfg().feedOwnerCat = v),
+                option("deathMessage", DEFAULTS.deathMessage, () -> cfg().deathMessage, v -> cfg().deathMessage = v));
     }
 
     private static List<Option> clientOptions() {

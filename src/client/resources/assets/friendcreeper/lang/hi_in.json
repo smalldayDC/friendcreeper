@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "मित्र क्रीपर",
   "config.friendcreeper.title": "Friend Creeper सेटिंग्स",
   "config.friendcreeper.search": "ढूंढें...",
   "config.friendcreeper.category.general": "सामान्य",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "क्या मित्र क्रीपर समय के साथ स्वाभाविक रूप से स्वास्थ्य पुनर्प्राप्त करेगा।",
   "config.friendcreeper.feedOwnerCat": "मालिक की बिल्ली को खिलाएँ",
   "config.friendcreeper.feedOwnerCat.tooltip": "क्या मित्र क्रीपर कच्ची मछली उठाकर मालिक की घायल बिल्लियों को खिलाएगा।\nबिल्लियों से डर अक्षम होना चाहिए।",
+  "config.friendcreeper.deathMessage": "मित्र क्रीपर मृत्यु संदेश",
+  "config.friendcreeper.deathMessage.tooltip": "क्या मित्र क्रीपर की मृत्यु उसके मालिक को सूचित की जाएगी।",
   "config.friendcreeper.witherRoseOnLowHealth": "कम स्वास्थ्य पर विदर गुलाब",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "क्या कम स्वास्थ्य पर मित्र क्रीपर पॉपी की जगह विदर गुलाब दिखाएगा।\nपॉपी दिखाएँ सक्षम होना चाहिए।",
   "modmenu.descriptionTranslation.friendcreeper": "बारूद से क्रीपर को पालतू बनाएँ और उसे अपना दोस्त बनाएँ।",

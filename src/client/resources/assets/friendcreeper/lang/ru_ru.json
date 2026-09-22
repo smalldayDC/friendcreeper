@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "Дружественный крипер",
   "config.friendcreeper.title": "Настройки Friend Creeper",
   "config.friendcreeper.search": "Поиск...",
   "config.friendcreeper.category.general": "Общие",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Будет ли дружественный крипер естественно восстанавливать здоровье со временем.",
   "config.friendcreeper.feedOwnerCat": "Кормить кошку владельца",
   "config.friendcreeper.feedOwnerCat.tooltip": "Будет ли дружественный крипер подбирать сырую рыбу и кормить раненых кошек владельца.\nТребуется отключённый страх кошек.",
+  "config.friendcreeper.deathMessage": "Сообщение о смерти дружественного крипера",
+  "config.friendcreeper.deathMessage.tooltip": "Будет ли владелец получать сообщение о смерти дружественного крипера.",
   "config.friendcreeper.witherRoseOnLowHealth": "Роза увядания при низком здоровье",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Будет ли дружественный крипер показывать розу увядания вместо мака при низком здоровье.\nТребуется включённое отображение мака.",
   "modmenu.descriptionTranslation.friendcreeper": "Приручите крипера порохом и сделайте его своим другом.",

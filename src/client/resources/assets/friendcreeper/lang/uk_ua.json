@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "Дружній кріпер",
   "config.friendcreeper.title": "Налаштування Friend Creeper",
   "config.friendcreeper.search": "Пошук…",
   "config.friendcreeper.category.general": "Загальні",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Чи буде дружній кріпер природно відновлювати здоров'я з часом.",
   "config.friendcreeper.feedOwnerCat": "Годувати кота власника",
   "config.friendcreeper.feedOwnerCat.tooltip": "Чи буде дружній кріпер підбирати сиру рибу та годувати поранених котів власника.\nПотрібно вимкнути страх котів.",
+  "config.friendcreeper.deathMessage": "Повідомлення про смерть дружнього кріпера",
+  "config.friendcreeper.deathMessage.tooltip": "Чи буде власник отримувати повідомлення про смерть дружнього кріпера.",
   "config.friendcreeper.witherRoseOnLowHealth": "Троянда висушення при низькому здоров'ї",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Чи буде дружній кріпер показувати троянду висушення замість маку при низькому здоров'ї.\nПотрібно увімкнути відображення маку.",
   "modmenu.descriptionTranslation.friendcreeper": "Приручіть кріпера порохом та зробіть його своїм другом.",

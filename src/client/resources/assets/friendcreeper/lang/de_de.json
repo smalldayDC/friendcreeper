@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "Befreundeter Creeper",
   "config.friendcreeper.title": "Friend Creeper Einstellungen",
   "config.friendcreeper.search": "Suche …",
   "config.friendcreeper.category.general": "Allgemein",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Ob befreundete Creeper sich mit der Zeit natürlich regenerieren.",
   "config.friendcreeper.feedOwnerCat": "Katze des Besitzers füttern",
   "config.friendcreeper.feedOwnerCat.tooltip": "Ob befreundete Creeper rohen Fisch aufheben und die verletzten Katzen des Besitzers füttern.\nAngst vor Katzen muss deaktiviert sein.",
+  "config.friendcreeper.deathMessage": "Todesnachricht des befreundeten Creepers",
+  "config.friendcreeper.deathMessage.tooltip": "Ob der Tod eines befreundeten Creepers seinem Besitzer gemeldet wird.",
   "config.friendcreeper.witherRoseOnLowHealth": "Withered Rose bei niedriger Gesundheit",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Ob befreundete Creeper bei niedriger Gesundheit eine Withered Rose statt einer Mohnblume anzeigen.\nMohnblume anzeigen muss aktiviert sein.",
   "modmenu.descriptionTranslation.friendcreeper": "Zähme Creeper mit Schwarzpulver und mache sie zu deinem Freund.",

@@ -42,6 +42,9 @@ public class FriendCreeperConfig {
     /** Whether tamed Creepers pick up fish and feed the owner's cats. Requires afraidOfCats to be disabled. Default: false */
     public boolean feedOwnerCat = false;
 
+    /** Whether a tamed Creeper's death is announced to its owner. Default: true */
+    public boolean deathMessage = true;
+
     // Client
     /** Whether tamed Creepers play a hurt sound when at low health. Client-side only. Default: true */
     public boolean hurtSound = true;

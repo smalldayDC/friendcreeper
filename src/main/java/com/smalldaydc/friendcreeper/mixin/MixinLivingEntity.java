@@ -2,9 +2,12 @@ package com.smalldaydc.friendcreeper.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.smalldaydc.friendcreeper.FriendCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Consumer;
 import net.minecraft.resources.ResourceKey;
@@ -49,5 +52,17 @@ public abstract class MixinLivingEntity {
             return;
         }
         original.call(self, world, source, causedByPlayer, key, consumer);
+    }
+
+    /**
+     * Tell the owner their creeper was killed. Self-destruction never reaches
+     * here — {@code Creeper.explodeCreeper} discards the entity instead of
+     * calling {@code die} — so that path is announced separately.
+     */
+    @Inject(method = "die", at = @At("HEAD"))
+    private void friendcreeper$sendDeathMessageToOwner(DamageSource source, CallbackInfo ci) {
+        if (!((Object) this instanceof Creeper creeper)) return;
+        FriendCreeperMod.sendDeathMessageToOwner(
+                creeper, creeper.getCombatTracker().getDeathMessage());
     }
 }

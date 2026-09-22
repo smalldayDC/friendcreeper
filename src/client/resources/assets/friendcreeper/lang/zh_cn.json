@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "朋友苦力怕",
   "config.friendcreeper.title": "Friend Creeper 设置",
   "config.friendcreeper.search": "搜索…",
   "config.friendcreeper.category.general": "通用",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "朋友苦力怕是否会随时间自然恢复生命值。",
   "config.friendcreeper.feedOwnerCat": "喂食主人的猫",
   "config.friendcreeper.feedOwnerCat.tooltip": "朋友苦力怕是否会拾取生鱼并喂食主人受伤的猫。\n需要关闭害怕猫。",
+  "config.friendcreeper.deathMessage": "朋友苦力怕死亡消息",
+  "config.friendcreeper.deathMessage.tooltip": "朋友苦力怕死亡后，是否向其主人播报死亡消息。",
   "config.friendcreeper.witherRoseOnLowHealth": "低血量时显示凋灵玫瑰",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "朋友苦力怕在低血量时是否将虞美人替换为凋灵玫瑰。\n需要开启渲染虞美人。",
   "modmenu.descriptionTranslation.friendcreeper": "用火药驯服苦力怕，让它成为你的朋友。",

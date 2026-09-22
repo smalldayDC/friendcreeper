@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "フレンドクリーパー",
   "config.friendcreeper.title": "Friend Creeper 設定",
   "config.friendcreeper.search": "検索…",
   "config.friendcreeper.category.general": "一般",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "フレンドクリーパーが時間の経過とともに自然に体力を回復するかどうか。",
   "config.friendcreeper.feedOwnerCat": "オーナーのネコに給餌",
   "config.friendcreeper.feedOwnerCat.tooltip": "フレンドクリーパーが生魚を拾い、飼い主の傷ついたネコに餌をやるかどうか。\nネコを恐れるを無効にする必要があります。",
+  "config.friendcreeper.deathMessage": "フレンドクリーパーの死亡メッセージ",
+  "config.friendcreeper.deathMessage.tooltip": "フレンドクリーパーの死亡をオーナーに通知するかどうか。",
   "config.friendcreeper.witherRoseOnLowHealth": "低体力時にウィザーローズ",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "フレンドクリーパーが低体力時にポピーの代わりにウィザーローズを表示するかどうか。\nポピーの描画を有効にする必要があります。",
   "modmenu.descriptionTranslation.friendcreeper": "火薬でクリーパーを手懐けて、あなたの友達にしよう。",

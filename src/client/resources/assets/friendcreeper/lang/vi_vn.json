@@ -1,4 +1,5 @@
 {
+  "entity.friendcreeper.friend_creeper": "Creeper bạn",
   "config.friendcreeper.title": "Cài đặt Friend Creeper",
   "config.friendcreeper.search": "Tìm kiếm...",
   "config.friendcreeper.category.general": "Chung",
@@ -25,6 +26,8 @@
   "config.friendcreeper.naturalRegeneration.tooltip": "Creeper bạn có tự động hồi phục máu theo thời gian hay không.",
   "config.friendcreeper.feedOwnerCat": "Cho mèo của chủ ăn",
   "config.friendcreeper.feedOwnerCat.tooltip": "Creeper bạn có nhặt cá sống và cho mèo bị thương của chủ ăn hay không.\nCần tắt sợ mèo.",
+  "config.friendcreeper.deathMessage": "Thông báo cái chết của Creeper bạn",
+  "config.friendcreeper.deathMessage.tooltip": "Creeper bạn chết có thông báo cho chủ hay không.",
   "config.friendcreeper.witherRoseOnLowHealth": "Hoa hồng héo khi máu thấp",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Creeper bạn có hiển thị hoa hồng héo thay cho hoa anh túc khi máu thấp hay không.\nCần bật hiển thị hoa anh túc.",
   "modmenu.descriptionTranslation.friendcreeper": "Thuần hóa Creeper bằng thuốc súng và biến chúng thành bạn của bạn.",
