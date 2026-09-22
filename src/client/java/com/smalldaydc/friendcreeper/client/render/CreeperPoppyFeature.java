@@ -22,6 +22,15 @@ public class CreeperPoppyFeature extends RenderLayer<CreeperRenderState, Creeper
     // Head cube is 8px tall; head top = -8/16 relative to head pivot in render space
     private static final float HEAD_TOP_OFFSET = -8.0f / 16.0f;
 
+    // ItemDisplayContext.GROUND applies item/generated's ground transform
+    // (translation [0,2,0], scale 0.5) on top of ours, lifting the flower by 0.5 * 2/16
+    private static final float GROUND_TRANSFORM_LIFT = 0.5f * (2.0f / 16.0f);
+
+    // Sitting exactly on the head's top face leaves the stem's bottom row coplanar with it,
+    // which loses the depth test at grazing angles. An eighth of a flower texture row (the
+    // flower spans 0.25 blocks over 16 rows) clears that without opening a visible gap.
+    private static final float CONTACT_MARGIN = (0.25f / 16.0f) / 8.0f;
+
     public CreeperPoppyFeature(
             RenderLayerParent<CreeperRenderState, CreeperModel> context) {
         super(context);
@@ -46,8 +55,8 @@ public class CreeperPoppyFeature extends RenderLayer<CreeperRenderState, Creeper
         matrices.pushPose();
         // Follow the head's pivot position and all rotations (yaw + pitch)
         head.translateAndRotate(matrices);
-        // Translate to the top of the head in head's local space, slightly above surface
-        matrices.translate(0.0, HEAD_TOP_OFFSET - 0.08, 0.0);
+        // Translate to the top of the head in head's local space, flush with the surface
+        matrices.translate(0.0, HEAD_TOP_OFFSET - GROUND_TRANSFORM_LIFT - CONTACT_MARGIN, 0.0);
         matrices.mulPose(Axis.ZP.rotationDegrees(180f));
         matrices.scale(0.5f, 0.5f, 0.5f);
 
